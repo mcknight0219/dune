@@ -6,8 +6,9 @@
 #
 one: 
   items: 1
-  products: 1;2
-  total_price: 11.23
+  refunded: false
+  shipped: false
+  user: one
 # column: value
 #
 two: {}

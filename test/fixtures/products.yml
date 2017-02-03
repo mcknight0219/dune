@@ -1,21 +1,21 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  sku: MyString
-  name: MyString
-  price: 1.5
+fishoil:
+  sku: A123456
+  name: Fish Oil
+  price: 9.99
   weight: 1.5
-  dimension: MyString
-  category: MyString
-  detail: MyString
-  active: false
+  dimension: 11cmx12cmx8cm
+  category: health products
+  detail: 
+  active: true
 
-two:
-  sku: MyString
-  name: MyString
-  price: 1.5
+cream:
+  sku: B123456
+  name: Lanco
+  price: 99.99
   weight: 1.5
-  dimension: MyString
-  category: MyString
-  detail: MyString
-  active: false
+  dimension: 8cmx8cmx8cm
+  category: cosmetics
+  detail: 
+  active: true

@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   root to: 'home#index'
   get 'home/index'
+
+  # admin
+  get 'dashboard', to: 'dashboard#index'
   
   # stripe
   resources :charges
