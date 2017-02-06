@@ -19,3 +19,12 @@ cream:
   category: cosmetics
   detail: 
   active: true
+  
+offshelf:
+  sku: C123456
+  name: Seal Oil
+  price: 100.00
+  weight: 0
+  category: health products
+  detail:
+  active: false

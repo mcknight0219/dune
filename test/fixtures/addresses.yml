@@ -4,20 +4,18 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-single_order: 
-  items: 1
-  refunded: false
-  shipped: false
-  user: client
+canada_address: 
+  country: Canada
+  state:   Alberta
+  city:    Edmonton
+  post_code: T2L7A2
+  address_line1: 123 Alphine Rd
+  mobile: +14031234567
 
-multiple_order:
-  items: 2
-  refunded: false
-  shipped: false
-  user: client
-
-shipped_order:
-  items: 1
-  refunded: false
-  shipped: true
-  user: client
+china_address:
+  country: 中国 
+  state: 陕西
+  city: 宝鸡
+  post_code: 721000
+  address_line1: 99 荒村
+  mobile: +861321234567
