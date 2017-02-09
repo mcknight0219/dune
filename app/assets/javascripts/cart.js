@@ -1,13 +1,27 @@
+import cart_client from 'cart_client'
 
-function Cart() {
+function Cart(client = cart_client) {
+  this.client = client
   this.items = [];
+  var self = this;
   // bind to items
   Object.defineProperty(this.items, "push", {
     configurable: false,
     enumerable: false,
     writable: false,
     value: function () {
+      self.client.addToCart();
       return Array.prototype.push.apply(this, arguments);
+    }
+  });
+  
+  Object.defineProperty(this.items, "splice", {
+    configurable: false,
+    enumerable: false,
+    writable: false,
+    value: function() {
+      self.client.delFromCart();
+      return Array.prototype.splice.apply(this, arguments);
     }
   });
 }
@@ -25,6 +39,10 @@ Cart.prototype.removeItem = function(item) {
   }
 
   return null;
+}
+
+Cart.prototype.hasItem = function(item) {
+  return !this.items.indexOf(item) < 0;
 }
 
 Cart.prototype.clear = function() {
