@@ -4,11 +4,11 @@ class CartsController < ApplicationController
 
   # 注册用户或游客都可以有购物车。 游客在Checkout是会被引导到注册
   def show
-    head :success
+    render :json => get_cart
   end
   
   def update
-    cart = getCart
+    cart = get_cart
     params[:cart_items].forEach do |it|
       cart.apply(it)
     end
@@ -16,7 +16,8 @@ class CartsController < ApplicationController
 
   private
 
-  def getCart
-    return session['cart'] || Cart.new
+  def get_cart
+    session['cart'] ||= Cart.new
+    return session['cart']
   end
 end

@@ -4,5 +4,4 @@ class Product < ApplicationRecord
   validates_inclusion_of :category, in: %w( "health products", "cosmetics" )
   scope :active, -> { where(active: true) }
   
-  
 end

@@ -1,5 +1,7 @@
 class Cart
-  attr_accessor :items
+  attr_accessor :items 
+  delegate :clear, :size, :empty?, to: :@items
+  delegate :to_json, to: :@items
 
   def initialize
     @items ||= []
@@ -17,6 +19,23 @@ class Cart
     end
   end
 
-  def generate_order
+  def generate_order(for_user)
+    return nil if @items.empty?
+    raise Exceptions::CartError unless @items.length < 100
+    order = for_user.orders.create(items: @items.length)
+    begin
+      order.save!
+      @items.each { |it|
+        order_item = order.order_items.create
+        order_item.product = Product.find_by sku: it
+        order_item.save!
+      }
+
+      return order
+    rescue ActiveRecord::ActiveRecordError
+      raise Exceptions::CartError
+    end
   end
+
+  
 end
