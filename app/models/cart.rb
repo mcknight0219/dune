@@ -14,7 +14,9 @@ class Cart
     end
     if item[:op] == '+'
       items << item[:product]
-    else 
+    else
+      #无法删除不存在的
+      raise Exceptions::CartError if items.index(item[:product]).nil?
       items.delete_at(items.index(item[:product]) || items.length)
     end
   end

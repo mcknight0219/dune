@@ -9,8 +9,14 @@ class CartsController < ApplicationController
   
   def update
     cart = get_cart
-    params[:cart_items].forEach do |it|
-      cart.apply(it)
+    cart_original = cart
+    begin
+      params[:cart_items].each do |it|
+        cart.apply(it)
+      end
+      head :ok
+    rescue Exceptions::CartError
+      render :json => {error: 'could not update cart', items: cart_original}, :status => 500
     end
   end
 

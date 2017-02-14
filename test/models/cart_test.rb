@@ -29,8 +29,6 @@ class CartTest < ActiveSupport::TestCase
       @cart.apply({:op => '+', :product => products(:cream).sku})
     end
     assert_equal(2, @cart.size)
-    @cart.apply({:op => '-', :product => products(:fishoil).sku})
-    assert_equal(2, @cart.size)
     @cart.apply({:op => '-', :product => products(:cream).sku})
     assert_equal(1, @cart.size)
   end
