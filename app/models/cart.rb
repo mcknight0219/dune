@@ -3,8 +3,8 @@ class Cart
   delegate :clear, :size, :empty?, to: :@items
   delegate :to_json, to: :@items
 
-  def initialize
-    @items ||= []
+  def initialize(items = [])
+    @items = items
   end
 
   def apply(item)

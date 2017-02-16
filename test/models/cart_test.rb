@@ -11,6 +11,10 @@ class CartTest < ActiveSupport::TestCase
     assert_empty(@cart.items)
   end
 
+  test 'initialize with items' do
+    @cart = Cart.new([products(:fishoil)])
+    assert_equal(1, @cart.size)
+  end
 
   test 'add item(s) to cart' do
     3.times do

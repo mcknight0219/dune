@@ -22,8 +22,12 @@ class CartsController < ApplicationController
   private
 
   def get_cart
-    byebug
-    session['cart'] ||= Cart.new
-    return session['cart']
+    if session['cart'].nil?
+      new_cart = Cart.new
+      session['cart'] = new_cart
+      return new_cart
+    else
+      return Cart.new(session['cart']['items'])
+    end
   end
 end

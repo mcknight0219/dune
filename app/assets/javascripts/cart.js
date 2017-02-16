@@ -1,44 +1,55 @@
-import cart_client from 'cart_client'
+import cart_client from 'cart_client';
+import cart_error  from 'cart_error';
 
 function Cart(client = cart_client) {
   this.client = client
   this.items = [];
   var self = this;
-  // bind to items
-  Object.defineProperty(this.items, "push", {
-    configurable: false,
-    enumerable: false,
-    writable: false,
-    value: function () {
-      self.client.addToCart();
-      return Array.prototype.push.apply(this, arguments);
-    }
-  });
-  
-  Object.defineProperty(this.items, "splice", {
-    configurable: false,
-    enumerable: false,
-    writable: false,
-    value: function() {
-      self.client.delFromCart();
-      return Array.prototype.splice.apply(this, arguments);
-    }
-  });
 }
 
 Cart.prototype.addItem = function(newItem) {
-  this.items.push(newItem);
-  return this.items.length;
+  fetch('/cart', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      items: [{ op: '+', product: newItem }]
+    })
+  }).then(function (response) {
+    if response.status >= 200 && response.status < 300 {
+      this.items.push(newItem);
+    } else {
+      cart_error.popupError(response.json().error);
+    }
+  }).catch(function(error) {
+    cart_error.popupError(error);
+  });
 }
 
 Cart.prototype.removeItem = function(item) {
   var idx = this.items.indexOf(item);
   if (idx >= 0) {
-    var removed = this.items.splice(idx, 1);
-    return removed.length == 1 ? removed[0] : null;
+    fetch('/cart', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        items: [{ op: '-', product: item }]
+      })
+    })
+    .then(function(response) {
+      if response.status >= 200 && response.status < 300 {
+        this.items.splice(idx, 1);
+      } else {
+        cart_error.popupError(response.json().error);
+      }
+    })
+    .catch(function(error) {
+      cart_error.popupError(error);
+    });
   }
-
-  return null;
 }
 
 Cart.prototype.hasItem = function(item) {

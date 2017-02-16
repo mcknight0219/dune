@@ -1,14 +1,14 @@
-import request from 'request';
+import fetch from 'whatwg-fetch';
 
 function Client() {
-  
+      
 }
 
-Client.prototype.addToCart = () => {
-  
+Client.prototype.addToCart = (item) => {
 }
 
-Client.prototype.delFromCart = () => {
+Client.prototype.delFromCart = (item) => {
+
   
 }
 
