@@ -6,7 +6,7 @@ class CartsController < ApplicationController
   def show
     render :json => get_cart
   end
-  
+
   def update
     cart = get_cart
     begin

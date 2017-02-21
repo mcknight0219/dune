@@ -1,8 +1,8 @@
 function CartError() {
 }
 
-CartError.prototype.popupError = function(message) {
-  $('#error-ribon').text(message)      
+CartError.prototype.popupError = function (message) {
+    $('#error-ribon').text(message)
 }
 
 
