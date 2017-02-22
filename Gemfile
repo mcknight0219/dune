@@ -39,6 +39,7 @@ gem 'cancancan'
 
 # 信用卡支付
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
+gem 'stripe-ruby-mock', '~> 2.4.0', :require => 'stripe_mock'
 
 gem 'minitest', group: :test
 gem 'minitest-reporters', group: :test
