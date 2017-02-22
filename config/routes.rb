@@ -7,8 +7,8 @@ Rails.application.routes.draw do
   resource :cart
   # admin
   get 'dashboard', to: 'dashboard#index'
-  # stripe
-  resources :charges
+  # checkout
+  resource :checkout
   # 用户
   devise_for :users
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

@@ -21,10 +21,10 @@ class Cart
     end
   end
 
-  def generate_order(for_user)
+  def generate_order(user)
     return nil if @items.empty?
     raise Exceptions::CartError unless @items.length < 100
-    order = for_user.orders.create(items: @items.length)
+    order = user.orders.create(items: @items.length)
     begin
       order.save!
       @items.each { |it|
