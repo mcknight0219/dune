@@ -38,11 +38,18 @@ gem 'devise'
 gem 'cancancan'
 
 # 信用卡支付
-gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
-gem 'stripe-ruby-mock', '~> 2.4.0', :require => 'stripe_mock'
+gem 'stripe'
+gem 'stripe-ruby-mock', :require => 'stripe_mock'
+gem 'money'
+
+# 单位换算
+gem 'alchemist'
 
 gem 'minitest', group: :test
 gem 'minitest-reporters', group: :test
+
+# cron job
+gem 'whenever', :require => false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

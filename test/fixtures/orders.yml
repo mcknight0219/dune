@@ -9,15 +9,18 @@ single_order:
   refunded: false
   shipped: false
   user: client
+  address: china_address
 
 multiple_order:
   items: 2
   refunded: false
   shipped: false
   user: client
+  address: canada_address
 
 shipped_order:
   items: 1
   refunded: false
   shipped: true
   user: client
+  address: china_address

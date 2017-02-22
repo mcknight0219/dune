@@ -11,6 +11,7 @@ canada_address:
   post_code: T2L7A2
   address_line1: 123 Alphine Rd
   mobile: +14031234567
+  user: client
 
 china_address:
   country: 中国 
@@ -19,3 +20,4 @@ china_address:
   post_code: 721000
   address_line1: 99 荒村
   mobile: +861321234567
+  user: client

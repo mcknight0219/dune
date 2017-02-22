@@ -1,11 +1,14 @@
 class Order < ApplicationRecord
   belongs_to :user
+  belongs_to :address
   has_many :order_items
 
-  def total_price
-    self.order_items.map { |o| o.product.price }.reduce(:+)
+  class << self
+    def cancel(order_id)
+      Order.find(order_id).delete
+    end
   end
-  
+
   def can_refund?
     !self.shipped
   end

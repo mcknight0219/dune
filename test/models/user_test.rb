@@ -16,4 +16,10 @@ class UserTest < ActiveSupport::TestCase
     assert(@admin.can?([:delete, :update], order))
     assert(@client.cannot?([:delete, :update], order))
   end
+
+  test 'user should have zero or more addresses' do
+    assert_empty(@admin.addresses)
+    assert_not_empty(@client.addresses)
+    assert_equal(2, @client.addresses.count)
+  end
 end

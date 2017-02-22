@@ -6,13 +6,13 @@ class CheckoutsController < ApplicationController
       @checkout_items = @cart.items.map { |sku| Product.find_by sku: sku }
       @order = @cart.generate_order(current_user)
       session['order_id'] = @order.id
-      @total_price = @order.total_price
+      @total_price = PriceCalculator.new(@order).total_price
   end
 
   def create
     begin
       charge = Stripe::Charge.create(
-        :amount => (Order.find(session['order_id']).total_price * 100).to_i,
+        :amount => (PriceCalculator.new(Order.find(session['order_id'])).total_price).to_i,
         :currency => 'cad',
         :source => params[:stripeToken],
         :description => 'Cart checkout'
@@ -21,8 +21,8 @@ class CheckoutsController < ApplicationController
         render 'confirmation'
       end
     rescue Stripe::CardError => e
-      flash[:error] = e.message
-      redirect_to_new_charge_path
+      flash[:alert] = e.message
+      redirect_to action: :show
     end
   end
 

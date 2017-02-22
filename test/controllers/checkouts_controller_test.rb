@@ -18,16 +18,14 @@ class CheckoutsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'get checkout items' do
-    # populate cart first
-    add_to_cart
+    arrive_at_checkout
 
-    get checkout_path
     assert_response(:success)
     items = assigns(:checkout_items)
     assert_equal(2, items.size)
     assert_equal('Fish Oil', items[0].name)
     assert_equal(9.99, items[1].price)
-    assert_equal(9.99*2, assigns(:total_price))
+    assert_equal(5635, assigns(:total_price))
   end
 
   test 'error out if checkout empty cart' do
@@ -37,8 +35,7 @@ class CheckoutsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'checkout successfully' do
-    add_to_cart
-    get checkout_path
+    arrive_at_checkout
 
     StripeMock.start
     charge = Stripe::Charge.create(
@@ -49,15 +46,32 @@ class CheckoutsControllerTest < ActionDispatch::IntegrationTest
     )
     post checkout_path, params: {:stripeToken => StripeMock.create_test_helper.generate_card_token}
     assert_response(:success)
+    assert_not_nil(session[:order_id])
     assert_template "confirmation"
     StripeMock.stop
   end
 
+  test 'checkout failed and redirect' do
+    arrive_at_checkout
+
+    StripeMock.start
+    StripeMock.prepare_card_error(:card_declined)
+    post checkout_path, params: {:stripeToken => StripeMock.create_test_helper.generate_card_token}
+    assert_response(:redirect)
+    assert_equal('The card was declined', flash[:alert])
+    StripeMock.stop
+  end
+
   private
-  def add_to_cart
+  def populate_cart
     2.times do
       put cart_path, xhr: true, params: { :cart_items => [{:op => '+', :product => products(:fishoil).sku}] }
     end
+  end
+
+  def arrive_at_checkout
+    populate_cart
+    get checkout_path
   end
 
 end

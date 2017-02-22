@@ -75,7 +75,6 @@ class CartTest < ActiveSupport::TestCase
     assert_nothing_raised do
       order = @cart.generate_order @u
       assert_equal(2, order.items)
-      assert_equal(products(:fishoil).price * 2, order.total_price)
     end
   end
 

@@ -19,5 +19,7 @@ module Dune
         p.start_with?(Rails.root.join('spec', 'javascripts').to_s)
       }
     end
+    # use CAD as default currency
+    Money.default_currency = Money::Currency.new("CAD")
   end
 end
