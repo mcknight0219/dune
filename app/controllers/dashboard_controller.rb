@@ -1,8 +1,8 @@
 class DashboardController < ApplicationController
   before_action :redirect_if_not_admin
+  layout 'dashboard'
 
   def index
-    render :text => 'Dashboard#index'
   end
   
   private
