@@ -13,6 +13,9 @@
 //= require jquery
 //= require tether
 //= require bootstrap
+//= require vue
+//= require vue-router
+//= require vue-resource
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
