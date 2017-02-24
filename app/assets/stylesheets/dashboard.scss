@@ -12,7 +12,6 @@
     top: 0;
     bottom: 0;
     left: 0;
-    z-index: 1000;
     display: block;
     padding: 20px;
     overflow-x: hidden;
@@ -23,7 +22,7 @@
 }
 
 .main {
-  padding: 20px;
+  padding-top: 1rem!important;
 }
 @media (min-width: 768px) {
   .main {
@@ -39,18 +38,23 @@
 /**
  * Sidebar stuff
  */
-.nav-sidebar {
-  margin-right: -21px;
+.sidebar {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.sidebar .nav {
   margin-bottom: 20px;
-  margin-left: -20px
 }
-.nav-sidebar > li > a {
-  padding-right: 20px;
-  padding-left: 20px;
+
+.sidebar .nav-item {
+  width: 100%;
 }
-.nav-sidebar > .active > a,
-.nav-sidebar > .active > a:hover,
-.nav-sidebar > .active > a:focus {
-  color: #fff;
-  background-color: #428bca;
+
+.sidebar .nav-item + .nav-item {
+  margin-left: 0;
+}
+
+.sidebar .nav-link {
+  border-radius: 0;
 }
