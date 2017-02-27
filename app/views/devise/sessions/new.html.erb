@@ -1,26 +1,51 @@
-<h2>Log in</h2>
-
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
+<div>
+  <!-- ################################################################################################ -->
+  <div class="wrapper row1">
+    <header id="header" class="hoc clear">
+      <!-- ################################################################################################ -->
+      <div>
+        <a href="index.html"><%= image_tag("logo.png", :class => "loginimg") %></a>
+      </div>
+      <!-- ################################################################################################ -->
+    </header>
   </div>
-
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
-
-  <% if devise_mapping.rememberable? -%>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+</div>
+<!-- End Top Background Image Wrapper -->
+<div class="container">
+  <section>
+    <div id="container_demo" >
+      <div id="wrapper">
+        <div id="login" class="animate form">
+          <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+            <h1>登录</h1>
+            <p>
+              <%= f.label :邮箱：, :class => "uname"%>
+              <%= f.email_field :email, :required => true, :type => "text", :placeholder => "myusername or mymail@mail.com", autofocus: true%>
+            </p>
+            <p>
+              <%= f.label :密码：, :class => "youpasswd"%>
+              <%= f.password_field :password, :required => true, :type => "password", :placeholder =>"eg. X8df!90EO", autocomplete: "off" %>
+            </p>
+              <% if devise_mapping.rememberable? -%>
+                <p class="keeplogin">
+                  <%= f.check_box :remember_me %>
+                  <%= f.label :保持登录 %>
+                </p>
+              <% end -%>
+              <p class="login button">
+                <%= f.submit "登录" %>
+            </p>
+            <p class="change_link">
+              还不是会员?
+              <%= link_to "注册", new_registration_path(resource_name), :class => "to_register" %>
+            </p>
+          <% end %>
+        </div>
+      </div>
     </div>
-  <% end -%>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+  </section>
+</div>
+<!-- JAVASCRIPTS -->
+<script src="../layout/scripts/jquery.min.js"></script>
+<script src="../layout/scripts/jquery.backtotop.js"></script>
+<script src="../layout/scripts/jquery.mobilemenu.js"></script>

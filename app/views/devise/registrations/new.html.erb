@@ -1,29 +1,55 @@
-<h2>Sign up</h2>
-
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
+<div>
+  <!-- ################################################################################################ -->
+  <div class="wrapper row1">
+    <header id="header" class="hoc clear">
+      <!-- ################################################################################################ -->
+      <div>
+        <a href="index.html"><%= image_tag("logo.png", :class => "loginimg") %></a>
+      </div>
+      <!-- ################################################################################################ -->
+    </header>
   </div>
+</div>
+<!-- End Top Background Image Wrapper -->
+<div class="container">
+  <section>
+    <div id="container_demo" >
+      <div id="wrapper">
+        <div id="register" class="animate form">
+          <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+              <%= devise_error_messages! %>
+            <h1> 注册 </h1>
+            <p>
+              <%= f.label :邮箱：, :class => "youmail" %>
+              <%= f.email_field :email, :required => true, :type => "email", :placeholder =>"mysupermail@mail.com", autofocus: true %>
+            </p>
+            <p>
+              <%= f.label :密码：, :class => "youpasswd" %>
+              <% if @minimum_password_length %>
+                  <em>(<%= @minimum_password_length %> characters minimum)</em>
+              <% end %><br />
+              <%= f.password_field :password, :required => true, :type => "password", :placeholder => "eg. X8df!90EO", autocomplete: "off" %>
+            </p>
+            <p>
+              <%= f.label :确认密码：, :class => "youpasswd" %>
+              <%= f.password_field :password_confirmation, :required => true, :type => "password", :placeholder => "eg. X8df!90EO",  autocomplete: "off" %>
+              </p>
+            <p class="signin button">
+              <%= f.submit "注册" %>
+            </p>
+            <p class="change_link">
+              已经是会员?
+              <%= link_to "Log in", new_session_path(resource_name), :class => "to_register" %>
+            </p>
+          <% end %>
+        </div>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+      </div>
+    </div>
+  </section>
+</div>
+<!-- ################################################################################################ -->
+<a id="backtotop" href="#top"><i class="fa fa-chevron-up"></i></a>
+<script src="../layout/scripts/jquery.min.js"></script>
+<script src="../layout/scripts/jquery.backtotop.js"></script>
+<script src="../layout/scripts/jquery.mobilemenu.js"></script>

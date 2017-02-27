@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -54,7 +54,7 @@ gem 'minitest-reporters', group: :test
 # cron job
 gem 'whenever', :require => false
 
-source 'https://rails-assets.org' do
+source 'http://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.3.3'
 end
 
@@ -75,4 +75,4 @@ group :development do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-#gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

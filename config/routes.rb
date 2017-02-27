@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root to: 'home#index'
   get 'home/index'
+  get 'contact', to: 'contact#index'
 
   resources :products
   # 购物车

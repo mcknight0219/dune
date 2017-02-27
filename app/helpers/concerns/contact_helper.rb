@@ -1,0 +1,2 @@
+module Concerns::ContactHelper
+end
