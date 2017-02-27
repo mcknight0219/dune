@@ -1,78 +1,114 @@
-import Cart from "cart";
-import cartError from 'cart_error';
+import { mutations, actions } from "store";
+import api from 'cart'
 import sinon from 'sinon';
-import sinonStubPromise from 'sinon-stub-promise';
+
+const { RECEIVE_PRODUCTS, ADD_TO_CART, DEL_FROM_CART, CART_SUCCESS, CART_FAILED } = mutations
+
+describe("mutations", () => {
+    it('receives products', () => {
+        const state = { products: [] }
+        const payload = { products: [{ "id": 1, "name": 'fishoil', "price": 9.99 }] }
+        RECEIVE_PRODUCTS(state, payload)
+        expect(state.products.length).toEqual(1)
+    })
+
+    it('add to cart', () => {
+        const state = { added: [], checkoutStatus: null }
+        ADD_TO_CART(state, { id: 1 })
+        expect(state.added).toEqual([{id: 1, quantity: 1}])
+        expect(state.checkoutStatus).toBeNull()
+    })
+
+    it('delete from cart', () => {
+        const state = { added: [], checkoutStatus: null }
+        ADD_TO_CART(state, { id: 1 })
+        DEL_FROM_CART(state, { id: 1 })
+        expect(state.added).toEqual([{id: 1, quantity: 0}])
+        expect(state.checkoutStatus).toBeNull()
+    })
+
+    it('update cart successfully', () => {
+        const state = { checkoutStatus: null }
+        CART_SUCCESS(state)
+        expect(state.checkoutStatus).toEqual('successful')
+    })
+
+    it('update cart failed', () => {
+        const state = { added:[], checkoutStatus: null }
+        CART_FAILED(state, { savedCartItems: [] })
+        expect(state.checkoutStatus).toEqual('failed')
+        expect(state.added).toEqual([])
+    })
+});
 
 
-describe("Cart", () => {
-    var cart;
-    let stubedFetch;
-    let successStubResponse;
-    let failureStubResponse;
-    let syncStubResponse;
+const testAction = (action, payload, state, expectedMutations, done) => {
 
-    beforeEach(() => {
-        cart = new Cart();
-        sinonStubPromise(sinon);
-        stubedFetch = sinon.stub(window, 'fetch');
+    // number of times mutation is committed
+    let count = 0
 
-        successStubResponse = new Response('{}', {
-            status: 200,
-            headers: {
-                'Content-type': 'application/json'
-            }
-        });
+    // mock commit
+    const commit = (type, payload) => {
+        const mutation = expectedMutations[count]
+        expect(mutation.type).toEqual(type)
+        if (payload) {
+            expect(mutation.payload).toEqual(payload)
+        }
+        count++
+        if (count >= expectedMutations.length) {
+            done()
+        }
+    }
 
-        failureStubResponse = new Response('{"error": "could not update cart"}', {
-            status: 500,
-            headers: {
-                'Content-type': 'application/json'
-            }
-        });
+    action({ commit, state }, payload)
 
-        syncStubResponse = new Response('{"items": ["item1", "item2", "item3"]}', {
-            status: 200,
-            headers: {
-                'Content-type': 'application/json'
-            }
-        });
-    });
+    if (expectedMutations.length === 0) {
+        expect(count).toEqual(0)
+        done()
+    }
+}
 
-    afterEach(() => {
-        sinon.restore(window.fetch);
-    });
+const validResponseHeader = {
+    status: 200,
+    headers: {
+        'Content-type': 'application/json'
+    }
+}
 
-    it("synchronize with remote server", () => {
-        "use strict";
-        stubedFetch.returnsPromise().resolves(syncStubResponse);
-        cart.syncRemote().then(() => {
-            expect(cart.getCount()).toEqual(3);
-        });
+describe('actions', () => {
+    beforeAll(() => {
+        sinon.stub(api, 'getProducts', () => {
+            return new Promise((resolve, reject) => {
+                resolve(new Response('{"products": [{"id": 1, "name": "fishoil"}]}', validResponseHeader))
+            })
+        })
 
-    });
-
-    it("adds items", () => {
-        stubedFetch.returnsPromise().resolves(successStubResponse);
-        cart.addItem("item1").then(() => {
-            expect(cart.getCount()).toEqual(1);
-        });
-    });
-
-    it("removes items", () => {
-        stubedFetch.returnsPromise().resolves(successStubResponse);
-        cart.addItem("item1");
-        let item = cart.removeItem("item1").then(() => {
-            expect(cart.getCount()).toEqual(0);
+        sinon.stub(api, 'addCart', () => {
+            let success = false
+            return new Promise((resolve, reject) => {
+                // flip success to test both scenarios
+                success = !success
+                setTimeout(() => {
+                    resolve(new Response(`{"success": ${success}}`, validResponseHeader))
+                }, 100)
+            })
         })
     })
 
-    it("failed cart operation", () => {
-        let mock = sinon.mock(cartError);
-        mock.expects("popupError").once();
-
-        stubedFetch.returnsPromise().resolves(failureStubResponse);
-        cart.addItem('item1');
-        expect(cart.getCount()).toEqual(0);
-        mock.verify();
+    it ('get all products', (done) => {
+        testAction(actions.getAllProducts, null, {}, [{ type: 'RECEIVE_PRODUCTS', payload: {products: [{id: 1, name: 'fishoil'}]}}], done)
     })
-});
+
+    it('add products to cart', (done) => {
+        testAction(actions.addToCart, {id: 1}, {}, [
+            { type: 'ADD_TO_CART', payload: { id: 1 } },
+            { type: 'CART_SUCCESS' }
+        ], done)
+
+        let state = { added: [] }
+        testAction(actions.addToCart, {id: 1}, state, [
+            { type: 'CART_FAILED', payload: { saved: []}}
+        ], done)
+        expect(state.added).toEqual([])
+    })
+})

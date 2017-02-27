@@ -1,46 +1,31 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar">
-      <ul class="nav nav-pills flex-column">
-        <li class="nav-item">
-          <a class="nav-link active" href="#">
-            订单
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">商品</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">图表</a>
-        </li>
-      </ul>
-    </div>
-    <div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
-      <h2 class="page-header">订单</h2>
-      <div class="table-responsive">
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>用户</th>
-              <th>总价</th>
-              <th>订单内容</th>
-              <th>地址</th>
-              <th>寄出</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1001</td>
-              <td>mcknight0219@gmail.com</td>
-              <td>$123.4</td>
-              <td>2xSKU12345,4xSKU56789</td>
-              <td>陕西省宝鸡市43信箱</td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
+<div id="app">
+  <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+    <router-link to="order" class="navbar-brand">Dashboard</router-link>
+  </nav>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar">
+        <ul class="nav nav-pills flex-column">
+          <li class="nav-item">
+            <router-link to="order" class="nav-link" active-class="active">订单</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="product" class="nav-link" active-class="active">商品</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="graph" class="nav-link" active-class="active">图表</router-link>
+          </li>
+        </ul>
       </div>
+      <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
+        <transition
+        mode="out-in"
+        enter-active-class="fadeIn"
+        leave-active-class="fadeOut"
+        appear>
+          <router-view class="animated"></router-view>
+        </transition>
+      </main>
     </div>
   </div>
 </div>
