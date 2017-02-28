@@ -24,3 +24,10 @@ shipped_order:
   shipped: true
   user: client
   address: china_address
+
+new_order:
+  items: 1
+  refunded: false
+  shipped: false
+  user: qiang
+  address: china_address

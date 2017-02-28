@@ -19,6 +19,16 @@ cream:
   category: cosmetics
   detail: 
   active: true
+
+mbp:
+  sku: E123456
+  name: Macbook Pro
+  price: 2999.99
+  weight: 3
+  dimension: 24cmx24cmx5cm
+  category: electronics
+  detail:
+  active: true
   
 offshelf:
   sku: C123456
