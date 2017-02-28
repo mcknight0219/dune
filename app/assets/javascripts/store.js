@@ -23,6 +23,11 @@ export const mutations = {
         state.orders =  orders
     },
 
+    [types.MARK_ORDER_SHIPPED] (state, {id}) {
+        const order = state.orders.find(o => o.id == id)
+        order.shipped = true
+    },
+
     [types.ADD_TO_CART] (state, { id }) {
         state.checkoutStatus = null
         const record = state.added.find(p => p.id === id)
@@ -65,6 +70,13 @@ export const actions = {
 
     getAllOrders ({commit}) {
         api.getOrders()
+            .then(jsonResponse)
+            .then(({orders}) => {
+                commit(types.RECEIVE_ORDERS, {orders})
+            })
+    },
+
+    shipOrder ({commit}, {id}) {
     },
 
     addToCart ({commit}, { id }) {

@@ -18,6 +18,15 @@ export default {
         })
     },
 
+    shipOrder(id) {
+        fetch(`/orders/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+    },
+
     addCart: (product) => {
         fetch('/cart', {
             method: 'PUT',

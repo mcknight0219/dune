@@ -28,10 +28,11 @@ class Ability
     #
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
+    return unless user
     if user.admin?
       can :manage, :all
     else
-      can [:create, :read], [Order, OrderItem]
+      can [:create, :read], [user.orders]
     end
   end
 end

@@ -1,8 +1,8 @@
 import { mutations, actions } from "store";
-import api from 'cart'
+import api from 'api'
 import sinon from 'sinon';
 
-const { RECEIVE_PRODUCTS, ADD_TO_CART, DEL_FROM_CART, CART_SUCCESS, CART_FAILED } = mutations
+const {RECEIVE_PRODUCTS, ADD_TO_CART, DEL_FROM_CART, CART_SUCCESS, CART_FAILED, RECEIVE_ORDERS, MARK_ORDER_SHIPPED} = mutations
 
 describe("mutations", () => {
     it('receives products', () => {
@@ -10,6 +10,18 @@ describe("mutations", () => {
         const payload = { products: [{ "id": 1, "name": 'fishoil', "price": 9.99 }] }
         RECEIVE_PRODUCTS(state, payload)
         expect(state.products.length).toEqual(1)
+    })
+
+    it('receive orders', () => {
+        const state = {orders: []}
+        RECEIVE_ORDERS(state, {orders: [{"id": 1, "user": 123, "shipped": false}]})
+        expect(state.orders.length).toEqual(1)
+    })
+
+    it('mark order as shipped', () => {
+        const state = {orders: [{"id": 1, "user": 123, "shipped": false}]}
+        MARK_ORDER_SHIPPED(state, {id: 1})
+        expect(state.orders[0].shipped).toBeTruthy()
     })
 
     it('add to cart', () => {
@@ -83,6 +95,12 @@ describe('actions', () => {
             })
         })
 
+        sinon.stub(api, 'getOrders', () => {
+            return new Promise((resolve, reject) => {
+                resolve(new Response('{"orders": [{"id": 1, "user": 123, "shipped": false}]}', validResponseHeader))
+            })
+        })
+
         sinon.stub(api, 'addCart', () => {
             let success = false
             return new Promise((resolve, reject) => {
@@ -97,6 +115,12 @@ describe('actions', () => {
 
     it ('get all products', (done) => {
         testAction(actions.getAllProducts, null, {}, [{ type: 'RECEIVE_PRODUCTS', payload: {products: [{id: 1, name: 'fishoil'}]}}], done)
+    })
+
+    it('get all orders', (done) => {
+        testAction(actions.getAllOrders, null, {}, [
+            {type: 'RECEIVE_ORDERS', payload: {orders: [{id: 1, user: 123, shipped: false}]}}
+        ], done)
     })
 
     it('add products to cart', (done) => {

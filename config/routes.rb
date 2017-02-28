@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'home/index'
 
   resources :products
+  resources :orders
   # 购物车
   resource :cart
   # admin
