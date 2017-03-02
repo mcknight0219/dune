@@ -1,7 +1,11 @@
 require 'test_helper'
 
 class SkuTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test 'generate valid sku' do
+    assert_equal('CO00001', Sku.new(:cosmetic).to_str)
+  end
+
+  test 'no same skus' do
+
+  end
 end
