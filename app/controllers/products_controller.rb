@@ -1,3 +1,4 @@
+# coding: utf-8
 class ProductsController < ApplicationController
   respond_to :json, only: [:show, :create, :update]
   load_and_authorize_resource
@@ -23,6 +24,10 @@ class ProductsController < ApplicationController
   end
 
   def update
+
+  end
+
+  def delete
 
   end
 end

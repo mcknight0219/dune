@@ -1,7 +1,7 @@
 
 export default {
     getProducts: () => {
-        fetch('/products', {
+        return fetch('/products', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -10,7 +10,7 @@ export default {
     },
 
     getOrders() {
-        fetch('/orders', {
+        return fetch('/orders', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -19,7 +19,7 @@ export default {
     },
 
     shipOrder(id) {
-        fetch(`/orders/${id}`, {
+        return fetch(`/orders/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -28,7 +28,7 @@ export default {
     },
 
     addCart: (product) => {
-        fetch('/cart', {
+        return fetch('/cart', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -40,7 +40,7 @@ export default {
     },
 
     delCart: (product) => {
-        fetch('/cart', {
+        return fetch('/cart', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

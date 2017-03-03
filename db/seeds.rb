@@ -5,3 +5,9 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+case Rails.env
+  when 'development'
+    Product.create([{name: 'Fish Oil', price: 19.99, weight: 8, category: 'health products', detail: 'Not very useful'},
+                    {name: 'Cream', price: 9.99, weight: 4, category: 'cosmetics', detail: 'very good'}])
+end

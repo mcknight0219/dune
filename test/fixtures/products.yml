@@ -1,7 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 fishoil:
-  sku: A123456
+  sku: 'HE00001'
   name: Fish Oil
   price: 9.99
   weight: 1.5
@@ -11,7 +11,7 @@ fishoil:
   active: true
 
 cream:
-  sku: B123456
+  sku: 'CO00001'
   name: Lanco
   price: 99.99
   weight: 1.5
@@ -21,7 +21,7 @@ cream:
   active: true
 
 mbp:
-  sku: E123456
+  sku: 'EL00001'
   name: Macbook Pro
   price: 2999.99
   weight: 3
@@ -31,7 +31,7 @@ mbp:
   active: true
   
 offshelf:
-  sku: C123456
+  sku: 'HE00002'
   name: Seal Oil
   price: 100.00
   weight: 0

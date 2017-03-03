@@ -61,6 +61,7 @@ export const actions = {
     getAllProducts ({commit}) {
         api.getProducts()
             .then((response) => {
+                debugger
                 return response.json()
             })
             .then(({ products }) => {

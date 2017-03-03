@@ -5,9 +5,9 @@ class Sku
 
   def initialize(*params)
     if params.is_a?(Hash)
-      @category = params[:category]
+      @category = params[:category].to_s
     else
-      @category = params.to_s
+      @category = params.first.to_s
     end
   end
 
@@ -20,12 +20,12 @@ class Sku
   # This could be slow but creating new product is
   # only used inside admin
   def next_serial_number(category)
-    initial = [0..1].upcase
-    skus = Product.find_by_sql ["SELECT sku FORM products WHERE LEFT(sku, 2)= ?", initial]
-    if skus.count
-      return "#{initial}00001"
+    initial = category[0..1].upcase
+    skus = Product.find_by_sql ["SELECT sku FROM products WHERE sku LIKE ?", "#{initial}%"]
+    if skus.count == 0
+      return "00001"
     end
 
-    return "#{initial}#{"%05d"%(skus.last[2..-1].to_i + 1)}"
+    return "%05d"%(skus.last.sku[2..-1].to_i + 1)
   end
 end

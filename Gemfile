@@ -18,6 +18,7 @@ gem 'coffee-rails', '~> 4.2'
 # gem 'therubyracer', platforms: :ruby
 
 gem 'vuejs-rails', git: 'https://github.com/mcknight0219/vuejs-rails'
+gem "bulma-rails", "~> 0.3.2"
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

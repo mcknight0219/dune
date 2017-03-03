@@ -1,13 +1,8 @@
+import OrderPanel from 'order';
+import ProductPanel from 'product';
+import store from 'store';
 
 // Components
-const OrderPanel = {
-    template: '<div class="panel-title"><strong>Order Panel</strong></div>'
-}
-
-const ProductPanel = {
-    template: '<h1>Product Panel</h1>'
-}
-
 const routes = [
     { path: '/', component: OrderPanel },
     { path: '/order', component: OrderPanel },
@@ -21,6 +16,7 @@ const router = new VueRouter({
 var app = new Vue({
     el: '#app',
     router,
+    store,
     components: {
         'order-panel': OrderPanel,
         'product-panel': ProductPanel
