@@ -33,6 +33,7 @@ class Ability
       can :manage, :all
     else
       can [:create, :read], Order, :user => user
+      can :manage, Address, :user => user
       can [:read], Product
     end
   end

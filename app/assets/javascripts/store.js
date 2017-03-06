@@ -10,13 +10,37 @@ const state = {
     products: [],
     added: [],
     checkoutStatus: null,
+
     // admin dashboard
-    orders: []
+    orders: [],
+    updateOrderStatus: null
 }
 
 export const mutations = {
     [types.RECEIVE_PRODUCTS] (state, { products }) {
         state.products = products
+    },
+
+    [types.ADD_NEW_PRODUCT] (state, {product}) {
+        state.products.push(product)
+    },
+
+    [types.DELETE_PRODUCT] (state, {product}) {
+        const record = state.products.find(p => p.id === product.id)
+        if (record) {
+            state.products.splice(state.products.indexOf(record), 1)
+        }
+    },
+
+    [types.UPDATE_PRODUCT] (state, {product}) {
+        const record = state.products.find(p => p.sku === product.sku)
+        if (!record) {
+            state.products.push(record)
+        } else {
+            Object.keys(record).map((k, i) => {
+                record[k] = product[k]
+            })
+        }
     },
 
     [types.RECEIVE_ORDERS] (state, { orders }) {
@@ -25,7 +49,7 @@ export const mutations = {
 
     [types.MARK_ORDER_SHIPPED] (state, {id}) {
         const order = state.orders.find(o => o.id == id)
-        order.shipped = true
+        order.is_shipped = true
     },
 
     [types.ADD_TO_CART] (state, { id }) {
@@ -61,11 +85,26 @@ export const actions = {
     getAllProducts ({commit}) {
         api.getProducts()
             .then((response) => {
-                debugger
                 return response.json()
             })
             .then(({ products }) => {
                 commit(types.RECEIVE_PRODUCTS, { products })
+            })
+    },
+
+    addNewProduct ({commit}, {product}) {
+        api.newProduct(product)
+            .then(jsonResponse)
+            .then(({product}) => {
+                commit(types.ADD_NEW_PRODUCT, {product})
+            })
+    },
+
+    deleteProduct ({commit}, {product}) {
+        api.deleteProduct(product.id)
+            .then(jsonResponse)
+            .then(() => {
+                commit(types.DELETE_PRODUCT, {product})
             })
     },
 
@@ -78,6 +117,11 @@ export const actions = {
     },
 
     shipOrder ({commit}, {id}) {
+        api.shipOrder(id)
+            .then(jsonResponse)
+            .then(() => {
+                commit(types.MARK_ORDER_SHIPPED, {id})
+            })
     },
 
     addToCart ({commit}, { id }) {
@@ -116,6 +160,7 @@ export default new Vuex.Store({
 
     getters: {
         checkoutStatus: state => state.checkoutStatus,
-        allProducts: state => state.products
+        allProducts: state => state.products,
+        allOrders: state => state.orders
     },
 })

@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   resources :products
   resources :orders
+  resources :addresses
   # 购物车
   resource :cart
   # admin

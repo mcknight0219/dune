@@ -1,6 +1,6 @@
 # coding: utf-8
 class ProductsController < ApplicationController
-  respond_to :json, only: [:show, :create, :update]
+  respond_to :json, only: [:show, :create, :update, :destroy]
   load_and_authorize_resource
 
   # 显示所有商品
@@ -17,17 +17,21 @@ class ProductsController < ApplicationController
   end
   
   def create
-    Product.new(params.permit(:name, :price, :weight, :dimension, :detail, :cateogry)) do |p|
-      p.active = true
-
-    end
+    p = Product.create product_params
+    render :json => {product: p}
   end
 
   def update
-
+    Product.find(params[:id]).update(product_params)
   end
 
-  def delete
+  def destroy
+    Product.destroy(params[:id])
+    render :json => {success: true}
+  end
 
+  private
+  def product_params
+    params.require(:product).permit([:name, :price, :weight, :dimension, :detail, :category])
   end
 end

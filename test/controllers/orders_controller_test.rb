@@ -9,11 +9,8 @@ class OrdersControllerTest < ActionDispatch::IntegrationTest
     @admin  = users(:admin)
   end
 
-  test 'only signed user can see orders' do
-    get orders_path, xhr: true
-    assert_response :forbidden
-
-    perform_action_as @client do
+  test 'user can see their orders' do
+    perform_action_as @qiang do
       get orders_path, xhr: true
       assert_response :success
     end
@@ -40,7 +37,7 @@ class OrdersControllerTest < ActionDispatch::IntegrationTest
       assert_response :success
 
       put order_path(orders(:single_order).id), xhr: true
-      assert_response 204
+      assert_response 200
     end
   end
 
@@ -51,6 +48,20 @@ class OrdersControllerTest < ActionDispatch::IntegrationTest
 
       put order_path(orders(:single_order).id), xhr: true
       assert_response :forbidden
+    end
+  end
+
+  test 'get order with sufficient data' do
+    perform_action_as @qiang do
+      get orders_path, xhr: true
+      assert_response :success
+
+      orders = JSON.parse(response.body)
+      assert(orders['orders'].size, 1)
+      order = orders['orders'].first
+      assert_equal(order['user'], 'qiang@gmail.com')
+      assert_equal(order['address']['country'], '中国')
+      assert_equal(1, order['items']['EL00001'])
     end
   end
 end

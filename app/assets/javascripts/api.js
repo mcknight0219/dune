@@ -1,11 +1,53 @@
+import util from 'utils'
 
 export default {
     getProducts: () => {
         return fetch('/products', {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
-            }
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRF-Token': util.csrfToken()
+            },
+            credentials: 'same-origin'
+        })
+    },
+
+    newProduct: (data) => {
+        return fetch('/products', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRF-Token': util.csrfToken()
+            },
+            body: JSON.stringify({product: data}),
+            credentials: 'same-origin'
+        })
+    },
+
+    deleteProduct: (id) => {
+        return fetch('/products/' + id, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMlHttpRequest',
+                'X-CSRF-Token': util.csrfToken()
+            },
+            credentials: 'same-origin'
+        })
+    },
+
+    updateProduct: (id, data) => {
+        return fetch('/products/' + id, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Request-With': 'XMLHttpRequest',
+                'X-CSRF-Token': util.csrfToken()
+            },
+            body: JSON.stringify({product: data}),
+            credentials: 'same-origin'
         })
     },
 
@@ -13,17 +55,23 @@ export default {
         return fetch('/orders', {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
-            }
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMlHttpRequest',
+                'X-CSRF-Token': util.csrfToken()
+            },
+            credentials: 'same-origin'
         })
     },
 
     shipOrder(id) {
-        return fetch(`/orders/${id}`, {
+        return fetch('/orders/' + id, {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
-            }
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMlHttpRequest',
+                'X-CSRF-Token': util.csrfToken()
+            },
+            credentials: 'same-origin'
         })
     },
 

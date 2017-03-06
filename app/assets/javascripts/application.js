@@ -18,5 +18,6 @@
 //= require vue-router
 //= require vue-resource
 //= require jquery_ujs
+//= require Chart
 //= require turbolinks
 //= require_tree .

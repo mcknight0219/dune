@@ -2,7 +2,7 @@ import { mutations, actions } from "store";
 import api from 'api'
 import sinon from 'sinon';
 
-const {RECEIVE_PRODUCTS, ADD_TO_CART, DEL_FROM_CART, CART_SUCCESS, CART_FAILED, RECEIVE_ORDERS, MARK_ORDER_SHIPPED} = mutations
+const {RECEIVE_PRODUCTS, ADD_NEW_PRODUCT, DELETE_PRODUCT, UPDATE_PRODUCT, ADD_TO_CART, DEL_FROM_CART, CART_SUCCESS, CART_FAILED, RECEIVE_ORDERS, MARK_ORDER_SHIPPED} = mutations
 
 describe("mutations", () => {
     it('receives products', () => {
@@ -10,6 +10,20 @@ describe("mutations", () => {
         const payload = { products: [{ "id": 1, "name": 'fishoil', "price": 9.99 }] }
         RECEIVE_PRODUCTS(state, payload)
         expect(state.products.length).toEqual(1)
+    })
+
+    it('add new product', () => {
+        const state = {products: []}
+        const payload = {product: {"sku": 'A00001', "name": "fishoil", "price": 9.99}}
+        ADD_NEW_PRODUCT(state, payload)
+        expect(state.products.length).toEqual(1)
+    })
+
+    it('updates product', () => {
+        const state = {products: [{"sku": 'A00001', "name": "fishoil", "price": 9.99}]}
+        const payload = {product: {"sku": 'A00001', "name": "fishoil", "price": 8.99}}
+        UPDATE_PRODUCT(state, payload)
+        expect(state.products[0].price).toEqual(8.99)
     })
 
     it('receive orders', () => {
@@ -95,6 +109,18 @@ describe('actions', () => {
             })
         })
 
+        sinon.stub(api, 'newProduct', () => {
+            return new Promise((resolve, reject) => {
+                resolve(new Response('{"product": {"sku": "A00001", "name": "fishoil", "price": 9.99}}', validResponseHeader))
+            })
+        })
+
+        sinon.stub(api, 'deleteProduct', () => {
+            return new Promise((resolve, reject) => {
+                resolve(new Response('{"success": true}'), validResponseHeader)
+            })
+        })
+
         sinon.stub(api, 'getOrders', () => {
             return new Promise((resolve, reject) => {
                 resolve(new Response('{"orders": [{"id": 1, "user": 123, "shipped": false}]}', validResponseHeader))
@@ -114,7 +140,24 @@ describe('actions', () => {
     })
 
     it ('get all products', (done) => {
-        testAction(actions.getAllProducts, null, {}, [{ type: 'RECEIVE_PRODUCTS', payload: {products: [{id: 1, name: 'fishoil'}]}}], done)
+        testAction(actions.getAllProducts, null, {}, [{
+            type: 'RECEIVE_PRODUCTS',
+            payload: {products: [{id: 1, name: 'fishoil'}]}
+        }], done)
+    })
+
+    it('add new product', (done) => {
+        let state = {products: []}
+        testAction(actions.addNewProduct, {product: {"name": "fishoil", "price": 9.99}}, state, [
+            {type: 'ADD_NEW_PRODUCT', payload: {product: {"sku": 'A00001', "name": "fishoil", "price": 9.99}}}
+        ], done)
+    })
+
+    it('delete product', (done) => {
+        let state = {products: [{id: 1}]}
+        testAction(actions.deleteProduct, {product: {"id": 1}}, state, [
+            {type: 'DELETE_PRODUCT', payload: {product: {"id": 1}}}
+        ], done)
     })
 
     it('get all orders', (done) => {

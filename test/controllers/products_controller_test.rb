@@ -15,22 +15,43 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
 
   test 'only admin can create product' do
     perform_action_as @client do
-      post products_path, xhr: true
+      post products_path, xhr: true, params: {:product => {:name => 'FishOil', :price => 9.99, :weight => 2.7, :detail => '', :category => 'health products'}}
       assert_response :forbidden
     end
 
     perform_action_as @admin do
-      post products_path, xhr: true
-      assert_response 204
+      post products_path, xhr: true, params: {:product => {:name => 'FishOil', :price => 9.99, :weight => 2.7, :detail => '', :category => 'health products'}}
+      assert_response :success
     end
   end
 
-  test 'admin can create a new product' do
+  test 'create new product through dashboard' do
     perform_action_as @admin do
-      old_val = Product.count
-      post products_path, xhr: true, params: {name: 'new product', price: 0.99, weight: 2, category: 'cosmetics'}
-      assert_response 204
-      assert_equal(old_val + 1, Product.count)
+      sz = Product.count
+      post products_path, params: {:product => {:name => 'FishOil', :price => 9.99, :weight => 2.7, :detail => '', :category => 'health products'}}, xhr: true
+      assert_response :success
+      assert_equal(sz+1, Product.count)
+
+      body = JSON.parse response.body
+      assert(body["product"])
     end
+  end
+
+  test 'update product' do
+    perform_action_as @admin do
+      product = Product.first
+      put product_path(product.id), xhr: true, params: {:product => {:price => 19.99}}
+      assert_response :success
+      assert_equal(19.99, Product.find(product.id).price)
+    end
+  end
+
+  test 'delete product' do
+    sz = Product.count
+    perform_action_as @admin do
+      delete product_path(Product.first.id), xhr: true
+    end
+    assert_response :success
+    assert_equal(sz-1, Product.count)
   end
 end
