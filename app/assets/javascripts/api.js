@@ -1,6 +1,18 @@
 import util from 'utils'
 
 export default {
+    getAddresses: () => {
+        return fetch('/addresses', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRF-Token': util.csrfToken()
+            },
+            credentials: 'same-origin'
+        })
+    },
+
     getProducts: () => {
         return fetch('/products', {
             method: 'GET',
