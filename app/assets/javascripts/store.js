@@ -13,7 +13,7 @@ const state = {
 
     // admin dashboard
     orders: [],
-    updateOrderStatus: null
+    updateOrderStatus: null,
 
     addresses: []
 }
