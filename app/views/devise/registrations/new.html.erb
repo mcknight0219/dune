@@ -1,16 +1,13 @@
 <div>
-  <!-- ################################################################################################ -->
   <div class="wrapper row1">
     <header id="header" class="hoc clear">
-      <!-- ################################################################################################ -->
       <div>
-        <a href="index.html"><%= image_tag("logo.png", :class => "loginimg") %></a>
+        <%= link_to image_tag("logo.png", :class => "loginimg"), root_path %>
       </div>
-      <!-- ################################################################################################ -->
     </header>
   </div>
 </div>
-<!-- End Top Background Image Wrapper -->
+
 <div class="container">
   <section>
     <div id="container_demo" >
@@ -21,18 +18,18 @@
             <h1> 注册 </h1>
             <p>
               <%= f.label :邮箱：, :class => "youmail" %>
-              <%= f.email_field :email, :required => true, :type => "email", :placeholder =>"mysupermail@mail.com", autofocus: true %>
+              <%= f.email_field :email, :required => true, :type => "email", :placeholder => "Email Address*", autofocus: true %>
             </p>
             <p>
               <%= f.label :密码：, :class => "youpasswd" %>
               <% if @minimum_password_length %>
                   <em>(<%= @minimum_password_length %> characters minimum)</em>
               <% end %><br />
-              <%= f.password_field :password, :required => true, :type => "password", :placeholder => "eg. X8df!90EO", autocomplete: "off" %>
+              <%= f.password_field :password, :required => true, :type => "password", :placeholder => "Password*", autocomplete: "off" %>
             </p>
             <p>
               <%= f.label :确认密码：, :class => "youpasswd" %>
-              <%= f.password_field :password_confirmation, :required => true, :type => "password", :placeholder => "eg. X8df!90EO",  autocomplete: "off" %>
+              <%= f.password_field :password_confirmation, :required => true, :type => "password", :placeholder => "Confirm Password*", autocomplete: "off" %>
               </p>
             <p class="signin button">
               <%= f.submit "注册" %>
@@ -48,8 +45,4 @@
     </div>
   </section>
 </div>
-<!-- ################################################################################################ -->
 <a id="backtotop" href="#top"><i class="fa fa-chevron-up"></i></a>
-<script src="../layout/scripts/jquery.min.js"></script>
-<script src="../layout/scripts/jquery.backtotop.js"></script>
-<script src="../layout/scripts/jquery.mobilemenu.js"></script>

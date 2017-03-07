@@ -1,16 +1,13 @@
 <div>
-  <!-- ################################################################################################ -->
   <div class="wrapper row1">
     <header id="header" class="hoc clear">
-      <!-- ################################################################################################ -->
       <div>
-        <a href="index.html"><%= image_tag("logo.png", :class => "loginimg") %></a>
+        <%= link_to image_tag("logo.png", :class => "loginimg"), root_path %>
       </div>
-      <!-- ################################################################################################ -->
     </header>
   </div>
 </div>
-<!-- End Top Background Image Wrapper -->
+
 <div class="container">
   <section>
     <div id="container_demo" >
@@ -20,11 +17,11 @@
             <h1>登录</h1>
             <p>
               <%= f.label :邮箱：, :class => "uname"%>
-              <%= f.email_field :email, :required => true, :type => "text", :placeholder => "myusername or mymail@mail.com", autofocus: true%>
+              <%= f.email_field :email, :required => true, :type => "text", :placeholder => "Email Address", autofocus: true %>
             </p>
             <p>
               <%= f.label :密码：, :class => "youpasswd"%>
-              <%= f.password_field :password, :required => true, :type => "password", :placeholder =>"eg. X8df!90EO", autocomplete: "off" %>
+              <%= f.password_field :password, :required => true, :type => "password", :placeholder => "Password", autocomplete: "off" %>
             </p>
               <% if devise_mapping.rememberable? -%>
                 <p class="keeplogin">
@@ -45,7 +42,3 @@
     </div>
   </section>
 </div>
-<!-- JAVASCRIPTS -->
-<script src="../layout/scripts/jquery.min.js"></script>
-<script src="../layout/scripts/jquery.backtotop.js"></script>
-<script src="../layout/scripts/jquery.mobilemenu.js"></script>

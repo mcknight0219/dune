@@ -1,6 +1,6 @@
 class DashboardController < ApplicationController
   before_action :redirect_if_not_admin
-  layout 'dashboard'
+  layout 'simple_application'
 
   def index
   end
