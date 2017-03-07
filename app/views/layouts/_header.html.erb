@@ -5,13 +5,14 @@
     </div>
     <nav id="mainav" class="fl_right">
       <ul class="clear">
-        <li class="active"><a href="index.html">主页</a></li>
-        <li><a href="pages/sidebar-left.html">购物</a></li>
+        <li class="active"><%= link_to '主页', root_path %></li>
         <li><a href="#">寄件</a></li>
-        <li><a href="#">运单追踪</a></li>
-        <li><a href="#">运费查询</a></li>
-        <li><a href="pages/contact.html">联系我们</a></li>
-        <li><a href="#">English</a></li>
+        <li><%= link_to '联系我们', contact_path %></li>
+        <% if user_signed_in? %>
+            <li><%= link_to '登出', destroy_user_session_path %></li>
+        <% else %>
+            <li><%= link_to '登陆', new_user_session_path %></li>
+        <% end %>
       </ul>
     </nav>
   </header>

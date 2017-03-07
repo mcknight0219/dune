@@ -2,30 +2,31 @@
   <main class="hoc container clear btmpad-none">
     <div class="content">
       <div id="comments">
-        <h2>Send Us a Message:</h2>
-        <form action="#" method="post">
-          <div class="one_third first">
-            <label for="name">Name <span>*</span></label>
-            <input type="text" name="name" id="name" value="" size="22" required>
-          </div>
-          <div class="one_third">
-            <label for="email">E-mail <span>*</span></label>
-            <input type="email" name="email" id="email" value="" size="22" required>
-          </div>
-          <div class="one_third">
-            <label for="url">Phone:</label>
-            <input type="url" name="url" id="url" value="" size="22">
-          </div>
-          <div class="block clear">
-            <label for="comment">Your Message:</label>
-            <textarea name="comment" id="comment" cols="25" rows="10"></textarea>
-          </div>
-          <div>
-            <input type="submit" name="submit" value="Submit Form">
-            &nbsp;
-            <input type="reset" name="reset" value="Reset Form">
-          </div>
-        </form>
+        <h2>给我们留言:</h2>
+        <% if flash[:notice] %>
+            <div class="alert alert-success"><%= flash[:notice] %></div>
+        <% end %>
+        <%= form_for @contact, url: {action: 'create'} do |f| %>
+            <div class='one_third first'>
+              <%= f.label :name, '姓名' %>
+              <%= f.text_field :name, :required => true %>
+            </div>
+            <div class='one_third'>
+              <%= f.label :email, '邮箱' %>
+              <%= f.text_field :email, :required => true %>
+            </div>
+            <div class="one_third">
+              <%= f.label :phone, '电话' %>
+              <%= f.telephone_field :phone %>
+            </div>
+            <div class='block clear'>
+              <%= f.label :message, '您的留言' %>
+              <%= f.text_area :message, :cols => 25, :rows => 10 %>
+            </div>
+            <div>
+              <%= f.submit "提交" %>
+            </div>
+        <% end %>
       </div>
     </div>
     <div class="clear"></div>
