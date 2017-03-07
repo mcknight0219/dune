@@ -15,3 +15,7 @@ two:
 three:
   product: cream
   order: multiple_order
+
+four:
+  product: mbp
+  order: new_order

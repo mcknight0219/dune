@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   get 'contact', to: 'contact#index'
 
   resources :products
+  resources :orders
+  resources :addresses
   # 购物车
   resource :cart
   # admin

@@ -8,6 +8,11 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+  def perform_action_as(user, &action)
+    sign_in user
+    action.call
+    sign_out user
+  end
 end
 
 reporter_options = { color: true }

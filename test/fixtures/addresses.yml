@@ -21,3 +21,12 @@ china_address:
   address_line1: 99 荒村
   mobile: +861321234567
   user: client
+
+new_address:
+  country: Canada
+  state:   Alberta
+  city:    Calgary
+  post_code: T2L2G3
+  address_line1: 91 Tuscarora Cres
+  mobile: +14031234567
+  user: qiang
