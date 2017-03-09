@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+laptop:
+  name: Laptop
+  quantity: 2
+  price: 999.99
+  country: China
+  package: two_item_packages
+
+bag:
+  name: Coach
+  quantity: 1
+  price: 99.99
+  country: USA
+  package: two_item_packages

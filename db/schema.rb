@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170307062021) do
+ActiveRecord::Schema.define(version: 20170309212952) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,29 @@ ActiveRecord::Schema.define(version: 20170307062021) do
     t.index ["user_id"], name: "index_orders_on_user_id", using: :btree
   end
 
+  create_table "package_items", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "quantity"
+    t.float    "price"
+    t.string   "country"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "package_id"
+    t.index ["package_id"], name: "index_package_items_on_package_id", using: :btree
+  end
+
+  create_table "packages", force: :cascade do |t|
+    t.integer  "address_id"
+    t.integer  "user_id"
+    t.boolean  "is_shipped"
+    t.boolean  "is_received"
+    t.boolean  "is_cancelled"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["address_id"], name: "index_packages_on_address_id", using: :btree
+    t.index ["user_id"], name: "index_packages_on_user_id", using: :btree
+  end
+
   create_table "products", force: :cascade do |t|
     t.string   "sku"
     t.string   "name"
@@ -97,4 +120,7 @@ ActiveRecord::Schema.define(version: 20170307062021) do
   add_foreign_key "order_items", "products"
   add_foreign_key "orders", "addresses"
   add_foreign_key "orders", "users"
+  add_foreign_key "package_items", "packages"
+  add_foreign_key "packages", "addresses"
+  add_foreign_key "packages", "users"
 end
