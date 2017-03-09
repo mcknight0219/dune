@@ -39,6 +39,7 @@ group :development do
   gem 'capistrano-rails', group: :development
   gem 'capistrano3-puma', group: :development
   gem 'capistrano-rbenv', group: :development
+  gem 'capistrano-npm'
 end
 
 gem 'browserify-rails'
