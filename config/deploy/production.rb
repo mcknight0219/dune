@@ -10,6 +10,9 @@ server '192.155.82.102',
   primary: true
 
 set :deploy_to, "/home/#{fetch(:user)}/apps/#{fetch(:application)}"
+
+set :rbenv_ruby, '2.2.3'
+
 # Puma
 set :puma_bind, "unix://#{shared_path}/tmp/sockets/#{fetch(:application)}-puma.socket"
 set :puma_state,"#{shared_path}/tmp/pids/puma.state"
