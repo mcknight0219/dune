@@ -18,9 +18,7 @@
 //= require vue-router
 //= require vue-resource
 //= require jquery_ujs
-//= require Chart
 //= require turbolinks
-//= require_tree .
 
 $('<form action="#"><select /></form>').appendTo("#mainav");
 $("<option />", {selected: "selected", value: "", text: "MENU"}).appendTo("#mainav select");

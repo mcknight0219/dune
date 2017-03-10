@@ -1,4 +1,4 @@
-import * as types from 'mutation-types'
+import * as types from 'store/mutation-types'
 import api from 'api'
 
 const jsonResponse = (response) => {

@@ -1,6 +1,6 @@
-import OrderPanel from 'order';
-import ProductPanel from 'product';
-import store from 'store';
+import OrderPanel from 'components/order';
+import ProductPanel from 'components/product';
+import store from 'store/store';
 
 // Components
 const routes = [

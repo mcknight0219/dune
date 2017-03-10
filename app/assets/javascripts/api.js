@@ -38,6 +38,19 @@ export default {
         })
     },
 
+    newPackage: (pack) => {
+        return fetch('/packages', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRF-Token': util.csrfToken()
+            },
+            credentials: 'same-origin',
+            body: JSON.stringify({package: pack})
+        })
+    },
+
     deleteProduct: (id) => {
         return fetch('/products/' + id, {
             method: 'DELETE',
