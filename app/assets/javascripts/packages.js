@@ -1,34 +1,4 @@
-import api from 'api'
-
-var store = new Vuex.Store({
-    state: {
-        packageItems: [],
-        updateSuccess: null
-    },
-
-    mutations: {
-        ADD_ITEM: (state, item) => {
-            const record = state.packageItems.find(o => o.name === item.name && o.country === item.country && o.price === item.price)
-            if (record) {
-                record.quantity++
-            } else {
-                state.packageItems.push(item)
-            }
-        },
-
-        UPDATE_SUCCESS: (state) => {
-            state.updateSuccess = true
-        },
-
-        UPDATE_FAIL: (state) => {
-            state.updateSuccess = false
-        }
-    },
-
-    getters: {
-        allPackageItems: state => state.packageItems
-    }
-});
+import store from 'store/packages';
 
 var app = new Vue({
     el: '#app',
@@ -38,6 +8,10 @@ var app = new Vue({
     computed: {
         packageItems() {
             return this.$store.getters.allPackageItems
+        },
+
+        addresses() {
+            return this.$store.getters.allAddresses
         }
     },
 
@@ -58,5 +32,9 @@ var app = new Vue({
                 this.$store.commit('UPDATE_SUCCESS')
             })
         }
+    },
+
+    created() {
+        //this.$store.dispatch('getAllAddresses')
     }
 });

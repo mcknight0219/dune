@@ -6,20 +6,19 @@
           <h2>物品明细:</h2>
           <%= form_tag do %>
               <div class="one_third first">
-                <%= label_tag(:name, '名称*') %>
-                <%= text_field_tag(:name, '', :required => true) %>
+                <%= label_tag(:name, '名称') %>
+                <%= text_field_tag(:name, '', :required => true, 'v-model': 'packageItem.name') %>
               </div>
               <div class="one_third">
                 <%= label_tag(:quantity, '数量*') %>
-                <%= number_field_tag(:name, '', :required => true, :min => 0, :step => 1) %>
-              </div>
-              <div class="one_third first">
-                <%= label_tag(:price, '单价') %>
-                <%= number_field_tag(:price, '', :min => 0) %>
+                <%= number_field_tag(:name, '', :required => true, :min => 0, :step => 1, 'v-model': 'packageItem.quantity') %>
               </div>
               <div class="one_third">
-                <%= label_tag(:country, '原产地*') %>
-                <%= text_field_tag(:country, '', :required => true) %>
+                <%= label_tag(:price, '单价') %>
+                <%= number_field_tag(:price, '', :min => 0, 'v-model': 'packageItem.price') %>
+              </div>
+              <div>
+                <%= submit_tag('确定') %>
               </div>
           <% end %>
         </div>
