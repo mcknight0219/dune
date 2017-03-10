@@ -41,13 +41,26 @@ class AddressesControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test 'can not delete address still in use' do
+    my_address = addresses(:canada_address)
+    perform_action_as @client do
+      delete address_path(my_address.id), xhr: true
+      assert_response :forbidden
+      body = JSON.parse response.body
+      assert_match('address is still in use', body['error'])
+    end
+  end
+
   test 'user can delete their own address' do
     other_people_address = addresses(:new_address)
     perform_action_as @client do
       delete address_path(other_people_address.id), xhr: true
       assert_response :forbidden
 
-      delete address_path(addresses(:canada_address).id), xhr: true
+      # create on address
+      post addresses_path, xhr: true, params: {:country => 'China', :state => 'Shannxi', :city => 'Beijing', :post_code => '1234567', :address_line1 => 'address', :address_line2 => '', :mobile => '0000000'}
+      new_address = Address.find_by(:city => 'Beijing')
+      delete address_path(new_address.id), xhr: true
       assert_response :success
     end
   end

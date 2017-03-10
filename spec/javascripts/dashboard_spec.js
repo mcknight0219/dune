@@ -1,4 +1,4 @@
-import { mutations, actions } from "store";
+import { mutations, actions } from 'store/dashboard';
 import api from 'api'
 import sinon from 'sinon';
 

@@ -20,7 +20,6 @@
 //= require jquery_ujs
 //= require turbolinks
 
-$('<form action="#"><select /></form>').appendTo("#mainav");
 $("<option />", {selected: "selected", value: "", text: "MENU"}).appendTo("#mainav select");
 $("#mainav a").each(function () {
     var e = $(this);

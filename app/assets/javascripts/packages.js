@@ -25,6 +25,7 @@ var app = new Vue({
     methods: {
         addPackageItem() {
             this.$store.commit('ADD_ITEM', this.packageItem)
+            this.packageItem = {}
         },
 
         submit() {
@@ -35,6 +36,6 @@ var app = new Vue({
     },
 
     created() {
-        //this.$store.dispatch('getAllAddresses')
+        this.$store.dispatch('getAllAddresses')
     }
 });

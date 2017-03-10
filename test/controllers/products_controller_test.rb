@@ -47,11 +47,14 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'delete product' do
-    sz = Product.count
     perform_action_as @admin do
       delete product_path(Product.first.id), xhr: true
+      assert_response :forbidden
+
+      post products_path, params: {:product => {:name => 'Switch', :price => 9.99, :weight => 2.7, :detail => '', :category => 'health products'}}, xhr: true
+      new_product = Product.find_by(name: 'Switch')
+      delete product_path(new_product.id), xhr: true
+      assert_response :success
     end
-    assert_response :success
-    assert_equal(sz-1, Product.count)
   end
 end

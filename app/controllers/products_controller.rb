@@ -26,8 +26,13 @@ class ProductsController < ApplicationController
   end
 
   def destroy
-    Product.destroy(params[:id])
-    render :json => {success: true}
+    product = Product.find params[:id]
+    if product.order_items.empty?
+      product.destroy
+      render :json => {success: true}
+    else
+      render :json => { success: false, error: 'Cannot delete product' }, :status => :forbidden
+    end
   end
 
   private

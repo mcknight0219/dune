@@ -1,5 +1,5 @@
 class Product < ApplicationRecord
-  belongs_to :order
+  has_many :order_items
   validates_presence_of :weight
   validates_inclusion_of :category, in: ["health products", "cosmetics"]
   scope :active, -> { where(active: true) }

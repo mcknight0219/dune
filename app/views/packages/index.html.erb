@@ -18,9 +18,14 @@
                 <%= number_field_tag(:price, '', :min => 0, 'v-model': 'packageItem.price') %>
               </div>
               <div>
-                <%= submit_tag('确定') %>
+                <%= submit_tag('确定', 'v-on:click.prevent': 'addPackageItem()') %>
               </div>
           <% end %>
+          <div class="package-item-list">
+            <ul v-for="item in packageItems">
+              <li>{{ item.name + ': ' + item.quantity}}</li>
+            </ul>
+          </div>
         </div>
       </div>
       <div class="clear"></div>
@@ -31,6 +36,14 @@
       <div class="content">
         <div id="comments">
           <h2>收件人信息:</h2>
+          <%= form_tag do %>
+            <div class="one_third first">
+              <%=	 label_tag(:name, '姓名') %>
+              <%=	 text_field_tag(:name, '', :required => true, 'v-model': '') %>
+            </div>
+          <% end %>
+
+
           <form action="#" method="post">
             <div class="one_third first">
               <label for="name">姓名<span>*</span></label>

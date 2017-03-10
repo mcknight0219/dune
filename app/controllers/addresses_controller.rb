@@ -16,8 +16,13 @@ class AddressesController < ApplicationController
   end
 
   def destroy
-    Address.destroy(params[:id])
-    render :json => {success: true}
+    address = Address.find(params[:id])
+    if address.orders.empty?
+      address.destroy
+      render :json => { success: true }
+    else
+      render :status => 403, :json => { success: false, error: 'address is still in use' }
+    end
   end
 
   def create
