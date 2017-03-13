@@ -1,9 +1,34 @@
 import util from 'utils'
 
 export default {
+    getPackages: () => {
+        return fetch('/packages', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRF-Token': util.csrfToken()
+            },
+            credentials: 'same-origin'
+        })
+    },
+
     getAddresses: () => {
         return fetch('/addresses', {
             method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRF-Token': util.csrfToken()
+            },
+            credentials: 'same-origin'
+        })
+    },
+
+    deleteAddress: (id) => {
+        debugger
+        return fetch('/addresses/' + id, {
+            method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest',

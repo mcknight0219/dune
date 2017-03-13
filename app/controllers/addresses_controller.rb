@@ -1,7 +1,4 @@
 class AddressesController < ApplicationController
-  respond_to :json
-  load_and_authorize_resource
-
   def index
     unless user_signed_in?
       render :status => :forbidden, :json => {success: false}
@@ -11,8 +8,17 @@ class AddressesController < ApplicationController
     end
   end
 
+  def new
+    authenticate_user!
+    @address = current_user.addresses.new
+  end
+
   def show
     render :json => {address: Address.find(params[:id])}
+  end
+
+  def edit
+    @address = Address.find params[:id]
   end
 
   def destroy
@@ -26,13 +32,34 @@ class AddressesController < ApplicationController
   end
 
   def create
-    current_user.addresses.create(address_param)
-    render :json => {success: true}
+    new_address = current_user.addresses.create address_params
+    if new_address
+      if params[:returnUrl]
+        redirect_to params[:returnUrl]
+      else
+        redirect_to controller: 'packages', action: 'index'
+      end
+    else
+      flash[:notice] = new_address.errors
+      render :new
+    end
   end
 
-  private
+  def update
+    updated = Address.find(params[:id]).update address_params
+    if updated
+      flash[:notice] = 'Your change is saved.'
+    else
+      flash[:error] = 'Error saving update. Please try later.'
+    end
+    if params[:returnUrl]
+      redirect_to params[:returnUrl]
+    else
+      redirect_to action: :edit, id: params[:id]
+    end
+  end
 
-  def address_param
-    params.permit([:country, :state, :city, :post_code, :address_line1, :address_line2, :mobile, :phone])
+  def address_params
+    params.require(:address).permit(:name, :country, :state, :city, :post_code, :address_line1, :address_line2, :mobile, :phone, :id_front)
   end
 end

@@ -1,4 +1,5 @@
-import store from 'store/packages';
+import store from 'store/packages'
+import Address from 'components/address'
 
 var app = new Vue({
     el: '#app',
@@ -18,7 +19,11 @@ var app = new Vue({
     data() {
         return {
             packageItem: {},
-            package: {}
+            package: {},
+            selectedAddress: null,
+
+            needPickup: false,
+            pickupAddress: null
         }
     },
 
@@ -32,10 +37,26 @@ var app = new Vue({
             api.newPackage().then(response => {
                 this.$store.commit('UPDATE_SUCCESS')
             })
+        },
+
+        removeAddress(addr) {
+            this.$store.dispatch('deleteAddress', addr)
+        },
+
+        selectAddress(addr) {
+            this.selectedAddress = addr
+        },
+
+        submitPackage() {
+            alert('提交表单')
         }
     },
 
     created() {
         this.$store.dispatch('getAllAddresses')
+    },
+
+    components: {
+        'address-label': Address
     }
 });

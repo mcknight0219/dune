@@ -1,12 +1,14 @@
 import OrderPanel from 'components/order';
 import ProductPanel from 'components/product';
+import PackagePanel from 'components/package';
 import store from 'store/dashboard';
 
 // Components
 const routes = [
     { path: '/', component: OrderPanel },
     { path: '/order', component: OrderPanel },
-    { path: '/product', component: ProductPanel}
+    { path: '/product', component: ProductPanel},
+    { path: '/package', component: PackagePanel}
 ]
 
 const router = new VueRouter({
@@ -19,6 +21,7 @@ var app = new Vue({
     store,
     components: {
         'order-panel': OrderPanel,
-        'product-panel': ProductPanel
+        'product-panel': ProductPanel,
+        'package-panel': PackagePanel
     }
 });

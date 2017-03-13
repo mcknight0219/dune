@@ -15,6 +15,7 @@ gem 'bootstrap', '~> 4.0.0.alpha6'
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
+gem "dynamic_form"
 # See https://github.com/rails/execjs#readme for more supported runtimes
 #gem 'therubyracer', platforms: :ruby
 
@@ -62,6 +63,9 @@ gem 'minitest-reporters', group: :test
 
 # cron job
 gem 'whenever', :require => false
+
+# 附件管理
+gem "paperclip", git: "git://github.com/thoughtbot/paperclip.git"
 
 source 'http://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.3.3'

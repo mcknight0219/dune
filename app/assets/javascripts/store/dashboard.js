@@ -14,8 +14,8 @@ const state = {
     // admin dashboard
     orders: [],
     updateOrderStatus: null,
-
-    addresses: []
+    addresses: [],
+    packages: []
 }
 
 export const mutations = {
@@ -84,6 +84,10 @@ export const mutations = {
 
     [types.RECEIVE_ADDRESSES] (state, {addresses}) {
         state.addresses = addresses
+    },
+
+    [types.RECEIVE_PACKAGES] (state, {packages}) {
+        state.packages = packages
     }
 }
 
@@ -103,6 +107,14 @@ export const actions = {
             })
             .then(({ products }) => {
                 commit(types.RECEIVE_PRODUCTS, { products })
+            })
+    },
+
+    getAllPackages ({commit}) {
+        api.getPackages()
+            .then(response => response.json())
+            .then(({packages}) => {
+                commit(types.RECEIVE_PACKAGES, { packages })
             })
     },
 
@@ -176,6 +188,7 @@ export default new Vuex.Store({
         checkoutStatus: state => state.checkoutStatus,
         allProducts: state => state.products,
         allOrders: state => state.orders,
-        allAddresses: state => state.addresses
+        allAddresses: state => state.addresses,
+        allPackages: state => state.packages
     },
 })

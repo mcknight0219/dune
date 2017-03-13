@@ -1,0 +1,47 @@
+<div class="wrapper row3">
+  <main class="hoc container clear btmpad-none">
+    <div class="content">
+      <div id="comments">
+        <h4>添加地址</h4>
+        <%= form_for @address, url: {action: 'create'}, html: { multipart: true } do |f| %>
+            <%= f.error_messages %>
+            <div class='block'>
+              <%= f.label :name, '收件人' %>
+              <%= f.text_field :name, :required => true %>
+            </div>
+            <div class='block'>
+              <%=	f.label :country, '国家' %>
+              <%= f.text_field :country, :required => true %>
+            </div>
+            <div class='block'>
+              <%=	f.label :state, '省份' %>
+              <%= f.text_field :state, :required => true %>
+            </div>
+            <div class="block">
+              <%=	f.label :city, '城市' %>
+              <%=	f.text_field :city, :required => true %>
+            </div>
+            <div class="block">
+              <%=	 f.label :address_line1, '详细地址' %>
+              <%=	 f.text_field :address_line1, :required => true %>
+            </div>
+            <div class="block">
+              <%=	f.label :post_code, '邮政编码' %>
+              <%=	f.text_field :post_code, :required => true %>
+            </div>
+            <div class="block">
+              <%=	f.label :mobile, '电话号码' %>
+              <%=	f.phone_field :mobile, :required => true %>
+            </div>
+            <div class=block>
+              <%= f.label :id_front, '身份证正面' %>
+              <%= f.file_field :id_front %>
+            </div>
+            <div class="block">
+              <%= f.submit '添加' %>
+            </div>
+        <% end %>
+      </div>
+    </div>
+  </main>
+</div>

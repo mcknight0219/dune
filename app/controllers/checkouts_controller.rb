@@ -1,5 +1,5 @@
 class CheckoutsController < ApplicationController
-  before_action :only_registered_user, :only => [:show]
+  before_action :authenticate_user!, :only => [:show]
   before_action :retrieve_and_verify_cart
 
   def show
@@ -23,12 +23,6 @@ class CheckoutsController < ApplicationController
     rescue Stripe::CardError => e
       flash[:alert] = e.message
       redirect_to action: :show
-    end
-  end
-
-  def only_registered_user
-    unless current_user
-      redirect_to new_user_session_path
     end
   end
 

@@ -2,8 +2,9 @@
   <div class="wrapper row3">
     <main class="hoc container clear btmpad-none">
       <div class="content">
+        <h2>1. 选择邮寄物品</h2>
         <div id="comments">
-          <h2>物品明细:</h2>
+          <h4>物品明细:</h4>
           <%= form_tag do %>
               <div class="one_third first">
                 <%= label_tag(:name, '名称') %>
@@ -29,81 +30,34 @@
         </div>
       </div>
       <div class="clear"></div>
-    </main>
-  </div>
-  <div class="wrapper row3">
-    <main class="hoc container clear btmpad-none">
       <div class="content">
-        <div id="comments">
-          <h2>收件人信息:</h2>
-          <%= form_tag do %>
-            <div class="one_third first">
-              <%=	 label_tag(:name, '姓名') %>
-              <%=	 text_field_tag(:name, '', :required => true, 'v-model': '') %>
-            </div>
-          <% end %>
-
-
-          <form action="#" method="post">
-            <div class="one_third first">
-              <label for="name">姓名<span>*</span></label>
-              <input type="text" name="name" id="name" value="" size="22" required>
-            </div>
-            <div class="one_third">
-              <label for="url">联系电话</label>
-              <input type="url" name="url" id="url" value="" size="22">
-            </div>
-            <div class="one_third">
-              <label>国家<span>*</span></label>
-              <input type="text" name="country" id="country" value="" size="22" required>
-            </div>
-            <div class="one_third first">
-              <label>省份<span>*</span></label>
-              <input type="text" name="country" id="country" value="" size="22" required>
-            </div>
-            <div class="one_third">
-              <label>城市<span>*</span></label>
-              <input type="text" name="country" id="country" value="" size="22" required>
-            </div>
-            <div class="one_third">
-              <label>邮编<span>*</span></label>
-              <input type="text" name="country" id="country" value="" size="22" required>
-            </div>
-            <div class="one_third first">
-              <label>身份证号<span>*</span></label>
-              <input type="text" name="country" id="country" value="" size="22" required>
-            </div>
-            <div class="one_third">
-              <label>正面照<span>*</span></label>
-              <img src="../images/demo/backgrounds/01.jpg">
-              <p style="text-align: center;">修改</p>
-            </div>
-            <div class="one_third">
-              <label>反面照<span>*</span></label>
-              <img src="../images/demo/backgrounds/01.jpg">
-              <p style="text-align: center;">修改</p>
-            </div>
-            <div class="block clear">
-              <label for="comment">详细地址:</label>
-              <textarea name="comment" id="comment" cols="25" rows="1"></textarea>
-            </div>
-            <div class="block clear">
-              <label for="comment">备注:</label>
-              <textarea name="comment" id="comment" cols="25" rows="5"></textarea>
-            </div>
-            <div class="block clear">
-              <input type="radio" name="save" value="male">保存收件人
-            </div>
-            <div class="block clear">
-              <input type="radio" name="save" value="male">我需要上门取货服务
-            </div>
-            <div>
-              <a class="btn" href="success.html">提交</a>
-            </div>
-          </form>
+        <h2>2. 选择地址</h2>
+        <div class="wrapper row1">
+          <div class="content"><%= link_to '新建', new_address_path(:returnUrl => packages_path) %></div>
         </div>
+        <address-label v-for="address in addresses" v-bind:selected="selectedAddress === address" v-bind:address="address" v-on:delete="removeAddress(address)" v-on:selected="selectAddress(address)"></address-label>
       </div>
       <div class="clear"></div>
+      <div class="content">
+        <h2>3. 附加信息</h2>
+        <%= form_tag do %>
+            <div class="block">
+              <%= label_tag(:pickup, '我需要上门取货服务  (Only in Edmonton)') %>
+              <%= check_box_tag(:pickup, '', false, 'v-model': 'needPickup')  %>
+            </div>
+            <div class="block" v-if="needPickup">
+              <%= label_tag(:pickup_address, '地址（Edmonton）') %>
+              <%= text_field_tag(:pickup_address, '', :required => true, 'v-model': 'pickupAddress') %>
+            </div>
+            <div class="block">
+              <%= label_tag(:note, '备注') %>
+              <%= text_area(:note, :cols => 25, :rows => 10) %>
+            </div>
+            <div class="'block">
+              <%= submit_tag('确定', 'v-on:click.prevent': 'submitPackage()') %>
+            </div>
+        <% end %>
+      </div>
     </main>
   </div>
 </div>

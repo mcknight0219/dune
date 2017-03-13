@@ -13,3 +13,10 @@ bag:
   price: 99.99
   country: USA
   package: two_item_packages
+
+fishoil:
+  name: fishoil
+  quantity: 2
+  price: 10.99
+  country: Canada
+  package: admin_package

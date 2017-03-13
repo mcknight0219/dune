@@ -1,0 +1,49 @@
+<div class="wrapper row3">
+  <main class="hoc container clear btmpad-none">
+    <div class="content">
+      <div id="comments">
+      <h4>编辑地址</h4>
+      <%=	form_for @address, url: address_path(@address), html: { method: 'patch'} do |f| %>
+            <%= f.error_messages %>
+            <% if flash[:notice] %>
+                <div class="alert alert-success"><%= flash[:notice] %></div>
+            <% end %>
+            <% if flash[:error] %>
+                <div class="alert alert-warning"><%= flash[:error] %></div>
+            <% end %>
+          <div class='block'>
+            <%= f.label :name, '收件人' %>
+            <%= f.text_field :name %>
+          </div>
+          <div class='block'>
+            <%=	f.label :country, '国家' %>
+            <%= f.text_field :country %>
+          </div>
+          <div class='block'>
+            <%=	f.label :state, '省份' %>
+            <%= f.text_field :state %>
+          </div>
+          <div class="block">
+            <%=	f.label :city, '城市' %>
+            <%=	f.text_field :city %>
+          </div>
+          <div class="block">
+            <%=	 f.label :address_line1, '详细地址' %>
+            <%=	 f.text_field :address_line1 %>
+          </div>
+          <div class="block">
+            <%=	f.label :post_code, '邮政编码' %>
+            <%=	f.text_field :post_code %>
+          </div>
+          <div class="block">
+            <%=	f.label :mobile, '电话号码' %>
+            <%=	f.phone_field :mobile %>
+          </div>
+          <div class="block">
+            <%= f.submit '保存' %>
+          </div>
+      <% end %>
+    </div>
+    </div>
+  </main>
+</div>

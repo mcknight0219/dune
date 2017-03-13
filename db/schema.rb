@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170309212952) do
+ActiveRecord::Schema.define(version: 20170313021529) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,10 +23,19 @@ ActiveRecord::Schema.define(version: 20170309212952) do
     t.string   "address_line1"
     t.string   "address_line2"
     t.string   "phone"
-    t.string   "mobile",        null: false
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.string   "mobile",                null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
     t.integer  "user_id"
+    t.string   "name"
+    t.string   "id_front_file_name"
+    t.string   "id_front_content_type"
+    t.integer  "id_front_file_size"
+    t.datetime "id_front_updated_at"
+    t.string   "id_back_file_name"
+    t.string   "id_back_content_type"
+    t.integer  "id_back_file_size"
+    t.datetime "id_back_updated_at"
     t.index ["user_id"], name: "index_addresses_on_user_id", using: :btree
   end
 
@@ -80,6 +89,8 @@ ActiveRecord::Schema.define(version: 20170309212952) do
     t.boolean  "is_cancelled"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.boolean  "pickup"
+    t.string   "note"
     t.index ["address_id"], name: "index_packages_on_address_id", using: :btree
     t.index ["user_id"], name: "index_packages_on_user_id", using: :btree
   end

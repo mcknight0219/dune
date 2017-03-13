@@ -1,0 +1,50 @@
+
+// Address component
+.a-box {
+  border: .1rem #ddd solid;
+  border-radius: .4rem;
+  display: block;
+  background-color: #fff;
+
+  &.selected {
+    border-color: #00b89c;
+  }
+
+  .a-box-inner {
+    position: relative;
+
+    ul {
+      list-style: none;
+    }
+
+    h5 {
+      margin_bottom: 0.6rem;
+      font-weight: 600;
+    }
+  }
+
+  .a-padding-small {
+    padding: .5rem .9rem!important;
+  }
+
+  .a-button {
+    display: inline-block;
+    width: 40%;
+    min-width: 120px;
+    margin: 0;
+    padding: 8px 5px;
+    cursor: pointer;
+    color: black;
+    text-align: center;
+    border: .1rem #ddd solid;
+  }
+
+  .a-button-last {
+    margin-left: 10%;
+  }
+
+  .a-row {
+    margin-bottom: 1em;
+    padding: 0 .9rem!important;
+  }
+}
