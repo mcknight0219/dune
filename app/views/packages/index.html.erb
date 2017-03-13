@@ -51,7 +51,7 @@
             </div>
             <div class="block">
               <%= label_tag(:note, '备注') %>
-              <%= text_area(:note, :cols => 25, :rows => 10) %>
+              <%= text_area(:note, :cols => 25, :rows => 10, 'v-model': 'note') %>
             </div>
             <div class="'block">
               <%= submit_tag('确定', 'v-on:click.prevent': 'submitPackage()') %>

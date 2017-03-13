@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170313021529) do
+ActiveRecord::Schema.define(version: 20170313210841) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,10 +87,11 @@ ActiveRecord::Schema.define(version: 20170313021529) do
     t.boolean  "is_shipped"
     t.boolean  "is_received"
     t.boolean  "is_cancelled"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.boolean  "pickup"
     t.string   "note"
+    t.string   "pickup_address"
     t.index ["address_id"], name: "index_packages_on_address_id", using: :btree
     t.index ["user_id"], name: "index_packages_on_user_id", using: :btree
   end

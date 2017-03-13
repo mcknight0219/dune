@@ -2,7 +2,7 @@
 
 two_item_packages:
   user: qiang
-  address: china_address
+  address: new_address
   is_shipped: false
   is_received: false
   pickup: false
@@ -10,7 +10,7 @@ two_item_packages:
 
 one_item_package:
   user: qiang
-  address: china_address
+  address: new_address
   is_shipped: false
   is_received: false
   pickup: true

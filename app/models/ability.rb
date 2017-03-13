@@ -34,6 +34,7 @@ class Ability
     else
       can [:create, :read], Order, :user => user
       can :manage, Address, :user => user
+      can :manage, Package, :user => user
       can [:read], Product
     end
   end

@@ -19,11 +19,10 @@ var app = new Vue({
     data() {
         return {
             packageItem: {},
-            package: {},
             selectedAddress: null,
-
             needPickup: false,
-            pickupAddress: null
+            pickupAddress: null,
+            note: ''
         }
     },
 
@@ -48,7 +47,23 @@ var app = new Vue({
         },
 
         submitPackage() {
-            alert('提交表单')
+          const form = new FormData()
+          form.append('pickup', this.needPickup)
+          form.append('note', this.note)
+          form.append('pick_address', this.pickupAddress)
+          form.append('address', this.selectedAddress.id)
+          form.append('package_items', this.packageItems)
+
+          fetch('/packages', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Request-With': 'XMLHttpRequest',
+                'X-CSRF-Token': util.csrfToken()
+            },
+            data: form,
+            credentials: 'same-origin'
+          })
         }
     },
 
