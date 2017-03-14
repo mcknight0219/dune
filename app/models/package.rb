@@ -17,5 +17,6 @@ class Package < ApplicationRecord
   def default_values
     self.is_shipped ||= false
     self.is_received ||= false
+    self.is_cancelled ||= false
   end
 end

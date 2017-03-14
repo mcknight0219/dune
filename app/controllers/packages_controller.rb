@@ -4,7 +4,7 @@ class PackagesController < ApplicationController
 
   def index
     respond_to do |format|
-      format.json { render :json => {packages: getPackages(current_user)} }
+      format.json { render :json => {packages: getPackages(current_user).map { |p| replace_with_real_address p}} }
       format.html
     end
   end
@@ -35,5 +35,9 @@ class PackagesController < ApplicationController
 
   def package_params
     params.require(:package).permit(:is_received, :is_shipped, :is_cancelled, :address_id, :pickup, :pickup_address, :package_items, :note) 
+  end
+
+  def replace_with_real_address(package)
+    package.as_json.merge({address: package.address.as_json})
   end
 end

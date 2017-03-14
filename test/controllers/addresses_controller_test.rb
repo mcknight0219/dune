@@ -10,7 +10,7 @@ class AddressesControllerTest < ActionDispatch::IntegrationTest
 
   test 'guest does not have access to address' do
     get addresses_path, xhr: true
-    assert_response :forbidden
+    assert_response 401
   end
 
   test 'admin could read all addresses' do
@@ -35,7 +35,7 @@ class AddressesControllerTest < ActionDispatch::IntegrationTest
 
   test 'user creates address' do
     perform_action_as @client do
-      post addresses_path, xhr: true, params: {:country => 'China', :state => 'Shannxi', :city => 'Baoji', :post_code => '1234567', :address_line1 => 'address', :address_line2 => '', :mobile => '0000000'}
+      post addresses_path, xhr: true, params: { :address => {:country => 'China', :state => 'Shannxi', :city => 'Baoji', :post_code => '1234567', :address_line1 => 'address', :address_line2 => '', :mobile => '0000000'} }
       assert_response :success
       assert_not_nil(Address.find_by(:state => 'Shannxi'))
     end
@@ -58,7 +58,7 @@ class AddressesControllerTest < ActionDispatch::IntegrationTest
       assert_response :forbidden
 
       # create on address
-      post addresses_path, xhr: true, params: {:country => 'China', :state => 'Shannxi', :city => 'Beijing', :post_code => '1234567', :address_line1 => 'address', :address_line2 => '', :mobile => '0000000'}
+      post addresses_path, xhr: true, params: {:address => {:country => 'China', :state => 'Shannxi', :city => 'Beijing', :post_code => '1234567', :address_line1 => 'address', :address_line2 => '', :mobile => '0000000'} }
       new_address = Address.find_by(:city => 'Beijing')
       delete address_path(new_address.id), xhr: true
       assert_response :success

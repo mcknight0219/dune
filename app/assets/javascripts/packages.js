@@ -1,3 +1,4 @@
+import util from 'utils'
 import store from 'store/packages'
 import Address from 'components/address'
 
@@ -45,14 +46,18 @@ var app = new Vue({
         selectAddress(addr) {
             this.selectedAddress = addr
         },
-
         submitPackage() {
-          const form = new FormData()
-          form.append('pickup', this.needPickup)
-          form.append('note', this.note)
-          form.append('pick_address', this.pickupAddress)
-          form.append('address', this.selectedAddress.id)
-          form.append('package_items', this.packageItems)
+
+          debugger
+          const params = {
+            package: {
+              address_id: this.selectedAddress.id,
+              package_items: this.packageItems,
+              pickup: this.needPickup,
+              pickup_address: this.pickupAddress,
+              note: this.note
+            }
+          }
 
           fetch('/packages', {
             method: 'POST',
@@ -61,7 +66,7 @@ var app = new Vue({
                 'X-Request-With': 'XMLHttpRequest',
                 'X-CSRF-Token': util.csrfToken()
             },
-            data: form,
+            body: JSON.stringify(params),
             credentials: 'same-origin'
           })
         }

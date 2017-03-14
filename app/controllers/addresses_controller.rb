@@ -1,4 +1,7 @@
 class AddressesController < ApplicationController
+  before_action :authenticate_user!
+  load_and_authorize_resource
+
   def index
     unless user_signed_in?
       render :status => :forbidden, :json => {success: false}

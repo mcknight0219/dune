@@ -49,6 +49,17 @@ class PackagesControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test 'package contains address details' do
+    perform_action_as @user do
+      get packages_path + '.json', xhr: true
+      assert_response :success
+
+      address = JSON.parse(response.body)['packages'].first['address']
+      assert(address)
+      assert_equal('Qiang Guo', address['name'])
+    end
+  end
+
   test 'update package' do
     perform_action_as @admin do
       assert_not(@package.is_received)

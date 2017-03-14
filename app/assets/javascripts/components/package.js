@@ -11,14 +11,14 @@ export default {
                 <table class="table">
                     <thead><tr><th>物品详情</th><th>目的地</th><th>上门取件</th><th>收到</th><th>寄出</th></tr></thead>
                     <tbody>
-                        <tr v-for="p in tablefy(packages)">
+                        <tr v-for="p in packages">
                           <td>
-                            <ol v-for="it in p.detail">
+                            <ol v-for="it in p.package_items">
                               <li>{{ it.name }} {{ it.quantity }}</li>
                             </ol>
                           </td>
                           <td><span v-on:click="openModal(p.address)">{{ p.address.name }}</span></td>
-                          <td>{{ p.retrieve }}</td>
+                          <td>{{ p.pickup ? p.pickup_address : 'No' }}</td>
                           <td><input type="checkbox"></td>
                           <td><input type="checkbox"></td>  
                           <td></td>
@@ -44,7 +44,7 @@ export default {
                     </div>
                 </section>
                 <footer class="modal-card-foot">
-                    <a class="button is-primary" v-on:click="hideModal">确定</a>
+                    <a class="button is-primary" v-on:click="hideModal()">确定</a>
                 </footer>
             </div>
         </div>
@@ -54,33 +54,25 @@ export default {
 
     computed: {
         packages () {
-            this.$store.getters.allPackages
+            return this.$store.getters.allPackages
         }
     },
 
-    data: {
-      showModal: false,
-      addressInModal: null
+    data() {
+      return {
+        showModal: false,
+        addressInModal: {}
+      }
     },
 
     methods: {
-      tablefy(packages) {
-        packages.filter((p) => {
-          return {
-            detail: p.package_items,
-            address: p.address,
-            retrieve: p.pickup ? p.pickup_address : 'No'
-          }
-        })  
-      },
-
       openModal(addr) {
         this.addressInModal = addr
         this.showModal = true
       },
 
       hideModal() {
-        this.addressInModal = null
+        this.addressInModal = {}
         this.showModal = false
       }
     },

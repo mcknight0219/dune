@@ -6,7 +6,7 @@ class PackageTest < ActiveSupport::TestCase
   end
 
   test 'association between package and user' do
-    assert_equal(1, @client.packages.count)
+    assert_equal(2, @client.packages.count)
     assert_equal(2, @client.packages.first.package_items.count)
   end
 

@@ -5,6 +5,7 @@
 # below each fixture, per the syntax in the comments below
 #
 canada_address: 
+  name: Qiang Guo
   country: Canada
   state:   Alberta
   city:    Edmonton
@@ -14,6 +15,7 @@ canada_address:
   user: client
 
 china_address:
+  name: Qiang Guo
   country: 中国 
   state: 陕西
   city: 宝鸡
@@ -23,6 +25,7 @@ china_address:
   user: client
 
 new_address:
+  name: Qiang Guo
   country: Canada
   state:   Alberta
   city:    Calgary
