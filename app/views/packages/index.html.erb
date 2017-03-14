@@ -2,9 +2,33 @@
   <div class="wrapper row3">
     <main class="hoc container clear btmpad-none">
       <div class="content">
-        <h2>1. 选择邮寄物品</h2>
-        <div id="comments">
-          <h4>物品明细:</h4>
+        <% if flash[:error]  %>
+          <div class="alert alert-warning"> <%= flash[:error] %></div> 
+        <% end %>
+        <% if flash[:notice]  %>
+          <div class="alert alert-success"> <%= flash[:notice] %></div> 
+        <% end %>
+
+        <h2 class="receivername">物品明细</h2>
+        <div id="comments" class="scrollable">
+          <table>
+            <thead>
+              <tr>
+                <th>名称</th>
+                <th>数量</th>
+                <th>产地</th>
+                <th>修改</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="item in packageItems">
+                <th>{{item.name}}</th>
+                <th>{{item.quantity}}</th>
+                <th>{{item.price}}</th>
+                <th><a class="btn smlbtn inverse" v-bind:click="removePackageItem(item)">删除</a></th>
+              </tr>
+            </tbody>
+          </table>
           <%= form_tag do %>
               <div class="one_third first">
                 <%= label_tag(:name, '名称') %>
@@ -18,46 +42,33 @@
                 <%= label_tag(:price, '单价') %>
                 <%= number_field_tag(:price, '', :min => 0, 'v-model': 'packageItem.price') %>
               </div>
+              <div class="block clear">
+                <%= check_box_tag '轻奢侈品' %>
+              </div>
               <div>
-                <%= submit_tag('确定', 'v-on:click.prevent': 'addPackageItem()') %>
+                <a class="btn smlbt" href="" v-on:click="addPackageItem()">确定</a>
               </div>
           <% end %>
-          <div class="package-item-list">
-            <ul v-for="item in packageItems">
-              <li>{{ item.name + ': ' + item.quantity}}</li>
-            </ul>
-          </div>
         </div>
-      </div>
-      <div class="clear"></div>
-      <div class="content">
-        <h2>2. 选择地址</h2>
-        <div class="wrapper row1">
-          <div class="content"><%= link_to '新建', new_address_path(:returnUrl => packages_path) %></div>
-        </div>
-        <address-label v-for="address in addresses" v-bind:selected="selectedAddress === address" v-bind:address="address" v-on:delete="removeAddress(address)" v-on:selected="selectAddress(address)"></address-label>
-      </div>
-      <div class="clear"></div>
-      <div class="content">
-        <h2>3. 附加信息</h2>
-        <%= form_tag do %>
-            <div class="block">
-              <%= label_tag(:pickup, '我需要上门取货服务  (Only in Edmonton)') %>
-              <%= check_box_tag(:pickup, '', false, 'v-model': 'needPickup')  %>
-            </div>
-            <div class="block" v-if="needPickup">
-              <%= label_tag(:pickup_address, '地址（Edmonton）') %>
-              <%= text_field_tag(:pickup_address, '', :required => true, 'v-model': 'pickupAddress') %>
-            </div>
-            <div class="block">
-              <%= label_tag(:note, '备注') %>
-              <%= text_area(:note, :cols => 25, :rows => 10, 'v-model': 'note') %>
-            </div>
-            <div class="'block">
-              <%= submit_tag('确定', 'v-on:click.prevent': 'submitPackage()') %>
-            </div>
-        <% end %>
       </div>
     </main>
+  </div>
+  <div class="wrapper row3">
+    <main class="hoc container clear btmpad-none">
+      <div class="content">
+        <div id="comments"> 
+          <h2 class="receivername">选择收件人地址</h2>
+          <p class="divider">收件人是否在列表中？如果是，请点击选此收件人。若否，请<%= link_to '新建收件人地址', new_address_path(:returnUrl => packages_path) %></p>
+          <p>列表太长？请在下框中搜索（比如，姓名，电话，身份证等）</p>
+          <div class="one_third first">
+            <input type="text" placeholder="姓名，电话，身份证" v-model="query"> 
+          </div>
+          <address-label v-for="address in addresses" v-bind:selected="selectedAddress === address" v-bind:address="address" v-on:delete="removeAddress(address)" v-on:selected="selectAddress(address)"></address-label>
+        </div>
+      </div>
+    </main>
+    <div class="chose">
+      <a class="btn" href="" v-click="submitPackage()"   
+    </div>
   </div>
 </div>

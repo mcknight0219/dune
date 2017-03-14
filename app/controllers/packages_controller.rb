@@ -9,9 +9,6 @@ class PackagesController < ApplicationController
     end
   end
 
-  def show
-  end
-
   def destroy
     Package.find(params[:id]).destroy!
   end
@@ -21,6 +18,12 @@ class PackagesController < ApplicationController
     params['package']['package_items'].each do |item|
       new_package.package_items.create(item.permit(:quantity, :price, :country, :name))
     end
+    unless new_package.persisted?
+      flash[:error] = '无法提交，请稍后重试'
+    else
+      flash[:notice] = '已提交，我们将会尽快处理'
+    end
+    render 'index'
   end
 
   def update

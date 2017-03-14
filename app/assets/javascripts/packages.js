@@ -23,8 +23,18 @@ var app = new Vue({
             selectedAddress: null,
             needPickup: false,
             pickupAddress: null,
-            note: ''
+            note: '',
+            query: ''
         }
+    },
+
+    watch: {
+      // trigger search after at least 3 characters are typed
+      query(val) {
+        if (val !== undefined && typeof val === 'string' && val.length >= 3) {
+          searchAddress(val)
+        }
+      }
     },
 
     methods: {
@@ -46,9 +56,8 @@ var app = new Vue({
         selectAddress(addr) {
             this.selectedAddress = addr
         },
-        submitPackage() {
 
-          debugger
+        submitPackage() {
           const params = {
             package: {
               address_id: this.selectedAddress.id,
@@ -69,6 +78,25 @@ var app = new Vue({
             body: JSON.stringify(params),
             credentials: 'same-origin'
           })
+        },
+        
+        searchAddress(query) {
+          const terms = query.split('/\W+/')
+          // Make search on each term and merge results together
+          const found = terms.map((t) => {
+            var res = [];
+            this.addresses.forEach((addr) => {
+              const target = addr.name + addr.address_line1 + addr.address_line2 + addr.city + addr.state + addr.mobile + addr.phone + addr.post_code
+              if (target.indexOf(t) >= 0) {
+                res.append(t)
+              }
+            })
+            return res
+          }).reduce((accu, val) => {
+            accu.append(val)
+          }, [])
+
+          return found
         }
     },
 

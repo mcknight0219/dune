@@ -17,7 +17,7 @@ export default {
                               <li>{{ it.name }} {{ it.quantity }}</li>
                             </ol>
                           </td>
-                          <td><span v-on:click="openModal(p.address)">{{ p.address.name }}</span></td>
+                          <td><a href="" v-on:click="openModal(p.address)">{{ p.address.name }}</a></td>
                           <td>{{ p.pickup ? p.pickup_address : 'No' }}</td>
                           <td><input type="checkbox"></td>
                           <td><input type="checkbox"></td>  

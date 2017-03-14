@@ -14,7 +14,7 @@ class PackagesControllerTest < ActionDispatch::IntegrationTest
     perform_action_as @user do
       delete package_path(@package.id), xhr: true
       assert_response :success
-      assert_equal(2, Package.count)
+      assert_equal(3, Package.count)
     end
   end
 
@@ -27,13 +27,24 @@ class PackagesControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test 'user can only delete his package' do
+    other_package = users(:client).packages.first 
+    perform_action_as @user do
+      delete package_path(other_package.id), xhr: true
+      assert_response :forbidden
+
+      delete package_path(@package.id), xhr: true
+      assert_response :success
+    end
+  end
+
   test 'admin gets all packages' do
     perform_action_as @admin do
       get packages_path + '.json', xhr: true
       assert_response :success
 
       packages = JSON.parse(response.body)['packages']
-      assert_equal(3, packages.count)
+      assert_equal(4, packages.count)
     end
   end
 

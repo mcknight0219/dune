@@ -16,6 +16,14 @@ one_item_package:
   pickup: true
   note:
 
+other_package:
+  user: client
+  address: china_address
+  is_shipped: false
+  is_received: false
+  pickup: false
+  note:
+
 admin_package:
   user: admin
   address: canada_address
