@@ -22,10 +22,10 @@
             </thead>
             <tbody>
               <tr v-for="item in packageItems">
-                <th>{{item.name}}</th>
-                <th>{{item.quantity}}</th>
-                <th>{{item.price}}</th>
-                <th><a class="btn smlbtn inverse" v-on:click="removePackageItem(item)">删除</a></th>
+                <td>{{item.name}}</td>
+                <td>{{item.quantity}}</td>
+                <td>{{item.price}}</td>
+                <td><a class="btn smlbtn inverse" v-on:click="removePackageItem(item)">删除</a></td>
               </tr>
             </tbody>
           </table>
