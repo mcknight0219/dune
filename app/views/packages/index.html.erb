@@ -52,12 +52,12 @@
       <div class="content">
         <h2 class="receivername">选择收件人地址</h2>
         <div id="comments"> 
-          <p class="divider">收件人是否在列表中？如果是，请点击选此收件人。若否，请<%= link_to '新建收件人地址', new_address_path(:returnUrl => packages_path) %></p>
-          <div class="one_third">
+          <p class="divider">收件人是否在列表中？如果是，请点击选此收件人。若否，请 <%= link_to '新建收件人地址', new_address_path(:returnUrl => packages_path) %></p>
+          <div class="one_third first">
             <input type="text" placeholder="姓名，电话，身份证" v-model="query"> 
           </div>
           <div class="clear"></div> 
-          <address-label v-for="address in addresses" v-bind:selected="selectedAddress === address" v-bind:address="address" v-on:delete="removeAddress(address)" v-on:selected="selectAddress(address)"></address-label>
+          <address-label v-for="(address, index) in addresses" v-bind:pos="index" v-bind:selected="selectedAddress === address" v-bind:address="address" v-on:delete="removeAddress(address)" v-on:selected="selectAddress(address)"></address-label>
         </div>
       </div>
     </main>

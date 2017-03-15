@@ -1,5 +1,0 @@
-class AddNoteToPackages < ActiveRecord::Migration[5.0]
-  def change
-    add_column :packages, :note, :string
-  end
-end

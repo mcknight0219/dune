@@ -1,6 +1,6 @@
-import OrderPanel from 'components/order';
-import ProductPanel from 'components/product';
-import PackagePanel from 'components/package';
+import OrderPanel from 'components/dashboard/order';
+import ProductPanel from 'components/dashboard/product';
+import PackagePanel from 'components/dashboard/package';
 import store from 'store/dashboard';
 
 // Components

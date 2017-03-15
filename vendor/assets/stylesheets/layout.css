@@ -1,14 +1,4 @@
 @charset "utf-8";
-/*
-Template Name: Gomag
-Author: <a href="http://www.os-templates.com/">OS Templates</a>
-Author URI: http://www.os-templates.com/
-Licence: Free to use under our free template licence terms
-Licence URI: http://www.os-templates.com/template-terms
-File: Layout CSS
-*/
-
-@import url("font-awesome.min.css");
 @import url("framework.css");
 
 /* Rows
@@ -64,7 +54,7 @@ File: Layout CSS
 
 /* Comments */
 #comments ul{margin:0 0 40px 0; padding:0; list-style:none;}
-#comments li{margin:0 0 10px 0; padding:15px;}
+#comments li{margin:0 0 10px 0; padding:20px 0px 0px 0px;}
 #comments .avatar{float:right; margin:0 0 10px 10px; padding:3px; border:1px solid;}
 #comments address{font-weight:bold;}
 #comments time{font-size:smaller;}
@@ -271,7 +261,7 @@ input:focus, textarea:focus, *:required:focus{border-color:#2BB656;}
 
 
 /* Header */
-#header #logo a{color:#2BB656; font-size: }
+#header #logo a{color:#2BB656 }
 
 
 /* Page Intro */
@@ -321,78 +311,7 @@ table a{background-color:inherit;}
 
 
 /* ------------------------------------------------------------------------------------------------------------ */
-/* ------------------------------------------------------------------------------------------------------------ */
-/* ------------------------------------------------------------------------------------------------------------ */
-/* ------------------------------------------------------------------------------------------------------------ */
-/* ------------------------------------------------------------------------------------------------------------ */
-
-
-/* Media Queries
---------------------------------------------------------------------------------------------------------------- */
-@-ms-viewport{width:device-width;}
-
-
-/* Max Wrapper Width - Laptop, Desktop etc.
---------------------------------------------------------------------------------------------------------------- */
-@media screen and (min-width:978px){
-	.hoc{max-width:978px;}
-}
-
-
-/* Mobile Devices
---------------------------------------------------------------------------------------------------------------- */
-@media screen and (max-width:900px){
-	.hoc{max-width:90%;}
-
-	#header{padding:30px 0 15px;}
-	#header #logo{margin:0;}
-
-	#mainav{}
-	#mainav ul{display:none;}
-	#mainav form{display:block;}
-
-	#breadcrumb{}
-
-	.container{}
-	#comments input[type="reset"]{margin-top:10px;}
-	.subscribe input[type="reset"]{margin-top:10px;}
-	.pagination li{display:inline-block; margin:0 5px 5px 0;}
-
-	#footer{}
-
-	#copyright{}
-	#copyright p:first-of-type{margin-bottom:10px;}
-}
-
-
-@media screen and (max-width:750px){
-	.imgl, .imgr{display:inline-block; float:none; margin:0 0 10px 0;}
-	.fl_left, .fl_right{display:block; float:none;}
-	.one_half, .one_third, .two_third, .one_quarter, .two_quarter, .three_quarter{display:block; float:none; width:auto; margin:0 0 30px 0; padding:0;}
-	.group .group > *:last-child, .clear .clear > *:last-child, .clear .group > *:last-child, .group .clear > *:last-child, .group.smvplc > :last-child{margin-bottom:0;}/* Experimental - Needs more testing in different situations, stops double margin when stacking */
-
-	#header{text-align:center;}
-	#header #logo{margin-bottom:15px;}
-}
-
-
-/* Other
---------------------------------------------------------------------------------------------------------------- */
-@media screen and (max-width:650px){
-	.scrollable{display:block; width:100%; margin:0 0 30px 0; padding:0 0 15px 0; overflow:auto; overflow-x:scroll;}
-	.scrollable table{margin:0; padding:0; white-space:nowrap;}
-
-	.inline li{display:block; margin-bottom:10px;}
-	.pushright li{margin-right:0;}
-
-	.font-x2{font-size:1.4rem;}
-	.font-x3{font-size:1.6rem;}
-
-	#pageintro{padding:150px 0;}
-	#pageintro > div{max-width:none;}
-	#pageintro .heading{font-size:2.2rem;}
-}
-
+/* -Qian Added CSS------------------------------------------------------------------------------------------------ */
 .addnow{
 	color: #2BB656
 }
@@ -465,7 +384,13 @@ li.cartlist{
 }
 
 .smlbtn{
-	padding: 5px 20px;
+	padding: 0px 48px;
+	font-size: 13px;
+}
+.widebtn{
+	padding: 6px 0px;
+	display: block;
+	width: 100%;
 }
 
 .chosen{
@@ -478,18 +403,121 @@ li.cartlist{
 
 .chosenbtn{
 	background-color: #d4f0dd;
-	padding: 5px 20px;
 	color: #a8a8a8;
 	border-color: #a8a8a8;
 }
 
 .chosenbtn:hover{
 	background-color: #d4f0dd;
-	padding: 5px 20px;
 	color: #a8a8a8;
 	border-color: #a8a8a8;
+}
+
+.smlchosenbtn{
+	background-color: #d4f0dd;
+	color: #a8a8a8;
+	border-color: #a8a8a8;
+	padding: 0px 47px;
+	font-size: 13px;
+}
+
+.smlchosenbtn:hover{
+	background-color: #d4f0dd;
+	color: #a8a8a8;
+	border-color: #a8a8a8;
+	padding: 0px 47px;
+	font-size: 13px;
 }
 
 .chosentext{
 	color: #a8a8a8;
 }
+/* ------------------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------------------ */
+
+
+/* Media Queries
+--------------------------------------------------------------------------------------------------------------- */
+@-ms-viewport{width:device-width;}
+
+
+/* Max Wrapper Width - Laptop, Desktop etc.
+--------------------------------------------------------------------------------------------------------------- */
+@media screen and (min-width:978px){
+	.hoc{max-width:978px;}
+}
+
+
+/* Mobile Devices
+--------------------------------------------------------------------------------------------------------------- */
+@media screen and (max-width:900px){
+	.hoc{max-width:90%;}
+
+	#header{padding:30px 0 15px;}
+	#header #logo{margin:0;}
+
+	#mainav{}
+	#mainav ul{display:none;}
+	#mainav form{display:block;}
+
+	#breadcrumb{}
+
+	.container{}
+	#comments input[type="reset"]{margin-top:10px;}
+	.subscribe input[type="reset"]{margin-top:10px;}
+	.pagination li{display:inline-block; margin:0 5px 5px 0;}
+
+	#footer{}
+
+	#copyright{}
+	#copyright p:first-of-type{margin-bottom:10px;}
+}
+
+
+@media screen and (max-width:750px){
+	.imgl, .imgr{display:inline-block; float:none; margin:0 0 10px 0;}
+	.fl_left, .fl_right{display:block; float:none;}
+	.one_half, .one_third, .two_third, .one_quarter, .two_quarter, .three_quarter{display:block; float:none; width:auto; margin:0 0 30px 0; padding:0;}
+	.group .group > *:last-child, .clear .clear > *:last-child, .clear .group > *:last-child, .group .clear > *:last-child, .group.smvplc > :last-child{margin-bottom:0;}/* Experimental - Needs more testing in different situations, stops double margin when stacking */
+
+	#header{text-align:center;}
+	#header #logo{margin-bottom:15px;}
+	.smlbtn{
+	width: 100%
+	}
+	.smlchosenbtn{;
+		width: 100%
+	}
+	#comments li {
+		margin: 0px;
+		padding: 10px 0px 0px 0px;
+	}
+
+	.smlchosenbtn:hover{
+		width: 100%
+	}
+}
+
+
+/* Other
+--------------------------------------------------------------------------------------------------------------- */
+@media screen and (max-width:650px){
+	.scrollable{display:block; width:100%; margin:0 0 30px 0; padding:0 0 15px 0; overflow:auto; overflow-x:scroll;}
+	.scrollable table{margin:0; padding:0; white-space:nowrap;}
+
+	.inline li{display:block;}
+	.pushright li{margin-right:0;}
+
+	.font-x2{font-size:1.4rem;}
+	.font-x3{font-size:1.6rem;}
+
+	#pageintro{padding:150px 0;}
+	#pageintro > div{max-width:none;}
+	#pageintro .heading{font-size:2.2rem;}
+	#comments li {
+		margin: 0px;
+		padding: 10px 0px 0px 0px;
+	}
+}
+

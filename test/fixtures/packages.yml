@@ -5,30 +5,22 @@ two_item_packages:
   address: new_address
   is_shipped: false
   is_received: false
-  pickup: false
-  note:
 
 one_item_package:
   user: qiang
   address: new_address
   is_shipped: false
   is_received: false
-  pickup: true
-  note:
 
 other_package:
   user: client
   address: china_address
   is_shipped: false
   is_received: false
-  pickup: false
-  note:
 
 admin_package:
   user: admin
   address: canada_address
   is_shipped: false
   is_received: false
-  pickup: false
-  note:
 

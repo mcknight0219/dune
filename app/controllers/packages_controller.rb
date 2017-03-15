@@ -20,10 +20,10 @@ class PackagesController < ApplicationController
     end
     unless new_package.persisted?
       flash[:error] = '无法提交，请稍后重试'
+      render 'index'
     else
-      flash[:notice] = '已提交，我们将会尽快处理'
+      render 'success'
     end
-    render 'index'
   end
 
   def update

@@ -20,7 +20,7 @@ class PackagesControllerTest < ActionDispatch::IntegrationTest
 
   test 'user could create package' do
     perform_action_as @user do
-      post packages_path, xhr: true, params: { package: { package_items: [{name: 'test', country: 'China', price: 1.1, quantity: 1}], address_id: @address.id, pickup: false, pickup_address: '', note: ''} }
+      post packages_path, xhr: true, params: { package: { package_items: [{name: 'test', country: 'China', price: 1.1, quantity: 1}], address_id: @address.id} }
       assert_response :success
       assert_equal(3, @user.packages.count)
       assert(PackageItem.find_by(:name => 'test'))
