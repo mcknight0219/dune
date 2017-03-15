@@ -9,11 +9,19 @@ export default new Vuex.Store({
 
     mutations: {
         ADD_ITEM: (state, item) => {
+
             const record = state.packageItems.find(o => o.name === item.name && o.country === item.country && o.price === item.price)
             if (record) {
                 record.quantity++
             } else {
                 state.packageItems.push(item)
+            }
+        },
+
+        DEL_ITEM: (state, item) => {
+            const record = state.packageItems.find(o => o.name == item.name)
+            if (record) {
+                state.packageItems.splice(state.packageItems.indexOf(record), 1)
             }
         },
 

@@ -11,7 +11,7 @@
 
         <h2 class="receivername">物品明细</h2>
         <div id="comments" class="scrollable">
-          <table>
+          <table v-if="packageItems.length > 0">
             <thead>
               <tr>
                 <th>名称</th>
@@ -25,28 +25,22 @@
                 <th>{{item.name}}</th>
                 <th>{{item.quantity}}</th>
                 <th>{{item.price}}</th>
-                <th><a class="btn smlbtn inverse" v-bind:click="removePackageItem(item)">删除</a></th>
+                <th><a class="btn smlbtn inverse" v-on:click="removePackageItem(item)">删除</a></th>
               </tr>
             </tbody>
           </table>
           <%= form_tag do %>
-              <div class="one_third first">
-                <%= label_tag(:name, '名称') %>
-                <%= text_field_tag(:name, '', :required => true, 'v-model': 'packageItem.name') %>
+              <div class="one_quarter first">
+                <%= text_field_tag(:name, '', :required => true, :placeholder =>'名称', 'v-model': 'packageItem.name') %>
               </div>
-              <div class="one_third">
-                <%= label_tag(:quantity, '数量*') %>
-                <%= number_field_tag(:name, '', :required => true, :min => 0, :step => 1, 'v-model': 'packageItem.quantity') %>
+              <div class="one_quarter">
+                <%= number_field_tag(:name, '', :required => true, :min => 0, :step => 1, :placeholder=> '数量', 'v-model': 'packageItem.quantity') %>
               </div>
-              <div class="one_third">
-                <%= label_tag(:price, '单价') %>
-                <%= number_field_tag(:price, '', :min => 0, 'v-model': 'packageItem.price') %>
+              <div class="one_quarter">
+                <%= number_field_tag(:price, '', :min => 0, :placeholder => "单价", 'v-model': 'packageItem.price') %>
               </div>
-              <div class="block clear">
-                <%= check_box_tag '轻奢侈品' %>
-              </div>
-              <div>
-                <a class="btn smlbt" href="" v-on:click="addPackageItem()">确定</a>
+              <div class="one_quarter">
+                <a class="btn smlbt" v-on:click="addPackageItem()">确定</a>
               </div>
           <% end %>
         </div>
@@ -56,19 +50,19 @@
   <div class="wrapper row3">
     <main class="hoc container clear btmpad-none">
       <div class="content">
+        <h2 class="receivername">选择收件人地址</h2>
         <div id="comments"> 
-          <h2 class="receivername">选择收件人地址</h2>
           <p class="divider">收件人是否在列表中？如果是，请点击选此收件人。若否，请<%= link_to '新建收件人地址', new_address_path(:returnUrl => packages_path) %></p>
-          <p>列表太长？请在下框中搜索（比如，姓名，电话，身份证等）</p>
-          <div class="one_third first">
+          <div class="one_third">
             <input type="text" placeholder="姓名，电话，身份证" v-model="query"> 
           </div>
+          <div class="clear"></div> 
           <address-label v-for="address in addresses" v-bind:selected="selectedAddress === address" v-bind:address="address" v-on:delete="removeAddress(address)" v-on:selected="selectAddress(address)"></address-label>
         </div>
       </div>
     </main>
-    <div class="chose">
-      <a class="btn" href="" v-click="submitPackage()"   
+    <div class="chose btmspace-80">
+      <a class="btn" href="" v-on:click="submitPackage()">确定</a>   
     </div>
   </div>
 </div>

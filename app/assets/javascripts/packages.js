@@ -4,9 +4,7 @@ import Address from 'components/address'
 
 var app = new Vue({
     el: '#app',
-
     store,
-
     computed: {
         packageItems() {
             return this.$store.getters.allPackageItems
@@ -41,6 +39,11 @@ var app = new Vue({
         addPackageItem() {
             this.$store.commit('ADD_ITEM', this.packageItem)
             this.packageItem = {}
+        },
+
+        removePackageItem(item) {
+            debugger
+            this.$store.commit('DEL_ITEM', item)
         },
 
         submit() {
