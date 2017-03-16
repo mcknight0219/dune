@@ -30,10 +30,7 @@ export const methods = {
         const params = {
             package: {
                 address_id: this.selectedAddress.id,
-                package_items: this.packageItems,
-                pickup: this.needPickup,
-                pickup_address: this.pickupAddress,
-                note: this.note
+                package_items: this.packageItems
             }
         }
 

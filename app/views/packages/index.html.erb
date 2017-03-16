@@ -12,14 +12,6 @@
         <h2 class="receivername">物品明细</h2>
         <div id="comments" class="scrollable">
           <table v-if="packageItems.length > 0">
-            <thead>
-              <tr>
-                <th>名称</th>
-                <th>数量</th>
-                <th>产地</th>
-                <th>修改</th>
-              </tr>
-            </thead>
             <tbody>
               <tr v-for="item in packageItems">
                 <td>{{item.name}}</td>
@@ -40,6 +32,9 @@
                 <%= number_field_tag(:price, '', :min => 0, :placeholder => "单价", 'v-model': 'packageItem.price') %>
               </div>
               <div class="one_quarter">
+                <%= input_field_tag(:luxury, '', 'v-model': 'packageItem.isLuxury') %>
+              </div>
+              <div class="one_quarter first">
                 <a class="btn smlbt" v-on:click="addPackageItem()">确定</a>
               </div>
           <% end %>

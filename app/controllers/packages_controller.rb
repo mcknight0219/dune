@@ -23,12 +23,9 @@ class PackagesController < ApplicationController
       flash[:error] = '无法提交，请稍后重试'
       render 'index'
     else
-      redirect_to action: 'confirm'
+      @confirm_id = new_package.serial
+      render :template => 'packages/success'
     end
-  end
-
-  def confirm
-    render 'success'
   end
 
   def update
@@ -42,11 +39,14 @@ class PackagesController < ApplicationController
   end
 
   def package_params
-    params.require(:package).permit(:is_received, :is_shipped, :is_cancelled, :address_id, :pickup, :pickup_address, :package_items, :note) 
+    params.require(:package).permit(:is_received, :is_shipped, :is_cancelled, :address_id,  :package_items, :luxury) 
   end
 
   def replace_with_real_address_and_items(package)
-    package.as_json.merge({address: package.address.as_json, package_items: package.package_items.as_json})
+    package.as_json.merge({
+      address: package.address.as_json(:except => ["created_at", "updated_at"]), 
+      package_items: package.package_items.as_json(:except => ["created_at", "updated_at", "package_id"])
+    })
   end
 
 end

@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   resources :addresses
 
   resources :packages
-  get 'packages/confirm', to: 'packages#confirm'
+  #get 'packages/confirm', to: 'packages#confirm'
 
   # 购物车
   resource :cart

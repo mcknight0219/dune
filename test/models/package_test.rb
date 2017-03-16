@@ -22,4 +22,14 @@ class PackageTest < ActiveSupport::TestCase
     assert(new_package_item)
     assert_equal(@client, new_package_item.package.user)
   end
+
+  test 'package should have correct serial number' do
+    new_package = @client.packages.create(address: addresses(:canada_address), luxury: true) 
+    assert_equal(expected_serial(new_package), new_package.serial)
+  end
+
+  def expected_serial(package)
+    prefix = package.luxury ? 'SU' : 'AC'
+    "#{prefix}#{(package.id.to_i + 170000).to_s}"
+  end
 end

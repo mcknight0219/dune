@@ -22,6 +22,7 @@ class PackagesControllerTest < ActionDispatch::IntegrationTest
     perform_action_as @user do
       post packages_path, xhr: true, params: { package: { package_items: [{name: 'test', country: 'China', price: 1.1, quantity: 1}], address_id: @address.id} }
       assert_response :success
+      assert_template 'packages/success'
       assert_equal(3, @user.packages.count)
       assert(PackageItem.find_by(:name => 'test'))
     end
@@ -60,14 +61,18 @@ class PackagesControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'package contains address details' do
+  test 'package contains address and items details' do
     perform_action_as @user do
       get packages_path + '.json', xhr: true
       assert_response :success
 
       address = JSON.parse(response.body)['packages'].first['address']
+      items = JSON.parse(response.body)['packages'].first['package_items']
       assert(address)
       assert_equal('Qiang Guo', address['name'])
+
+      assert(items)
+      assert_equal(2, items.count)
     end
   end
 
