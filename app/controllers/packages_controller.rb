@@ -4,7 +4,7 @@ class PackagesController < ApplicationController
 
   def index
     respond_to do |format|
-      format.json { render :json => {packages: getPackages(current_user).map { |p| replace_with_real_address p}} }
+      format.json { render :json => {packages: getPackages(current_user).map { |p| replace_with_real_address_and_items p }} }
       format.html
     end
   end
@@ -18,12 +18,17 @@ class PackagesController < ApplicationController
     params['package']['package_items'].each do |item|
       new_package.package_items.create(item.permit(:quantity, :price, :country, :name))
     end
+
     unless new_package.persisted?
       flash[:error] = '无法提交，请稍后重试'
       render 'index'
     else
-      render 'success'
+      redirect_to action: 'confirm'
     end
+  end
+
+  def confirm
+    render 'success'
   end
 
   def update
@@ -40,7 +45,8 @@ class PackagesController < ApplicationController
     params.require(:package).permit(:is_received, :is_shipped, :is_cancelled, :address_id, :pickup, :pickup_address, :package_items, :note) 
   end
 
-  def replace_with_real_address(package)
-    package.as_json.merge({address: package.address.as_json})
+  def replace_with_real_address_and_items(package)
+    package.as_json.merge({address: package.address.as_json, package_items: package.package_items.as_json})
   end
+
 end

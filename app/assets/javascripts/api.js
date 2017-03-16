@@ -1,4 +1,5 @@
 import util from 'utils'
+import 'whatwg-fetch'
 
 export default {
     getPackages: () => {

@@ -9,7 +9,7 @@ export default {
             <article class="tile is-child box">
                 <h4 class="title">邮寄列表</h4>
                 <table class="table">
-                    <thead><tr><th>物品详情</th><th>目的地</th><th>上门取件</th><th>收到</th><th>寄出</th></tr></thead>
+                    <thead><tr><th>物品详情</th><th>目的地</th><th>收到</th><th>寄出</th></tr></thead>
                     <tbody>
                         <tr v-for="p in packages">
                           <td>
@@ -17,8 +17,7 @@ export default {
                               <li>{{ it.name }} {{ it.quantity }}</li>
                             </ol>
                           </td>
-                          <td><a href="" v-on:click="openModal(p.address)">{{ p.address.name }}</a></td>
-                          <td>{{ p.pickup ? p.pickup_address : 'No' }}</td>
+                          <td><a v-on:click="openModal(p.address)">{{ p.address.name }}</a></td>
                           <td><input type="checkbox"></td>
                           <td><input type="checkbox"></td>  
                           <td></td>

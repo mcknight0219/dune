@@ -1,31 +1,45 @@
 <div id="app">
-  <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
-    <router-link to="order" class="navbar-brand">Dashboard</router-link>
-  </nav>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar">
-        <ul class="nav nav-pills flex-column">
-          <li class="nav-item">
-            <router-link to="order" class="nav-link" active-class="active">订单</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="product" class="nav-link" active-class="active">商品</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="package" class="nav-link" active-class="active">邮寄</router-link>
-          </li>
-        </ul>
-      </div>
-      <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
-        <transition
-        mode="out-in"
-        enter-active-class="fadeIn"
-        leave-active-class="fadeOut"
-        appear>
-          <router-view class="animated"></router-view>
-        </transition>
-      </main>
+  <section class="hero is-bold app-navbar animated slideInDown">
+    <div class="hero-head">
+      <nav class="nav">
+        <div class="nav-left">
+          <a class="nav-item is-hidden-tablet">
+            <i aria-hidden="true" class="fa fa-bars"></i>
+          </a>
+        </div>
+        <div class="nav-center">
+          <router-link to="order" class="nav-item hero-brand">Dashboard</router-link>
+        </div>
+        <div class="nav-right is-flex">
+          <a href="/" style="margin-top:15px; margin-right:25px;"><span class="icon"><i class="fa fa-home"></i></span>回到主页</a>
+        </div>
+      </nav>
     </div>
-  </div>
+  </section>
+  <aside class="menu app-sidebar animated slideInLeft">
+    <p class="menu-label"> General</p>
+    <ul class="menu-list">
+      <li>
+        <router-link to="order" active-class="is-active">订单</router-link>
+      </li>
+      <li>
+        <router-link to="product" active-class="is-active">商品</router-link>
+      </li>
+      <li>
+        <router-link to="package" active-class="is-active">邮寄</router-link>
+      </li>
+    </ul>
+  </aside>
+  <section class="app-main">
+    <div class="container is-fluid is-marginless app-content">
+      <transition
+      mode="out-in"
+      enter-active-class="fadeIn"
+      leave-active-class="fadeOut"
+      appear>
+        <router-view class="animated"></router-view>
+      </transition>
+    </div>
+  </section>
+
 </div>

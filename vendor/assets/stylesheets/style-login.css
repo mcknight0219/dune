@@ -39,7 +39,13 @@ a.hiddenanchor{
 	min-height: 560px;	
 	margin: 0px auto;	
 	width: 500px;
-	position: relative;	
+	position: relative;
+}
+
+@media screen and (max-width: 750px) {
+	#wrapper {
+		width: 100%;
+	}
 }
 /**** Styling the form elements **/
 
@@ -50,7 +56,7 @@ a.hiddenanchor{
 }
 
 #wrapper h1{
-	font-size: 48px;
+	font-size: 35px;
 	color: rgb(25, 25, 25);
 	padding: 2px 0 10px 0;
 	font-family: 'FranchiseRegular','Arial Narrow',Arial,sans-serif;
@@ -151,7 +157,7 @@ input {
 	padding: 8px 5px;
 	font-family: 'BebasNeueRegular','Arial Narrow',Arial,sans-serif;
 	color: #fff;
-	font-size: 24px;	
+	font-size: 18px;
 	border: 1px solid rgb(28, 108, 122);	
 	margin-bottom: 10px;	
 	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
@@ -254,6 +260,12 @@ p.change_link{
 	rgb(247, 247, 247) 30px
 	);
 }
+
+@media screen and (max-width: 750px) {
+	p.change_link {
+		width: 100%;
+	}
+}
 #wrapper p.change_link a {
 	display: inline-block;
 	font-weight: bold;
@@ -282,7 +294,7 @@ p.change_link{
 	top: 1px;
 }
 /** Styling both forms **/
-#register, 
+#register,
 #login{
 	position: absolute;
 	top: 0px;
@@ -298,6 +310,13 @@ p.change_link{
 	-moz-border-radius: 5px;
 		 border-radius: 5px;
 }
+
+@media screen and (max-width: 750px) {
+	#register, #login {
+		width: 100%;
+	}
+}
+
 #login{
 	z-index: 22;
 }
