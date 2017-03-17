@@ -15,8 +15,9 @@ class PackagesController < ApplicationController
 
   def create
     new_package = current_user.packages.create package_params
+    byebug
     params['package']['package_items'].each do |item|
-      new_package.package_items.create(item.permit(:quantity, :price, :country, :name))
+      new_package.package_items.create(item.permit(:quantity, :country, :name))
     end
 
     unless new_package.persisted?

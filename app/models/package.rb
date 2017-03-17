@@ -6,14 +6,6 @@ class Package < ApplicationRecord
   after_save  :make_serial_no
 
   attr_accessor :luxury
-  
-  def total_price
-    total = 0
-    package_items.each do |items|
-      total += items.price * items.quantity
-    end
-    total
-  end
 
   def make_serial_no
     unless self.serial

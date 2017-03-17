@@ -23,7 +23,7 @@ export default {
         },
 
         editPath() {
-            return "/addresses/" + this.address.id + "/edit?returnUrl=/packages"
+            return "/addresses/" + this.address.id + "/edit?returnUrl=packages"
         },
 
         firstOne() {

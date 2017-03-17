@@ -1,8 +1,8 @@
 <div class="wrapper row3">
   <main class="hoc container clear btmpad-none">
     <div class="content">
+      <h4 class="title-divider"><span>编辑地址</span></h4>
       <div id="comments">
-      <h4>编辑地址</h4>
       <%=	form_for @address, url: address_path(@address), html: { method: 'patch'} do |f| %>
             <%= f.error_messages %>
             <% if flash[:notice] %>

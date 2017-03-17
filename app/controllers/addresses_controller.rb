@@ -36,14 +36,15 @@ class AddressesController < ApplicationController
 
   def create
     new_address = current_user.addresses.create address_params
-    if new_address
+
+    if new_address.persisted?
       if params[:returnUrl]
         redirect_to params[:returnUrl]
       else
         redirect_to controller: 'packages', action: 'index'
       end
     else
-      flash[:notice] = new_address.errors
+      flash[:errors] = new_address.errors
       render :new
     end
   end
@@ -51,13 +52,9 @@ class AddressesController < ApplicationController
   def update
     updated = Address.find(params[:id]).update address_params
     if updated
-      flash[:notice] = 'Your change is saved.'
+      redirect_to :controller => 'packages', :action => 'index'
     else
       flash[:error] = 'Error saving update. Please try later.'
-    end
-    if params[:returnUrl]
-      redirect_to params[:returnUrl]
-    else
       redirect_to action: :edit, id: params[:id]
     end
   end

@@ -9,18 +9,21 @@
           <div class="alert alert-success"> <%= flash[:notice] %></div> 
         <% end %>
 
-        <h2 class="receivername">物品明细</h2>
+        <h2 class="receivername title-divider"><span>物品明细</span></h2>
+
         <div id="comments" class="scrollable">
-          <table v-if="packageItems.length > 0">
-            <tbody>
+          <div class="pkglist">
+            <table v-if="packageItems.length > 0">
+              <tbody>
               <tr v-for="item in packageItems">
                 <td>{{item.name}}</td>
                 <td>{{item.quantity}}</td>
                 <td>{{item.price}}</td>
                 <td><a class="btn smlbtn inverse" v-on:click="removePackageItem(item)">删除</a></td>
               </tr>
-            </tbody>
-          </table>
+              </tbody>
+            </table>
+          </div>
           <%= form_tag do %>
               <div class="one_quarter first">
                 <%= text_field_tag(:name, '', :required => true, :placeholder =>'名称', 'v-model': 'packageItem.name') %>
@@ -29,11 +32,13 @@
                 <%= number_field_tag(:name, '', :required => true, :min => 0, :step => 1, :placeholder=> '数量', 'v-model': 'packageItem.quantity') %>
               </div>
               <div class="one_quarter">
-                <%= number_field_tag(:price, '', :min => 0, :placeholder => "单价", 'v-model': 'packageItem.price') %>
+                <%= text_field_tag(:country, '', :required => true, :placeholder => "产地", 'v-model': 'packageItem.country') %>
               </div>
-              <div class="one_quarter">
-                <%= input_field_tag(:luxury, '', 'v-model': 'packageItem.isLuxury') %>
+              <div class="one_quarter mgt-small">
+                  <input class="narrow_input" type="checkbox" v-model='packageItem.luxury'>
+                  轻奢侈品
               </div>
+              <div class="clear"></div>
               <div class="one_quarter first">
                 <a class="btn smlbt" v-on:click="addPackageItem()">确定</a>
               </div>
@@ -45,10 +50,10 @@
   <div class="wrapper row3">
     <main class="hoc container clear btmpad-none">
       <div class="content">
-        <h2 class="receivername">选择收件人地址</h2>
+        <h2 class="receivername title-divider"><span>选择收件人地址</span></h2>
         <div id="comments"> 
           <p class="divider">收件人是否在列表中？如果是，请点击选此收件人。若否，请 <%= link_to '新建收件人地址', new_address_path(:returnUrl => packages_path) %></p>
-          <div class="one_third first">
+          <div class="one_third first" v-if="addresses.length > 6">
             <input type="text" placeholder="姓名，电话，身份证" v-model="query"> 
           </div>
           <div class="clear"></div> 
