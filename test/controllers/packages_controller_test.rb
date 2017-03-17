@@ -22,7 +22,6 @@ class PackagesControllerTest < ActionDispatch::IntegrationTest
     perform_action_as @user do
       post packages_path, xhr: true, params: { package: { package_items: [{name: 'test', country: 'China', quantity: 1}], address_id: @address.id} }
       assert_response :success
-      assert_template 'packages/success'
       assert_equal(3, @user.packages.count)
       assert(PackageItem.find_by(:name => 'test'))
     end

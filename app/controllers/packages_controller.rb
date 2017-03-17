@@ -1,6 +1,6 @@
 class PackagesController < ApplicationController
   before_action :authenticate_user!
-  load_and_authorize_resource
+  load_and_authorize_resource :except => [:confirm]
 
   def index
     respond_to do |format|
@@ -15,7 +15,6 @@ class PackagesController < ApplicationController
 
   def create
     new_package = current_user.packages.create package_params
-    byebug
     params['package']['package_items'].each do |item|
       new_package.package_items.create(item.permit(:quantity, :country, :name))
     end
@@ -24,9 +23,13 @@ class PackagesController < ApplicationController
       flash[:error] = '无法提交，请稍后重试'
       render 'index'
     else
-      @confirm_id = new_package.serial
-      render :template => 'packages/success'
+      redirect_to action: 'confirm', :params => {:id => new_package.serial}
     end
+  end
+
+  def confirm 
+    @confirm_id = params[:id]
+    render :template => 'packages/success'
   end
 
   def update
