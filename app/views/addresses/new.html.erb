@@ -1,8 +1,8 @@
 <div class="wrapper row3">
   <main class="hoc container clear btmpad-none">
-    <div class="content">
+    <div class="content single-col">
+      <h4 class="title-divider"><span>添加地址</span></h4>
       <div id="comments">
-        <h4>添加地址</h4>
         <%= form_for @address, url: {action: 'create'}, html: { multipart: true } do |f| %>
             <%= f.error_messages %>
             <div class='block'>

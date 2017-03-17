@@ -116,14 +116,6 @@
 #copyright *{margin:0; padding:0;}
 
 
-/* Transition Fade
-This gives a smooth transition to "ALL" elements used in the layout - other than the navigation form used in mobile devices
-If you don't want it to fade all elements, you have to list the ones you want to be faded individually
-Delete it completely to stop fading
---------------------------------------------------------------------------------------------------------------- */
-*, *::before, *::after{transition:all .3s ease-in-out;}
-#mainav form *{transition:none !important;}
-
 
 /* ------------------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------------------ */
@@ -523,7 +515,9 @@ li.cartlist{
 	.scrollable{display:block; width:100%; margin:0 0 30px 0; padding:0 0 15px 0; overflow:auto; overflow-x:scroll;}
 	.scrollable table{margin:0; padding:0; white-space:nowrap;}
 
-	.inline li{display:block;}
+	.inline li {
+		display: block;
+	}
 	.pushright li{margin-right:0;}
 
 	.font-x2{font-size:1.4rem;}

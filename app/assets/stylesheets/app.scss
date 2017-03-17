@@ -1,1 +1,13 @@
-@import 'font-awesome'
+@import 'font-awesome';
+
+.wrapper {
+  .content {
+    &.single-col {
+      margin: auto;
+      margin-bottom: 24px;
+      width: 100%;
+      max-width: 560px;
+    }
+  }
+}
+
