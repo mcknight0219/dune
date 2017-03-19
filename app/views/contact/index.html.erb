@@ -24,7 +24,7 @@
               <%= f.text_area :message, :cols => 25, :rows => 10 %>
             </div>
             <div>
-              <%= f.submit "提交" %>
+              <%= f.submit "提交", :class => 'btn' %>
             </div>
         <% end %>
       </div>
@@ -56,25 +56,4 @@
     </ul>
     <div class="clear"></div>
   </section>
-</div>
-
-<div class="wrapper row3">
-  <main class="hoc container clear btmpad-none">
-    <div class="subscribe">
-      <h2>Subscribe Us:</h2>
-      <p>To get the lattest product and discount information, subcribe us. We will send the most updated information to
-        your email:</p>
-      <form action="#" method="post">
-        <div class="one_third first">
-          <label for="email">E-mail <span>*</span></label>
-          <input type="email" name="email" id="email" value="" size="22" required>
-        </div>
-        <div class="one_third">
-          <label for="email"><span>&nbsp</span></label>
-          <button class="btn" href="#">Subscribe</button>
-        </div>
-      </form>
-    </div>
-    <div class="clear"></div>
-  </main>
 </div>

@@ -25,17 +25,17 @@
             </table>
           </div>
           <%= form_tag do %>
-              <div class="one_quarter first">
+              <div class="one_third first">
                 <%= text_field_tag(:name, '', :required => true, :placeholder =>'名称', 'v-model': 'packageItem.name') %>
               </div>
-              <div class="one_quarter">
+              <div class="one_third">
                 <%= number_field_tag(:name, '', :required => true, :min => 0, :step => 1, :placeholder=> '数量', 'v-model': 'packageItem.quantity') %>
               </div>
-              <div class="one_quarter">
+              <div class="one_third">
                 <%= text_field_tag(:country, '', :required => true, :placeholder => "产地", 'v-model': 'packageItem.country') %>
               </div>
-              <div class="one_quarter mgt-small">
-                  <input class="narrow_input" type="checkbox" v-model='packageItem.luxury'>
+              <div class="one_quarter first mgt-small">
+                <input class="narrow_input" type="checkbox" v-model='luxury'>
                   轻奢侈品
               </div>
               <div class="clear"></div>
@@ -61,8 +61,21 @@
         </div>
       </div>
     </main>
-    <div class="chose btmspace-80">
-      <button class="btn" href="" v-on:click="submitPackage()" v-bind:disabled="selectedAddress === null || packageItem.length === 0">确定</button>
-    </div>
+  </div>
+  <div class="wrapper row1">
+    <main class="hoc container clear">
+      <div class="content">
+
+        <%= form_for @package, url: {action: 'create'}, html: {} do |f| %>
+            <div class="block">
+              <%= f.hidden_field :address_id, "v-model": "selectedAddress.id" %>
+              <%= f.hidden_field :package_items, "v-bind:value": "JSON.stringify(packageItems)" %>
+              <%= f.hidden_field :luxury, "v-model": "luxury" %>
+              <%= f.submit '确认订单', "v-bind:disabled": "disableSubmit", "class": 'btn' %>
+            </div>
+        <% end %>
+
+      </div>
+    </main>
   </div>
 </div>

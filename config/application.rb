@@ -23,11 +23,12 @@ module Dune
     Money.default_currency = Money::Currency.new("CAD")
 
     config.to_prepare do
-      Devise::SessionsController.layout 'simple_application'
-      Devise::RegistrationsController.layout 'simple_application'
-      Devise::ConfirmationsController.layout 'simple_application'
-      Devise::PasswordsController.layout 'simple_application'
-      Devise::UnlocksController.layout 'simple_application'
+      Devise::SessionsController.layout 'application'
+      Devise::RegistrationsController.layout 'application'
+      Devise::ConfirmationsController.layout 'application'
+      Devise::PasswordsController.layout 'application'
+      Devise::UnlocksController.layout 'application'
     end
+    config.i18n.default_locale = :'zh-CN'
   end
 end

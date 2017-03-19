@@ -1,8 +1,9 @@
 class PackagesController < ApplicationController
   before_action :authenticate_user!
-  load_and_authorize_resource :except => [:confirm]
+  load_and_authorize_resource :except => [:confirm, :create]
 
   def index
+    @package = Package.new
     respond_to do |format|
       format.json { render :json => {packages: getPackages(current_user).map { |p| replace_with_real_address_and_items p }} }
       format.html
@@ -15,19 +16,20 @@ class PackagesController < ApplicationController
 
   def create
     new_package = current_user.packages.create package_params
-    params['package']['package_items'].each do |item|
-      new_package.package_items.create(item.permit(:quantity, :country, :name))
+
+    JSON.parse(params['package']['package_items']).each do |item|
+      new_package.package_items.create item
     end
 
     unless new_package.persisted?
       flash[:error] = '无法提交，请稍后重试'
       render 'index'
     else
-      redirect_to action: 'confirm', :params => {:id => new_package.serial}
+      redirect_to :action => "confirm", :params => {id: new_package.serial}
     end
   end
 
-  def confirm 
+  def confirm
     @confirm_id = params[:id]
     render :template => 'packages/success'
   end
@@ -43,13 +45,13 @@ class PackagesController < ApplicationController
   end
 
   def package_params
-    params.require(:package).permit(:is_received, :is_shipped, :is_cancelled, :address_id,  :package_items, :luxury) 
+    params.require(:package).permit(:is_received, :is_shipped, :is_cancelled, :address_id)
   end
 
   def replace_with_real_address_and_items(package)
     package.as_json.merge({
-      address: package.address.as_json(:except => ["created_at", "updated_at"]), 
-      package_items: package.package_items.as_json(:except => ["created_at", "updated_at", "package_id"])
+                              address: package.address.as_json(:except => ["created_at", "updated_at"]).merge({:id_front => package.address.id_front.url, :id_back => package.address.id_back.url}),
+                              package_items: package.package_items.as_json(:except => ["created_at", "updated_at", "package_id"])
     })
   end
 

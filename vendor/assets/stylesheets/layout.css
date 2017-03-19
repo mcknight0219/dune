@@ -146,7 +146,11 @@ nav ul, nav ol{margin:0; padding:0; list-style:none;}
 #mainav li li a, #mainav li li .drop{display:block; margin:0; padding:10px 15px;}
 #mainav .drop::after, #mainav li li .drop::after{content:"\f0d7";}
 #mainav .drop::after{top:35px; left:5px;}
-#mainav li li .drop::after{top:15px; left:5px;}
+
+#mainav li li .drop::after {
+    top: 15px;
+    left: 15px;
+}
 #mainav ul ul{visibility:hidden; opacity:0;}
 #mainav ul li:hover > ul{visibility:visible; opacity:1;}
 
@@ -280,7 +284,12 @@ input:focus, textarea:focus, *:required:focus{border-color:#2BB656;}
 /* Navigation */
 #mainav li a{color:inherit;}
 #mainav .active a, #mainav a:hover, #mainav li:hover > a{color:#2BB656; background-color:inherit;}
-#mainav li li a, #mainav .active li a{color:#FFFFFF; background-color:rgba(207,72,69,.5)/* #2BB656 */; border-color:rgba(0,0,0,.1);}
+
+#mainav li li a, #mainav .active li a {
+    color: black;
+    background-color: white;
+    border-color: rgba(0, 0, 0, .1);
+}
 #mainav li li:hover > a, #mainav .active .active > a{color:#FFFFFF; background-color:#2BB656;}
 #mainav form select{color:#FFFFFF; background-color:#000000; border-color:rgba(255,255,255,.2);}
 
@@ -301,7 +310,11 @@ input:focus, textarea:focus, *:required:focus{border-color:#2BB656;}
 table, th, td, #comments .avatar, #comments input, .subscribe input, #comments textarea{border-color:#D7D7D7;}
 #comments input:focus, .subscribe input:focus, #comments textarea:focus, #comments *:required:focus{border-color:#2BB656;}
 th{color:#FFFFFF; background-color:#373737;}
-tr, #comments, #comments input[type="submit"], #comments input[type="reset"]{color:inherit; background-color:#FBFBFB; padding: 20px; margin-bottom: 20px;}
+
+tr, #comments, #comments input[type="submit"], #comments input[type="reset"] {
+    padding: 10px;
+    margin-bottom: 20px;
+}
 tr:nth-child(even), #comments li:nth-child(even){color:inherit;}
 table a{background-color:inherit;}
 
@@ -382,6 +395,10 @@ li.cartlist{
 .chose {
 	text-align: center;
 	padding: 10px 0;
+    border-style: solid;
+    border-width: 0.1px;
+    border-radius: 3px;
+    border-color: silver;
 }
 
 .smlbtn{
@@ -398,10 +415,7 @@ li.cartlist{
 }
 
 .chosen{
-	border-style: solid;
-	border-width: 2px;
 	border-color: #2BB656;
-	border-radius: 3px;
 	background-color: #d4f0dd;
 }
 

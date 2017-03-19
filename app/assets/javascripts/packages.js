@@ -26,26 +26,6 @@ export const methods = {
         this.selectedAddress = addr
     },
 
-    submitPackage() {
-        const params = {
-            package: {
-                address_id: this.selectedAddress.id,
-                package_items: this.packageItems
-            }
-        }
-
-        fetch('/packages', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Request-With': 'XMLHttpRequest',
-                'X-CSRF-Token': utils.csrfToken()
-            },
-            body: JSON.stringify(params),
-            credentials: 'same-origin'
-        })
-    },
-
     searchAddress(query) {
         if (query === undefined || query === '' || query === {}) {
             return []
@@ -89,16 +69,18 @@ var app = new Vue({
             set: function (addrs) {
                 this.searchResult = addrs
             }
+        },
+
+        disableSubmit() {
+            return Object.keys(this.selectedAddress).length === 0 || this.packageItems.length === 0
         }
     },
 
     data() {
         return {
             packageItem: {},
-            selectedAddress: null,
-            needPickup: false,
-            pickupAddress: null,
-            note: '',
+            selectedAddress: {},
+            luxury: false,
             query: '',
             inSearch: false,
             searchResult: []
