@@ -7,6 +7,7 @@
       <ul class="clear">
         <li class="active"><%= link_to '主页', root_path %></li>
         <li><%= link_to '寄件', packages_path %></li>
+        <li><%= link_to '邮寄费率', rates_path %></li>
         <li><%= link_to '联系我们', contact_path %></li>
 
         <% if user_signed_in? %>
@@ -27,7 +28,6 @@
                 </li>
               </ul>
             </li>
-            <li></li>
         <% else %>
             <li><%= link_to '登陆', new_user_session_path %></li>
         <% end %>

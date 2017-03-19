@@ -5,11 +5,12 @@ class ProductsController < ApplicationController
 
   # 显示所有商品
   def index
-    @products = Product.active
-    respond_to do |format|
-      format.json { render :json => { products: @products } }
-      format.html { render 'index' }
-    end
+    render :template => 'products/future'
+    # @products = Product.active
+    # respond_to do |format|
+    #   format.json { render :json => { products: @products } }
+    #   format.html { render 'index' }
+    # end
   end
   
   def show
