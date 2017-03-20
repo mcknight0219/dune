@@ -11,7 +11,7 @@ class CartsControllerTest < ActionDispatch::IntegrationTest
   ['add', 'del'].each do |op|
     define_method(op + '_products') do |items|
       items = if items.kind_of?(Array) then items else [items] end
-      put cart_path, xhr: true, params: {:cart_items => items.map { |x| {:op => op == 'add' ? '+' : '-', :product => x } }}
+      put cart_path, xhr: true, params: {:items => items.map { |x| {:op => op == 'add' ? '+' : '-', :product => x } }}
     end
   end
 
@@ -30,7 +30,7 @@ class CartsControllerTest < ActionDispatch::IntegrationTest
 
   test "add products to cart and update cart" do
     perform_action_as users(:client) do
-      put cart_path, xhr: true, params: {:cart_items => [{:op => '+', :product => @product1.sku}, {:op => '+', :product => @product2.sku}]}
+      put cart_path, xhr: true, params: {:items => [{:op => '+', :product => @product1.sku}, {:op => '+', :product => @product2.sku}]}
       assert_response(:success)
       cart = @request.session["cart"]
       assert_not_nil(cart)
@@ -40,7 +40,7 @@ class CartsControllerTest < ActionDispatch::IntegrationTest
 
   test "could not update cart" do
     perform_action_as users(:client) do
-      put cart_path, xhr: true, params: {:cart_items => [{:op => '-', :product => @product1.sku}]}
+      put cart_path, xhr: true, params: {:items => [{:op => '-', :product => @product1.sku}]}
       assert_response(:error)
       assert_match('could not update cart', JSON.parse(response.body)["error"])
       # make sure cart is not altered

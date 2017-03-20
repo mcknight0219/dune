@@ -8,7 +8,6 @@ class CartsController < ApplicationController
   end
 
   def update
-    byebug
     cart = get_cart
     begin
       params[:items].each do |it|

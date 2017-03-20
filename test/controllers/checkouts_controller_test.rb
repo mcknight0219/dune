@@ -65,7 +65,7 @@ class CheckoutsControllerTest < ActionDispatch::IntegrationTest
   private
   def populate_cart
     2.times do
-      put cart_path, xhr: true, params: { :cart_items => [{:op => '+', :product => products(:fishoil).sku}] }
+      put cart_path, xhr: true, params: { :items => [{:op => '+', :product => products(:fishoil).sku}] }
     end
   end
 

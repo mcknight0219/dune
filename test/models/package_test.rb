@@ -14,7 +14,7 @@ class PackageTest < ActiveSupport::TestCase
     new_package = @client.packages.create(address: addresses(:canada_address))
     assert_not(new_package.is_received)
     assert_not(new_package.is_shipped)
-    new_package_item = new_package.package_items.create(name: 'some thing', quantity: 1, country: 'China')
+    new_package_item = new_package.package_items.create(name: 'some thing', quantity: 1, item_category: item_categories(:bag))
     assert(new_package_item)
     assert_equal(@client, new_package_item.package.user)
   end

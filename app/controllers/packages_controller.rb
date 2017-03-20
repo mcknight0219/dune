@@ -17,9 +17,7 @@ class PackagesController < ApplicationController
 
   def create
     new_package = current_user.packages.create package_params
-
     JSON.parse(params['package']['package_items']).each do |item|
-      byebug
       new_package.package_items.create item
     end
 
