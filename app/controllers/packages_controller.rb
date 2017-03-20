@@ -4,6 +4,7 @@ class PackagesController < ApplicationController
 
   def index
     @package = Package.new
+    @categories = ItemCategory.all.map { |cat| [cat.name, cat.id]}
     respond_to do |format|
       format.json { render :json => {packages: getPackages(current_user).map { |p| replace_with_real_address_and_items p }} }
       format.html
@@ -18,6 +19,7 @@ class PackagesController < ApplicationController
     new_package = current_user.packages.create package_params
 
     JSON.parse(params['package']['package_items']).each do |item|
+      byebug
       new_package.package_items.create item
     end
 

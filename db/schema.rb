@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170317050129) do
+ActiveRecord::Schema.define(version: 20170320190414) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,12 @@ ActiveRecord::Schema.define(version: 20170317050129) do
     t.index ["email"], name: "index_contacts_on_email", using: :btree
   end
 
+  create_table "item_categories", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "order_items", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -73,10 +79,11 @@ ActiveRecord::Schema.define(version: 20170317050129) do
   create_table "package_items", force: :cascade do |t|
     t.string   "name"
     t.integer  "quantity"
-    t.string   "country"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.integer  "package_id"
+    t.integer  "item_category_id"
+    t.index ["item_category_id"], name: "index_package_items_on_item_category_id", using: :btree
     t.index ["package_id"], name: "index_package_items_on_package_id", using: :btree
   end
 
@@ -105,6 +112,7 @@ ActiveRecord::Schema.define(version: 20170317050129) do
     t.boolean  "active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "cover"
   end
 
   create_table "users", force: :cascade do |t|
@@ -130,6 +138,7 @@ ActiveRecord::Schema.define(version: 20170317050129) do
   add_foreign_key "order_items", "products"
   add_foreign_key "orders", "addresses"
   add_foreign_key "orders", "users"
+  add_foreign_key "package_items", "item_categories"
   add_foreign_key "package_items", "packages"
   add_foreign_key "packages", "addresses"
   add_foreign_key "packages", "users"

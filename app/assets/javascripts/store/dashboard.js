@@ -6,12 +6,6 @@ const jsonResponse = (response) => {
 };
 
 const state = {
-    // shopping cart
-    products: [],
-    added: [],
-    checkoutStatus: null,
-
-    // admin dashboard
     orders: [],
     updateOrderStatus: null,
     addresses: [],
@@ -53,35 +47,7 @@ export const mutations = {
         const order = state.orders.find(o => o.id == id)
         order.is_shipped = true
     },
-
-    [types.ADD_TO_CART] (state, { id }) {
-        state.checkoutStatus = null
-        const record = state.added.find(p => p.id === id)
-        if (!record) {
-            state.added.push({
-                id: id,
-                quantity: 1
-            })
-        } else {
-            record.quantity++
-        }
-    },
-
-    [types.DEL_FROM_CART] (state, { id }) {
-        state.checkoutStatus = null
-        const record = state.added.find(p => p.id === id)
-        record.quantity--
-    },
-
-    [types.CART_SUCCESS] (state) {
-        state.checkoutStatus = 'successful'
-    },
-
-    [types.CART_FAILED] (state, { savedCartItems }) {
-        state.added = savedCartItems
-        state.checkoutStatus = 'failed'
-    },
-
+    
     [types.RECEIVE_ADDRESSES] (state, {addresses}) {
         state.addresses = addresses
     },
@@ -164,34 +130,6 @@ export const actions = {
             .then(() => {
                 commit(types.MARK_ORDER_SHIPPED, {id})
             })
-    },
-
-    addToCart ({commit}, { id }) {
-        const saved = [...state.added]
-        api.addCart(id)
-            .then(jsonResponse)
-            .then(data => {
-                if (data.success) {
-                    commit(types.ADD_TO_CART, { id })
-                    commit(types.CART_SUCCESS)
-                } else {
-                    commit(types.CART_FAILED, { saved })
-                }
-            })
-    },
-
-    delFromCart ({commit}, { id }) {
-        const saved = [...state.added]
-        api.delCart(id)
-            .then(jsonResponse)
-            .then(data => {
-                if (data.success) {
-                    commit(types.DEL_FROM_CART, { id })
-                    commit(types.CART_SUCCESS)
-                } else {
-                    commit(types.CART_FAILED, { saved })
-                }
-            })
     }
 }
 
@@ -201,7 +139,6 @@ export default new Vuex.Store({
     actions,
 
     getters: {
-        checkoutStatus: state => state.checkoutStatus,
         allProducts: state => state.products,
         allOrders: state => state.orders,
         allAddresses: state => state.addresses,

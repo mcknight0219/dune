@@ -18,6 +18,10 @@ export const methods = {
         })
     },
 
+    categoryName (id) {
+        return ['包','维生素','衣服', '其它'][parseInt(id)-1]
+    },
+
     removeAddress(addr) {
         this.$store.dispatch('deleteAddress', addr)
     },
@@ -78,7 +82,7 @@ var app = new Vue({
 
     data() {
         return {
-            packageItem: {},
+            packageItem: {item_category_id: 1},
             selectedAddress: {},
             luxury: false,
             query: '',

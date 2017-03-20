@@ -5,16 +5,22 @@ class ProductsController < ApplicationController
 
   # 显示所有商品
   def index
-    render :template => 'products/future'
-    # @products = Product.active
-    # respond_to do |format|
-    #   format.json { render :json => { products: @products } }
-    #   format.html { render 'index' }
-    # end
+    #render :template => 'products/future'
+    respond_to do |format|
+      format.json { render :json => { products: Product.all } }
+      format.html {
+        @products = Product.active.paginate(:page => params[:page], :per_page => 15)
+        render 'index' 
+      }
+    end
   end
   
   def show
-    render :json => { product: Product.find(params[:id]) }
+    @product = Product.find(params[:id])
+    respond_to do |format|
+      format.json { render :json => { product: @product }}
+      format.html
+    end
   end
   
   def create

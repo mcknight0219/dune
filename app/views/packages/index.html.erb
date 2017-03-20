@@ -17,8 +17,8 @@
               <tbody>
               <tr v-for="item in packageItems">
                 <td>{{item.name}}</td>
+                <td>{{categoryName(item.item_category_id)}}</td>
                 <td>{{item.quantity}}</td>
-                <td>{{item.country}}</td>
                 <td><a class="btn smlbtn inverse" v-on:click="removePackageItem(item)">删除</a></td>
               </tr>
               </tbody>
@@ -31,8 +31,9 @@
               <div class="one_third">
                 <%= number_field_tag(:name, '', :required => true, :min => 0, :step => 1, :placeholder=> '数量', 'v-model': 'packageItem.quantity') %>
               </div>
+
               <div class="one_third">
-                <%= text_field_tag(:country, '', :required => true, :placeholder => "产地", 'v-model': 'packageItem.country') %>
+                <%= select_tag(:category, options_for_select(@categories), 'v-model': 'packageItem.item_category_id') %>
               </div>
               <div class="one_quarter first mgt-small">
                 <input class="narrow_input" type="checkbox" v-model='luxury'>

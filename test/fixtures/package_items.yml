@@ -3,17 +3,17 @@
 laptop:
   name: Laptop
   quantity: 2
-  country: China
   package: two_item_packages
+  item_category: bag
 
 bag:
   name: Coach
   quantity: 1
-  country: USA
   package: two_item_packages
+  item_category: bag
 
 fishoil:
   name: fishoil
   quantity: 2
-  country: Canada
   package: admin_package
+  item_category: vitamin

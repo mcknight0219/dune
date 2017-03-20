@@ -130,8 +130,11 @@ export default {
         return fetch('/cart', {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMlHttpRequest',
+                'X-CSRF-Token': util.csrfToken()
             },
+            credentials: 'same-origin',
             body: JSON.stringify({
                 items: [{op: '+', product: product}]
             })
@@ -142,8 +145,11 @@ export default {
         return fetch('/cart', {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMlHttpRequest',
+                'X-CSRF-Token': util.csrfToken()
             },
+            credentials: 'same-origin',
             body: JSON.stringify({
                 items: [{op: '-', product: product}]
             })
