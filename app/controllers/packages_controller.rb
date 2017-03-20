@@ -36,6 +36,7 @@ class PackagesController < ApplicationController
 
   def update
     Package.find(params[:id]).update! package_params
+    render :json => { success: true }
   end
 
   private
@@ -45,7 +46,7 @@ class PackagesController < ApplicationController
   end
 
   def package_params
-    params.require(:package).permit(:is_received, :is_shipped, :is_cancelled, :address_id)
+    params.require(:package).permit(:is_received, :is_shipped, :is_cancelled, :address_id, :luxury)
   end
 
   def replace_with_real_address_and_items(package)

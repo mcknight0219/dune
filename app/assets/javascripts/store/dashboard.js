@@ -88,6 +88,14 @@ export const mutations = {
 
     [types.RECEIVE_PACKAGES] (state, {packages}) {
         state.packages = packages
+    },
+
+    [types.UPDATE_PACKAGE] (state, { pac }) {
+        const record = state.packages.find(p => p.id === pac.id)
+        if (record) {
+            record.is_shipped = pac.is_shipped
+            record.is_received = pac.is_received
+        }
     }
 }
 
@@ -115,6 +123,14 @@ export const actions = {
             .then(response => response.json())
             .then(({packages}) => {
                 commit(types.RECEIVE_PACKAGES, { packages })
+            })
+    },
+
+    updatePackage ({commit}, pac) {
+        api.updatePackage(pac)
+            .then(response => response.json())
+            .then(() => {
+                commit(types.UPDATE_PACKAGE, { pac })
             })
     },
 

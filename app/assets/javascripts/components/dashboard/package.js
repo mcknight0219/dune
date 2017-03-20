@@ -8,12 +8,17 @@ export default {
   </div>
   <div class="tile is-parent">
     <article class="tile is-child box">
-    <h4 class="title">邮寄列表</h4>
+    <nav class="level">
+        <div class="level-left"><h4 class="title">邮寄列表</h4></div> 
+        <div class="level-right"><input type="text" class="input" placeholder="订单号码，名字等" v-model="q"></div> 
+    </nav>
+        
     <table class="table">
-        <thead><tr><th>订单号</th><th>邮寄地址</th><th>证件图片</th><th>包裹详情</th><th>收到</th><th>寄出</th></tr></thead>
+        <thead><tr><th>订单号</th><th>时间</th><th>邮寄地址</th><th>证件图片</th><th>包裹详情</th><th>收到</th><th>寄出</th></tr></thead>
         <tbody>
         <tr v-for="p in packages">
             <td style="font-weight: 500">{{ p.serial  }}</td>
+            <td>{{ new Date(p.created_at).toLocaleString() }}</td>
             <td>
                 <p style="font-weight:600">{{ p.address.name  }}<p>
                 <p>{{ p.address.address_line1 }}</p>
@@ -29,11 +34,11 @@ export default {
                 </ul>
             </td>  
             <td style="vertical-align: middle">
-                <input type="checkbox" v-model="p.is_received" v-on:click="updateReceivedStatus(p)">
+                <input type="checkbox" v-model="p.is_received" v-on:click="updatePackage(p)">
                 
             </td>
             <td style="vertical-align: middle">
-                <input type="checkbox" v-model="p.is_shipped" v-on:click="updateShippedStatus(p)">
+                <input type="checkbox" v-model="p.is_shipped" v-on:click="updatePackage(p)">
                 
             </td>  
         </tr>    
@@ -50,7 +55,14 @@ export default {
     },
 
     data() {
-        return {}
+        return {
+            q: ''
+        }
+    },
+
+    watch: {
+        q: function(val) {
+        }
     },
 
     methods: {
@@ -62,12 +74,24 @@ export default {
             return p.address.id_back
         },
 
-        updateReceivedStatus(p) {
-            console.log(p.is_received)
+        updatePackage(p) {
+            this.$store.dispatch('updatePackage', p)
         },
 
-        updateShippedStatus(p) {
-            console.log(p.is_shipped)
+        /**
+         * Package sorting:
+         *    
+         *  1. if package is sent, put it at bottom cause it's of lowerest priority.
+         *  2. if package is received within last three days but not sent put it on top 
+         *     because it needs action.
+         *  3. package is placed according to timestamp by default
+         */ 
+        comparator(p1, p2) {
+            
+        },
+
+        searchPackages(qs) {
+            
         }
 
     },

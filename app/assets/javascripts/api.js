@@ -14,6 +14,19 @@ export default {
         })
     },
 
+    updatePackage: (pac) => {
+        return fetch('/packages/' + pac.id, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRF-Token': util.csrfToken()
+            },
+            body: JSON.stringify({'package': { is_shipped: pac.is_shipped, is_received: pac.is_received}}),
+            credentials: 'same-origin'
+        })
+    },
+
     getAddresses: () => {
         return fetch('/addresses', {
             method: 'GET',
@@ -61,19 +74,6 @@ export default {
             },
             body: JSON.stringify({product: data}),
             credentials: 'same-origin'
-        })
-    },
-
-    newPackage: (pack) => {
-        return fetch('/packages', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRF-Token': util.csrfToken()
-            },
-            credentials: 'same-origin',
-            body: JSON.stringify({package: pack})
         })
     },
 
