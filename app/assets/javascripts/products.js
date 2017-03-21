@@ -1,4 +1,3 @@
-import utils from 'utils'
 import store from 'store/cart'
 
 var app = new Vue({

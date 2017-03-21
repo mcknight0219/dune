@@ -46,6 +46,9 @@ end
 
 gem 'browserify-rails'
 
+# 检测是否移动设备
+gem 'browser'
+
 # 用户系统
 gem 'devise'
 

@@ -15,7 +15,7 @@
 <body>
 <%= yield %>
 <%= javascript_include_tag 'application' %>
-<% if %w( dashboard packages products ).include? params[:controller] %>
+<% if %w( dashboard packages products carts ).include? params[:controller] %>
     <%= javascript_include_tag params[:controller] %>
 <% end %>
 </body>

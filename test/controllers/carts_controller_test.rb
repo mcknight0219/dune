@@ -21,7 +21,7 @@ class CartsControllerTest < ActionDispatch::IntegrationTest
 
   test "return empty cart initially" do
     perform_action_as users(:client) do
-      get cart_path, xhr: true
+      get cart_path + '.json', xhr: true
       assert_equal "application/json", @response.content_type
       assert_response(:success)
       assert_empty(JSON.parse(response.body))
