@@ -1,10 +1,13 @@
 require 'exceptions'
 
 class CartsController < ApplicationController
-  respond_to :json
+  before_action :authenticate_user!
 
   def show
-    render :json => get_cart
+    respond_to do |format|
+      format.json { render :json => get_cart }
+      format.html
+    end
   end
 
   def update
@@ -13,9 +16,9 @@ class CartsController < ApplicationController
       params[:items].each do |it|
         cart.apply(it)
       end
-      head :ok
+      render :json => { success: true }
     rescue ::Exceptions::CartError
-      render :json => {error: 'could not update cart'}, :status => 500
+      render :json => { error: 'could not update cart', success: false }, :status => 500
     end
   end
 

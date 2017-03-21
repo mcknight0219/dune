@@ -54,7 +54,7 @@
         <h2 class="receivername title-divider"><span>选择收件人地址</span></h2>
         <div id="comments"> 
           <p class="divider">收件人是否在列表中？如果是，请点击选此收件人。若否，请 <%= link_to '新建收件人地址', new_address_path(:returnUrl => packages_path) %></p>
-          <div class="one_third first" v-if="addresses.length > 6">
+          <div class="one_third first" v-if="addresses.length > 6 || inSearch">
             <input type="text" placeholder="姓名，电话，身份证" v-model="query"> 
           </div>
           <div class="clear"></div> 
