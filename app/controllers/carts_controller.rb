@@ -4,11 +4,11 @@ class CartsController < ApplicationController
   before_action :authenticate_user!
 
   def show
-    @cart = get_cart
+    @cart = get_cart.full_form
     respond_to do |format|
-      format.json { render :json => @cart }
-      format.html { 
-        unless request.variant == :mobile
+      format.json { render :json => { :success => true, :cart => @cart } }
+      format.html {
+        if request.variant == :mobile
           render :template => 'carts/show.mobile'
         else
           render :template => 'carts/show'

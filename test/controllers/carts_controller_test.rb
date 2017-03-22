@@ -24,7 +24,7 @@ class CartsControllerTest < ActionDispatch::IntegrationTest
       get cart_path + '.json', xhr: true
       assert_equal "application/json", @response.content_type
       assert_response(:success)
-      assert_empty(JSON.parse(response.body))
+      assert_empty(JSON.parse(response.body)['cart'])
     end
   end
 

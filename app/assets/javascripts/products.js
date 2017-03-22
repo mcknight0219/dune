@@ -16,7 +16,6 @@ var app = new Vue({
     },
 
     addCart(productId) {
-      debugger
       this.$store.dispatch('addToCart', {id: productId})
     }
   }

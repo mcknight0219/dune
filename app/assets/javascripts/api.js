@@ -2,6 +2,20 @@ import util from 'utils'
 import 'whatwg-fetch'
 
 export default {
+    csrf_fetch: (method, path, body) => {
+      return fetch(path, {
+        method: method,
+        headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRF-Token': util.csrfToken()
+        },
+        credentials: 'same-origin',
+        body: body
+      })
+    },
+
+
     getPackages: () => {
         return fetch('/packages', {
             method: 'GET',
@@ -119,7 +133,7 @@ export default {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'X-Requested-With': 'XMlHttpRequest',
+                'X-Requested-With': 'XMLHttpRequest',
                 'X-CSRF-Token': util.csrfToken()
             },
             credentials: 'same-origin'
@@ -131,7 +145,7 @@ export default {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'X-Requested-With': 'XMlHttpRequest',
+                'X-Requested-With': 'XMLHttpRequest',
                 'X-CSRF-Token': util.csrfToken()
             },
             credentials: 'same-origin',
@@ -146,7 +160,7 @@ export default {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'X-Requested-With': 'XMlHttpRequest',
+                'X-Requested-With': 'XMLHttpRequest',
                 'X-CSRF-Token': util.csrfToken()
             },
             credentials: 'same-origin',
@@ -154,5 +168,25 @@ export default {
                 items: [{op: '-', product: product}]
             })
         })
+    },
+
+    // Totally removes product from cart
+    removeProduct: function (id) {
+      debugger
+      return this.csrf_fetch('PUT', '/cart', JSON.stringify({
+        items: [{op: 'r', product: id}]
+      }))
+    },
+
+    getCart: () => {
+      return fetch('/cart', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest',
+          'X-CSRF-Token': util.csrfToken()
+        },
+        credentials: 'same-origin'
+      })
     }
 };

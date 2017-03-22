@@ -18,11 +18,11 @@ class CartTest < ActiveSupport::TestCase
 
   test 'add item(s) to cart' do
     3.times do
-      @cart.apply({:op => '+', :product => products(:fishoil).sku})
+      @cart.apply({:op => '+', :product => products(:fishoil).id})
     end
 
     2.times do
-      @cart.apply({:op => '+', :product => products(:cream).sku})
+      @cart.apply({:op => '+', :product => products(:cream).id})
     end
 
     assert_equal(5, @cart.size)
@@ -30,15 +30,22 @@ class CartTest < ActiveSupport::TestCase
 
   test 'remove item(s) from cart' do
     2.times do
-      @cart.apply({:op => '+', :product => products(:cream).sku})
+      @cart.apply({:op => '+', :product => products(:cream).id})
     end
     assert_equal(2, @cart.size)
-    @cart.apply({:op => '-', :product => products(:cream).sku})
+    @cart.apply({:op => '-', :product => products(:cream).id})
     assert_equal(1, @cart.size)
   end
 
+  test 'remove product from cart' do
+    populate_cart
+    assert_equal(5, @cart.size)
+    @cart.apply({:op => 'r', :product => products(:cream).id})
+    assert_equal(2, @cart.size)
+  end
+
   test 'clear cart' do
-    @cart.apply :op => '+', :product => products(:cream).sku
+    @cart.apply :op => '+', :product => products(:cream).id
     assert_not(@cart.empty?)
     @cart.clear
     assert(@cart.empty?)
@@ -50,7 +57,7 @@ class CartTest < ActiveSupport::TestCase
   end
 
   test 'generate order on single order item' do
-    @cart.apply({:op => '+', :product => products(:cream).sku})
+    @cart.apply({:op => '+', :product => products(:cream).id})
     order = @cart.generate_order @u
     assert_not_nil(order)
     # make sure correct order is generated
@@ -59,7 +66,7 @@ class CartTest < ActiveSupport::TestCase
 
   test 'can not generate order for more than 99 items' do
     100.times do
-      @cart.apply({:op => '+', :product => products(:fishoil).sku})
+      @cart.apply({:op => '+', :product => products(:fishoil).id})
     end
 
     assert_raises(::Exceptions::CartError) do
@@ -69,7 +76,7 @@ class CartTest < ActiveSupport::TestCase
 
   test 'generate order on multiple order items' do
     2.times do
-      @cart.apply :op => '+', :product => products(:fishoil).sku
+      @cart.apply :op => '+', :product => products(:fishoil).id
     end
 
     assert_nothing_raised do
@@ -87,18 +94,27 @@ class CartTest < ActiveSupport::TestCase
     populate_cart
     json = JSON.parse @cart.to_json
     assert_not_empty(json)
-    assert_equal(2, json.count { |x| x == products(:fishoil).sku })
-    assert_equal(3, json.count { |x| x == products(:cream).sku })
+    assert_equal(2, json.count { |x| x == products(:fishoil).id })
+    assert_equal(3, json.count { |x| x == products(:cream).id })
+  end
+
+  test 'response contains full description of cart' do
+    populate_cart
+    data = @cart.full_form
+    assert_equal(2, data.size)
+    assert_equal(2, data.first[:quantity])
+    assert_equal(3, data.second[:quantity])
+
+    assert(data.first[:product])
   end
 
   def populate_cart
     2.times do
-      @cart.apply :op => '+', :product => products(:fishoil).sku
+      @cart.apply :op => '+', :product => products(:fishoil).id
     end
 
     3.times do
-      @cart.apply :op => '+', :product => products(:cream).sku
+      @cart.apply :op => '+', :product => products(:cream).id
     end
-
   end
 end

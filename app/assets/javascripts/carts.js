@@ -7,6 +7,10 @@ var app = new Vue({
         // Cart error
         status() {
             return this.$store.getters.checkoutStatus
+        },
+
+        cart() {
+          return this.$store.getters.cart
         }
     },
 
@@ -15,8 +19,12 @@ var app = new Vue({
 
         },
 
-        removeFromCart() {
-            this.$store.dispatch
+        removeFromCart(id) {
+          this.$store.dispatch('removeProduct', id)
         }
+    },
+
+    created() {
+      this.$store.dispatch('getCart')
     }
 })
