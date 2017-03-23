@@ -140,42 +140,16 @@ export default {
         })
     },
 
-    addCart: (product) => {
-        return fetch('/cart', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRF-Token': util.csrfToken()
-            },
-            credentials: 'same-origin',
-            body: JSON.stringify({
-                items: [{op: '+', product: product}]
-            })
-        })
-    },
-
-    delCart: (product) => {
-        return fetch('/cart', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRF-Token': util.csrfToken()
-            },
-            credentials: 'same-origin',
-            body: JSON.stringify({
-                items: [{op: '-', product: product}]
-            })
-        })
-    },
-
     // Totally removes product from cart
     removeProduct: function (id) {
       debugger
       return this.csrf_fetch('PUT', '/cart', JSON.stringify({
         items: [{op: 'r', product: id}]
       }))
+    },
+
+    updateCart: function(id, newQuantity) {
+
     },
 
     getCart: () => {

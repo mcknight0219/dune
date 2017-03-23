@@ -9,7 +9,8 @@ const state = {
     orders: [],
     updateOrderStatus: null,
     addresses: [],
-    packages: []
+    packages: [],
+    products: []
 }
 
 export const mutations = {

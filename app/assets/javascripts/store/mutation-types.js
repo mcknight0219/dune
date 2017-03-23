@@ -1,8 +1,7 @@
 // Cart
 export const RECEIVE_CARTS = 'RECEIVE_CARTS'
 export const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
-export const ADD_TO_CART = 'ADD_TO_CART'
-export const DEL_FROM_CART = 'DEL_FROM_CART'
+export const UPDATE_CART = 'UPDATE_CART'
 export const CART_SUCCESS = 'CART_SUCCESS'
 export const CART_FAILED = 'CART_FAILED'
 // Product

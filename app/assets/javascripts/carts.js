@@ -15,12 +15,29 @@ var app = new Vue({
     },
 
     methods: {
-        updateCart() {
+        productUrl(p) {
+            return "/products/" + p.id
+        },
 
+        updateCart(id, quantity) {
+            $this.strore.dispatch('updateCart', id, quantity)    
         },
 
         removeFromCart(id) {
           this.$store.dispatch('removeProduct', id)
+        }
+    },
+
+    watch: {
+        cart: {
+            deep: true,
+            // detect change in quantity
+            handler: function(val, oldVal) {
+                if (val.length === 0) {
+                    return
+                }
+                this.$store.dispatch('updateCart', val.product.id, p.quantity)
+            }
         }
     },
 

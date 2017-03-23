@@ -15,8 +15,8 @@ var app = new Vue({
       return index % 4 === 0
     },
 
-    addCart(productId) {
-      this.$store.dispatch('addToCart', {id: productId})
+    addCart(productId, n) {
+      this.$store.dispatch('addToCart', {id: productId, quantity: n})
     }
   }
 })
