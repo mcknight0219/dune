@@ -20,9 +20,11 @@ class CartsController < ApplicationController
   def update
     cart = get_cart
     begin
-      params[:items].each do |it|
-        cart.apply(it)
+      cart_params.each do |item|
+        cart.update(item)
       end
+      # save it to session
+      session[:cart] = cart.items
       render :json => { success: true }
     rescue ::Exceptions::CartError
       render :json => { error: 'could not update cart', success: false }, :status => 500
@@ -32,12 +34,10 @@ class CartsController < ApplicationController
   private
 
   def get_cart
-    if session['cart'].nil?
-      new_cart = Cart.new
-      session['cart'] = new_cart
-      return new_cart
-    else
-      return Cart.new(session['cart']['items'])
-    end
+    return Cart.new(session.key?('cart') ? session['cart'] : [])
+  end
+
+  def cart_params
+    params.require(:cart)
   end
 end

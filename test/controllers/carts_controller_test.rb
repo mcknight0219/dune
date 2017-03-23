@@ -23,18 +23,14 @@ class CartsControllerTest < ActionDispatch::IntegrationTest
 
   test "update cart" do
     perform_action_as users(:client) do
+      put cart_path, xhr: true, params: {:cart => [{:id => @product1.id, :quantity => 1}, {:id => @product2.id, :quantity => 2}]}
+      assert_response :success
+      assert_equal(3, session[:cart].length)
 
+      put cart_path, xhr: true, params: {:cart => [{:id => @product2.id, :quantity => 0}]}
+      assert_response :success
+      assert_equal(1, session[:cart].length)
+      assert_equal(@product1.id, session[:cart].first.to_i)
     end
   end
-
-  test "add products to cart and update cart" do
-    perform_action_as users(:client) do
-      put cart_path, xhr: true, params: {:items => [{:op => '+', :product => @product1.sku}, {:op => '+', :product => @product2.sku}]}
-      assert_response(:success)
-      cart = @request.session["cart"]
-      assert_not_nil(cart)
-      assert_equal(2, cart.size)
-    end
-  end
-
 end

@@ -7,20 +7,13 @@ class Cart
     @items = items
   end
 
-  def apply(item)
-    if item.kind_of?(Array) 
-      item.each { |it| apply(it) }
-      return
+  def update(item)
+    if items.find(item[:id])
+      items.delete_if { |x| x == item[:id] }
     end
     
-    if item[:op] == '+'
-      items << item[:product]
-    elsif item[:op] == 'r'
-      items.delete_if { |i| i == item[:product] }
-    else
-      #无法删除不存在的
-      raise Exceptions::CartError if items.index(item[:product]).nil?
-      items.delete_at(items.index(item[:product]) || items.length)
+    item[:quantity].to_i.times do
+      items << item[:id]
     end
   end
 
