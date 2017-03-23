@@ -35,9 +35,9 @@
               <li class="one_quarter" <% if index % 4 == 0 %>class="first"<% end %>>
                 <%= image_tag("co2.jpg") %></a>
                 <figcaption><%= product.name %></figcaption>
-                <figcaption><b>现价: <%= product.price%></b></figcaption>
+                <figcaption><b>价格: <%= product.price%></b></figcaption>
                 <figcaption class="addnow">
-                <div class="btn" v-on:click=<%= "addCart(#{product.id})" %>>加入购物车</div> 
+                <div class="btn" v-on:click=<%= "addCart(#{product.id}, 1)" %>>加入购物车</div> 
                 </figcaption>
               </li>
             <% end %>

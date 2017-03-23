@@ -9,11 +9,9 @@
             <li class="productprice"><b>价格:</b><%= @product.price %></li>
             <li class="productdetails"><b>重量:</b> <%= @product.weight %></li>
             <li class="orderquantity"><b>数量:</b></li>
-            <li><%= number_field(:quantity, '') %></li>
+            <li><%= number_field(:quantity, '', :value => '1', :min => 1) %></li>
             <li class="productdetails">
-              <footer>
-                <a class="btn">加入购物车</a>
-              </footer>
+                <a class="btn" v-on:click="addCart(@product.id)">加入购物车</a>
             </li>
           </ul>
         </figure>
