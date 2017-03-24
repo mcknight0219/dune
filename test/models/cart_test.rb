@@ -23,8 +23,15 @@ class CartTest < ActiveSupport::TestCase
   end
 
   test 'update cart' do
-    @cart.update({:id => products(:fishoil), :quantity => 1})
+    @cart.update({:id => products(:fishoil).id, :quantity => 1})
     assert_equal(1, @cart.size)
+  end
+
+  test 'remove product totally' do
+    populate_cart
+    assert_equal(5, @cart.size)
+    @cart.update({:id => products(:fishoil).id, :quantity => 0})
+    assert_equal(3, @cart.size)
   end
 
   test 'to_json' do

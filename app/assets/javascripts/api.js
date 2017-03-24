@@ -142,25 +142,18 @@ export default {
 
     // Totally removes product from cart
     removeProduct: function (id) {
-      debugger
       return this.csrf_fetch('PUT', '/cart', JSON.stringify({
-        items: [{op: 'r', product: id}]
+        cart: [{id: id, quantity: 0}]
       }))
     },
 
     updateCart: function(id, newQuantity) {
-
+      return this.csrf_fetch('PUT', '/cart', JSON.stringify({
+        cart:[{id: id, quantity: newQuantity}]
+      }))
     },
 
-    getCart: () => {
-      return fetch('/cart', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Requested-With': 'XMLHttpRequest',
-          'X-CSRF-Token': util.csrfToken()
-        },
-        credentials: 'same-origin'
-      })
+    getCart: function() {
+      return this.csrf_fetch('GET', '/cart')
     }
 };

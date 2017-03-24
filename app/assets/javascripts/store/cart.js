@@ -85,14 +85,19 @@ export const actions = {
             })
     },
 
-    // Add products to cart
     addToCart({commit}, {id, quantity}) {
         const record = state.fullCart.find(o => o.product.id === id)
-        if (record) {
-            updateCart(id, record.quantity+quantity)
-        } else {
-            updateCart(id, quantity)
-        }
+        const q = record ? record.quantity + quantity : quantity
+        api.updateCart(id, q)
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              commit(types.UPDATE_CART, id, q)
+              commit(types.CART_SUCCESS)
+            } else {
+              commit(types.CART_FAILED)
+            }
+          })
     }
 }
 

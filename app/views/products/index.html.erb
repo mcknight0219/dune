@@ -36,9 +36,7 @@
                 <%= image_tag("co2.jpg") %></a>
                 <figcaption><%= product.name %></figcaption>
                 <figcaption><b>价格: <%= product.price%></b></figcaption>
-                <figcaption class="addnow">
-                <div class="btn" v-on:click=<%= "addCart(#{product.id}, 1)" %>>加入购物车</div> 
-                </figcaption>
+                <div class="btn" v-on:click=<%= "addCart(#{product.id},1)" %>>加入购物车</div> 
               </li>
             <% end %>
           </ul>

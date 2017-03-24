@@ -33,10 +33,6 @@ var app = new Vue({
             deep: true,
             // detect change in quantity
             handler: function(val, oldVal) {
-                if (val.length === 0) {
-                    return
-                }
-                this.$store.dispatch('updateCart', val.product.id, p.quantity)
             }
         }
     },

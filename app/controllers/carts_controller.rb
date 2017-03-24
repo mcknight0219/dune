@@ -21,6 +21,7 @@ class CartsController < ApplicationController
     cart = get_cart
     begin
       cart_params.each do |item|
+        raise ::Exception::CartError if item[:quantity].to_i < 0
         cart.update(item)
       end
       # save it to session
