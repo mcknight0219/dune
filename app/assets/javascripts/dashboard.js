@@ -23,5 +23,11 @@ var app = new Vue({
         'order-panel': OrderPanel,
         'product-panel': ProductPanel,
         'package-panel': PackagePanel
+    },
+
+    data() {
+        return {
+
+        }
     }
 });

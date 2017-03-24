@@ -28,7 +28,19 @@ class CartsController < ApplicationController
       session[:cart] = cart.items
       render :json => { success: true }
     rescue ::Exceptions::CartError
-      render :json => { error: 'could not update cart', success: false }, :status => 500
+      render :json => { error: '无法更新购物车。请稍后重试', success: false }, :status => 500
+    end
+  end
+
+  # 创建订单， 并转到付款页面
+  def create
+    begin
+      order = get_cart.generate_order(current_user, Address.find(cart_params[:address_id]))
+      session[:order_id] = order.id
+      redirect_to payments_path
+    rescue Exceptions::CartError
+      flash[:error] = "无法创建订单。请稍后重试"
+      render action: :show
     end
   end
 

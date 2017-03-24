@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   # admin
   get 'dashboard', to: 'dashboard#index'
   # checkout
-  resource :checkout
+  resource :payments
   # 联系我们
   get 'contact', to: 'contact#index'
   post 'contact', to: 'contact#create'

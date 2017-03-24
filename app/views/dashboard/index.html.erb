@@ -52,5 +52,9 @@
       </transition>
     </div>
   </section>
-
+  <div class="modal" v-bind:class="{ 'is-active': true }">
+    <div class="modal-background"></div>
+    <div class="modal-content"><input class="input is-success" type="url" placeholder="http://bulma.io/images/placeholders/96x96.png"></div>
+    <button class="modal-close">设置图片</button>
+  </div>
 </div>

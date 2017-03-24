@@ -17,8 +17,8 @@ class CartTest < ActiveSupport::TestCase
   end
 
   
-  test 'generate order on empty' do
-    order = @cart.generate_order @u
+  test 'generate order on empty cart' do
+    order = @cart.generate_order @u, @u.addresses.first
     assert_nil(order)
   end
 

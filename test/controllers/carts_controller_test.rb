@@ -33,4 +33,29 @@ class CartsControllerTest < ActionDispatch::IntegrationTest
       assert_equal(@product1.id, session[:cart].first.to_i)
     end
   end
+
+  test "submit cart creates order and redirects to payments" do
+    perform_action_as users(:client) do
+      # add items to cart
+      buy [{:id => @product1.id, :quantity => 1}, {:id => @product2.id, :quantity => 2}]
+      # select an address
+      addr = users(:client).addresses.first
+      # go to payment
+      post cart_path, params: { :cart => { :address_id => addr.id } }
+      assert_redirected_to controller: 'payments', action: 'show'
+      assert(session.key? :order_id)
+    end
+  end
+
+  test 'submit cart fails' do
+    perform_action_as users(:client) do
+      buy [{:id => @product1.id, :quantity => 1}]
+
+    end
+  end
+
+  private
+  def buy(products)
+    put cart_path, xhr: true, params: { :cart => products }
+  end
 end

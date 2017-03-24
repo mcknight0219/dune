@@ -33,19 +33,17 @@ class Cart
     end
   end
 
-  def generate_order(user)
-    return nil if @items.empty?
-    raise Exceptions::CartError unless @items.length < 100
-    order = user.orders.create(items: @items.length)
+  def generate_order(user, address)
+    return nil if items.empty?
+    order = user.orders.create(items: @items.length, address: address)
     begin
       order.save!
       @items.each { |it|
         order_item = order.order_items.create
-        order_item.product = Product.find_by sku: it
+        order_item.product = Product.find (it)
         order_item.save!
       }
-
-      return order
+      order
     rescue ActiveRecord::ActiveRecordError
       raise Exceptions::CartError
     end

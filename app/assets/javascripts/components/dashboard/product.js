@@ -1,3 +1,5 @@
+import Gallery from 'components/gallery'
+
 export default {
     name: 'Product',
 
@@ -27,11 +29,17 @@ export default {
                     </div>
                     <div class="control is-horizontal">
                         <div class="control-label"><label class="label">产品描述</label></div>
-                        <div class="control"><textarea class="textarea" placeholder="添加商品的描述信息,支持markdown" v-model="newProduct.detail"></textarea></div>
+                        <div class="control"><textarea class="textarea" placeholder="添加商品的描述信息" v-model="newProduct.detail"></textarea></div>
+                    </div>
+                    <div class="control is-horizontal">
+                        <div class="control-label"><label class="label">产品照片</label></div>
+                        <div class="control">
+                            <gallery></gallery>
+                        </div>
                     </div>
                     <div class="control is-horizontal">
                         <div class="control-label"><label class="label"></label></div>
-                        <div class="control"><button class="button is-primary" @click="addProduct">确定</button><button class="button is-link">取消</button></div>
+                        <div class="control"><button class="button is-primary" @click="addProduct" v-bind:disabled="submitable">添加</button><button class="button is-link">取消</button></div>
                     </div>
                 </div>
             </article>          
@@ -95,7 +103,15 @@ export default {
     computed: {
         products() {
             return this.$store.getters.allProducts
+        },
+
+        submitable() {
+            return this.newProduct.length > 0
         }
+    },
+
+    components: {
+        'gallery': Gallery
     },
 
     methods: {
