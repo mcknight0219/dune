@@ -5,7 +5,7 @@ import store from 'store/dashboard';
 
 // Components
 const routes = [
-    { path: '/', component: OrderPanel },
+    {path: '/', component: PackagePanel},
     { path: '/order', component: OrderPanel },
     { path: '/product', component: ProductPanel},
     { path: '/package', component: PackagePanel}
@@ -23,11 +23,5 @@ var app = new Vue({
         'order-panel': OrderPanel,
         'product-panel': ProductPanel,
         'package-panel': PackagePanel
-    },
-
-    data() {
-        return {
-
-        }
     }
 });

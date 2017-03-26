@@ -1,7 +1,6 @@
 # coding: utf-8
 class ProductsController < ApplicationController
-  respond_to :json, only: [:show, :create, :update, :destroy]
-  load_and_authorize_resource
+  before_action :authenticate_user!
 
   # 显示所有商品
   def index
@@ -24,7 +23,7 @@ class ProductsController < ApplicationController
   end
   
   def create
-    p = Product.create product_params
+    p = Product.create params.permit([:name, :price, :weight, :dimension, :detail, :category] + (1..9).map { |n| "image#{n}".to_sym })
     render :json => {product: p}
   end
 

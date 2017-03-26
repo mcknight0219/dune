@@ -16,128 +16,58 @@ export default {
     },
 
 
-    getPackages: () => {
-        return fetch('/packages', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRF-Token': util.csrfToken()
-            },
-            credentials: 'same-origin'
-        })
+    getPackages: function () {
+        return this.csrf_fetch('GET', '/packages')
     },
 
-    updatePackage: (pac) => {
-        return fetch('/packages/' + pac.id, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRF-Token': util.csrfToken()
-            },
-            body: JSON.stringify({'package': { is_shipped: pac.is_shipped, is_received: pac.is_received}}),
-            credentials: 'same-origin'
-        })
+    updatePackage: function (pac) {
+        return this.csrf_fetch('PUT', '/packages/' + pac.id, JSON.stringify(
+            {
+                'package': {
+                    is_shipped: pac.is_shipped,
+                    is_received: pac.is_received
+                }
+            }))
     },
 
-    getAddresses: () => {
-        return fetch('/addresses', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRF-Token': util.csrfToken()
-            },
-            credentials: 'same-origin'
-        })
+    getAddresses: function () {
+        return this.csrf_fetch('GET', '/addresses')
     },
 
-    deleteAddress: (id) => {
-        debugger
-        return fetch('/addresses/' + id, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRF-Token': util.csrfToken()
-            },
-            credentials: 'same-origin'
-        })
+    deleteAddress: function (id) {
+        return this.csrf_fetch('DELETE', '/addresses/' + id)
     },
 
-    getProducts: () => {
-        return fetch('/products', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRF-Token': util.csrfToken()
-            },
-            credentials: 'same-origin'
-        })
+    getProducts: function () {
+        return this.csrf_fetch('GET', '/products')
     },
 
-    newProduct: (data) => {
+    newProduct: function (form) {
         return fetch('/products', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest',
                 'X-CSRF-Token': util.csrfToken()
             },
-            body: JSON.stringify({product: data}),
-            credentials: 'same-origin'
+            credentials: 'same-origin',
+            body: form
         })
     },
 
-    deleteProduct: (id) => {
-        return fetch('/products/' + id, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMlHttpRequest',
-                'X-CSRF-Token': util.csrfToken()
-            },
-            credentials: 'same-origin'
-        })
+    deleteProduct: function (id) {
+        return this.csrf_fetch('DELETE', '/products/' + id)
     },
 
-    updateProduct: (id, data) => {
-        return fetch('/products/' + id, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Request-With': 'XMLHttpRequest',
-                'X-CSRF-Token': util.csrfToken()
-            },
-            body: JSON.stringify({product: data}),
-            credentials: 'same-origin'
-        })
+    updateProduct: function (id, data) {
+        return this.csrf_fetch('PUT', '/products/' + id, JSON.stringify({product: data}))
     },
 
     getOrders() {
-        return fetch('/orders', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMlHttpRequest',
-                'X-CSRF-Token': util.csrfToken()
-            },
-            credentials: 'same-origin'
-        })
+        return this.csrf_fetch('GET', '/orders')
     },
 
     shipOrder(id) {
-        return fetch('/orders/' + id, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRF-Token': util.csrfToken()
-            },
-            credentials: 'same-origin'
-        })
+        return this.csrf_fetch('PUT', '/orders/' + id)
     },
 
     // Totally removes product from cart
