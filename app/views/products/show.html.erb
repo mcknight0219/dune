@@ -1,82 +1,41 @@
 <div class="wrapper row3">
   <main class="hoc container clear">
     <div class="content">
-      <div id="gallery">
+
+      <div class="one_half first" style="margin-top: 20px;">
         <figure>
-          <a href="#" class="one_half first"><%= image_tag("co.jpg") %></a>
-          <ul class="one_half">
-            <li class="productname"><%= @product.name %></li>
-            <li class="productprice"><b>价格:</b><%= @product.price %></li>
-            <li class="productdetails"><b>重量:</b> <%= @product.weight %></li>
-            <li class="orderquantity"><b>数量:</b></li>
-            <li><%= number_field(:quantity, '', :value => '1', :min => 1) %></li>
-            <li class="productdetails">
-                <a class="btn" v-on:click="addCart(@product.id)">加入购物车</a>
-            </li>
-          </ul>
+          <%= image_tag @product.image1.url, size: "350x350", style: "width:350px;height:350px" %>
         </figure>
       </div>
-    </div>
-    <div class="content">
-      <div id="gallery">
-        <h2>产品详情:</h2>
-        <p><%= @product.detail %></p>
+      <div class="one_half">
+        <p style="font-weight: 600;font-size: 25px;"><%= @product.name %></p>
+        <div style="">
+          <span style="float:left;font-size: 18px;">价格:</span>
+          <span style="float:right;font-size: 19px;color: red;text-align: left;"><%= "CDN$#{@product.price}" %></span>
+        </div>
+        <div class="clear"></div>
+        <div style="font-weight: 400; font-size: 17px; margin-top:20px;">产品描述</div>
+        <p style="padding-top:0px;color:gray;"><%= @product.detail %></p>
+        <div>
+          <div style="margin-bottom: 6px;">
+            <label style="display:inline;padding-right: 5px;">数量：</label>
+            <select style="display: inline;">
+              <option value="1" selected>1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </div>
+          <a class="btn btn-lg">加入购物车</a>
+        </div>
+      </div>
       </div>
     </div>
-    <div class="scrollable">
-      <table>
-        <thead>
-        <tr>
-          <th>瓶/箱</th>
-          <th>重量 磅</th>
-          <th>邮费 CAD</th>
-          <th>箱子</th>
-          <th>税后价格CAD/箱</th>
-          <th>总费用CAD/箱</th>
-          <th>平均CAD/箱</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td>1</td>
-          <td>2</td>
-          <td>11</td>
-          <td>1</td>
-          <td>17</td>
-          <td>29</td>
-          <td>29</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>2</td>
-          <td>11</td>
-          <td>1</td>
-          <td>34</td>
-          <td>46</td>
-          <td>23</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>2</td>
-          <td>11</td>
-          <td>1</td>
-          <td>51</td>
-          <td>63</td>
-          <td>21</td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>3</td>
-          <td>16.5</td>
-          <td>1</td>
-          <td>68</td>
-          <td>85</td>
-          <td>21.38</td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="clear"></div>
+
+
+
+<div class="clear"></div>
   </main>
 </div>
 
