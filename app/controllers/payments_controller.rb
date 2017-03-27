@@ -22,9 +22,4 @@ class PaymentsController < ApplicationController
       redirect_to action: :show
     end
   end
-
-  def get_cart
-    return Cart.new(session.key?('cart') ? session['cart'] : [])
-  end
-
 end

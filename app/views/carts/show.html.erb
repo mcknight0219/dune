@@ -12,7 +12,7 @@
             <div class="two_quarter first">
               <div class="one_third first" style="margin:auto;">
                 <div class="">
-                  <%=	 image_tag("https://images-na.ssl-images-amazon.com/images/I/41Xe4iVnYHL._AC_SY200_.jpg", size: "100x100") %>
+                  <img v-bind:src="item.image1" width="100" height="100">
                 </div>
               </div>
               <div class="two_third">
@@ -29,17 +29,36 @@
               </div>
             </div>
             <div class="one_quarter">
-              <input type="number" min="1" v-model="item.quantity">
+              <input type="number" min="1" v-bind:value="item.quantity" v-on:change="updateQuantity(item.product.id, $event)">
             </div>
           </div>
       </div>
     </div>
+    <div class="wrapper row3">
+      <main class="hoc container clear btmpad-none">
+        <div class="content">
+          <h2 class="receivername title-divider"><span>选择寄送地址</span></h2>
+          <p>请选择中国的地址，我们暂不提供本地配送</p>
+          <div id="comments">
+            <p class="divider">收件人是否在列表中？如果是，请点击选此收件人。若否，请 <%= link_to '新建收件人地址', new_address_path(:returnUrl => packages_path) %></p>
+            <div class="one_third first" v-if="addresses.length > 6 || inSearch">
+              <input type="text" placeholder="姓名，电话，身份证" v-model="query">
+            </div>
+            <div class="clear"></div>
+            <address-label v-for="(address, index) in addresses" v-bind:pos="index" v-bind:selected="selectedAddress === address" v-bind:address="address" v-on:delete="removeAddress(address)" v-on:selected="selectAddress(address)"></address-label>
+          </div>
+        </div>
+      </main>
+    </div>
     <!-- / main body -->
     <div class="clear"></div>
     <div style="margin-top: 20px;">
-      <a href=<%= checkout_path %>>
-        <button class="btn">付款购买</button>
-      </a>
+      <%= form_tag '/cart', html: {} do  %>
+          <div class="block">
+            <%= hidden_field_tag :address_id, nil, "v-model": "selectedAddress.id" %>
+            <%= submit_tag '确认订单', "v-bind:disabled": "disableSubmit", "class": 'btn' %>
+          </div>
+      <% end %>
     </div>
   </main>
 </div>

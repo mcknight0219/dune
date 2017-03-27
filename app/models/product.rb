@@ -15,4 +15,18 @@ class Product < ApplicationRecord
     self.sku ||= Sku.new(self.category).to_str
     self.active ||= true
   end
+
+  def as_json
+    super.as_json(except: exclude_list).merge(urls_hash)
+  end
+
+  private
+
+  def exclude_list
+    (1..9).reduce([]) { |excludes, n| excludes = excludes + ["image#{n}_file_name", "image#{n}_content_type", "image#{n}_file_size", "image#{n}_updated_at"]}.flatten
+  end
+
+  def urls_hash
+    (1..9).reduce({}) { |hsh, n| hash["image#{n}"] = self.send("image#{n}").url if self.send("image#{n}").size } || {}
+  end
 end

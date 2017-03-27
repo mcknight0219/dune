@@ -35,7 +35,7 @@ class CartsController < ApplicationController
   # 创建订单， 并转到付款页面
   def create
     begin
-      order = get_cart.generate_order(current_user, Address.find(cart_params[:address_id]))
+      order = get_cart.generate_order(current_user, Address.find(params[:address_id]))
       session[:order_id] = order.id
       redirect_to payments_path
     rescue Exceptions::CartError
@@ -47,7 +47,7 @@ class CartsController < ApplicationController
   private
 
   def get_cart
-    return Cart.new(session.key?('cart') ? session['cart'] : [])
+    return Cart.new(session.key?(:cart) ? session[:cart] : [])
   end
 
   def cart_params

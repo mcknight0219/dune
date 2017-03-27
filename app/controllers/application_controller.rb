@@ -13,4 +13,8 @@ class ApplicationController < ActionController::Base
   def detect_device_variant
     request.variant = :mobile if browser.device.mobile?
   end
+
+  def get_cart
+    return Cart.new(session.key?('cart') ? session['cart'] : [])
+  end
 end

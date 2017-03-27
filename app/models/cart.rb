@@ -9,11 +9,11 @@ class Cart
 
   def update(item)
     if items.find(item[:id])
-      items.delete_if { |x| x == item[:id] }
+      @items.delete_if { |x| x == item[:id] }
     end
     
     item[:quantity].to_i.times do
-      items << item[:id]
+      @items << item[:id]
     end
   end
 
@@ -29,7 +29,7 @@ class Cart
     end
     # retrieve information for each product
     counts.map do |id, n|
-      {:quantity => n, :product => Product.find(id).as_json(:except => [:created_at, :updated_at])}
+      { :quantity => n, :product => Product.find(id).as_json }
     end
   end
 

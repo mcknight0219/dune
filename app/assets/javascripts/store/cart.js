@@ -1,4 +1,5 @@
 import * as types from 'store/mutation-types'
+import addressModule from 'store/address'
 import api from 'api'
 
 const state = {
@@ -22,11 +23,11 @@ export const mutations = {
         }
     },
 
-    [types.UPDATE_CART] (state, id, diff) {
+    [types.UPDATE_CART] (state, {id, q}) {
         state.checkoutStatus = null
         const record = state.fullCart.find(p => id === p.product.id)
         if (record) {
-            record.quantity = record.quantity + diff
+            record.quantity = q
             state.checkoutStatus = 'successful'
         } else {
             state.checkoutStatus = 'failed'
@@ -72,12 +73,13 @@ export const actions = {
 
     },
 
-    updateCart ({commit}, id, newQuantity) {
-        api.updateCart(id, newQuantity)
+    updateCart ({commit}, {id, q}) {
+        debugger
+        api.updateCart(id, q)
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    commit(types.UPDATE_CART, id, newQuantity)
+                    commit(types.UPDATE_CART, { id, q })
                     commit(types.CART_SUCCESS)
                 } else {
                     commit(types.CART_FAILED)
@@ -86,13 +88,14 @@ export const actions = {
     },
 
     addToCart({commit}, {id, quantity}) {
+        debugger
         const record = state.fullCart.find(o => o.product.id === id)
         const q = record ? record.quantity + quantity : quantity
         api.updateCart(id, q)
           .then(response => response.json())
           .then(data => {
             if (data.success) {
-              commit(types.UPDATE_CART, id, q)
+              commit(types.UPDATE_CART, { id, q })
               commit(types.CART_SUCCESS)
             } else {
               commit(types.CART_FAILED)
@@ -101,12 +104,20 @@ export const actions = {
     }
 }
 
-export default new Vuex.Store({
+const cartModule = {
     state,
     mutations,
     actions,
     getters: {
         checkoutStatus: state => state.checkoutStatus,
-            cart: state => state.fullCart
+        cart: state => state.fullCart
+    }
+}
+
+
+export default new Vuex.Store({
+    modules: {
+        cart: cartModule,
+        address: addressModule
     }
 })

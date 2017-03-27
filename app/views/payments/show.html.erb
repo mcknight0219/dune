@@ -1,24 +1,29 @@
-<%= form_tag checkout_path do %>
-  <div id="error_explanation">
-    <% if flash[:error].present? %>
-      <p><%= flash[:error] %></p>
+<div class="wrapper row3">
+  <main class="hoc container clear">
+    <%= form_tag payments_path do %>
+        <div id="error_explanation">
+          <% if flash[:error].present? %>
+              <p><%= flash[:error] %></p>
+          <% end %>
+        </div>
+        <div class="order_summary">
+          <ul style="list-style: none">
+            <li>商品总价</li>
+            <li>邮寄费用</li>
+            <li>合计</li>
+          </ul>
+        </div>
+        <article>
+          <label class="amount">
+            <span>Amount: <%= number_to_currency(@amount) %></span>
+          </label>
+        </article>
+        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+                data-description="Cart checkout"
+                data-amount="<%= @amount %>"
+                data-locale="ca"></script>
     <% end %>
-  </div>
-  <% @checkout_items.each do |item| %>
-  <div class="checkout-item">
-    <div class="name">item.name</div>
-    <div class="price">item.price</div>
-  </div>
-  <% end %>
-  <article>
-    <label class="amount">
-      <span>Amount: <%= number_to_currency(@amount) %></span>
-    </label>
-  </article>
-  <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-  data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
-  data-description="Cart checkout"
-  data-amount="<%= @amount %>"
-  data-locale="ca"></script>
-<% end %>
+  </main>
+</div>
 

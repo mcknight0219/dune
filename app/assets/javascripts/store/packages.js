@@ -1,6 +1,7 @@
 import api from 'api';
+import addressModule from 'address'
 
-export default new Vuex.Store({
+const packageModule = {
     state: {
         packageItems: [],
         addresses: [],
@@ -55,16 +56,23 @@ export default new Vuex.Store({
         },
 
         deleteAddress({commit}, addr) {
-           api.deleteAddress(addr.id)
-               .then(response => response.json())
-               .then(() => {
-                   commit('DELETE_ADDRESS', addr)
-               })
+            api.deleteAddress(addr.id)
+                .then(response => response.json())
+                .then(() => {
+                    commit('DELETE_ADDRESS', addr)
+                })
         }
     },
 
     getters: {
         allPackageItems: state => state.packageItems,
         allAddresses: state => state.addresses
+    }
+}
+
+export default new Vuex.Store({
+    modules: {
+        package: packageModules,
+        address: addressModule
     }
 });
