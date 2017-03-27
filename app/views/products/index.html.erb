@@ -1,50 +1,41 @@
 <div id="app"> 
 <div class="wrapper row3">
   <main class="hoc container clear">
-    <div class="sidebarJ one_quarter first">
-      <h6>目录</h6>
-      <nav class="sdb_holder">
-        <ul>
-          <li><a href="#">所有产品</a></li>
-          <ul>
-            <li><a href="#">保健品</a></li>
-            <li><a href="#">奶粉</a>
-              <ul>
-                <li><a href="#">雅培</a></li>
-                <li><a href="#">雀巢</a></li>
-              </ul>
-            </li>
-            <li><a href="#">日用品</a>
-              <ul>
-                <li><a href="#">护肤品</a></li>
-                <li><a href="#">洗浴用</a>
-                </li>
-              </ul>
-            </li>
-            <li><a href="#">折扣产品</a></li>
-          </ul>
+    <div class="content">
+      <div style="margin-bottom: 35px;" class="block">
+        <ul style="list-style: none;padding-left: 0;display:flex; font-size: 16px;">
+          <li style="display: list-item;padding:8px 13px;border: 1px solid #2BB656;border-top-left-radius: 5px;border-bottom-left-radius: 5px;">所有产品</li>
+          <li style="display: list-item;padding:8px 13px;border: 1px solid #2BB656;">化妆品</li>
+          <li style="display: list-item;padding:8px 13px;border: 1px solid #2BB656;border-top-right-radius: 5px;border-bottom-right-radius: 5px">营养品</li>
         </ul>
-      </nav>
-    </div>
-
-    <div class="content three_quarter">
-      <div id="gallery">
-        <figure>
-          <ul class="nospace clear">
-            <% @products.each_with_index do |product, index| %>
-              <li class="one_quarter" <% if index % 4 == 0 %>class="first"<% end %>>
-                <%= image_tag("co2.jpg") %></a>
-                <figcaption><%= product.name %></figcaption>
-                <figcaption><b>价格: <%= product.price%></b></figcaption>
-                <div class="btn" v-on:click=<%= "addCart(#{product.id},1)" %>>加入购物车</div> 
-              </li>
-            <% end %>
-          </ul>
-        </figure>
       </div>
-      <nav class="pagination">
-        <%= will_paginate @products %>
-      </nav>
+      <% @products.each_with_index do |product, index| %>
+          <div class="one_quarter <%= 'first' if index % 4 == 0 %>" style="text-align: center; margin-top:25px;">
+            <figure>
+              <%= image_tag product.image1.url, size: "150x150", style: "width:150px;height:150px" %>
+            </figure>
+            <div style="text-align: center;">
+              <p style="font-weight:500; font-size:18px;margin-top:10px;text-overflow: ellipsis;line-height: 16px; max-height: 32px;overflow:hidden;"><%= link_to product.name, product_path(product.id) %></p>
+              <div style="color:gray; margin-top:6px;">Costco, Canada</div>
+              <div style="font-weight: 400"><%= "CDN $#{product.price}" %></div>
+            </div>
+            <div>
+              <div style="margin-bottom: 6px;">
+                <label style="display:inline;padding-right: 5px;">数量：</label>
+                <select style="display: inline;">
+                  <option value="1" selected>1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </div>
+              <a class="btn btn-lg">加入购物车</a>
+            </div>
+          </div>
+      <% end %>
+      <%= will_paginate @products %>
+
     </div>
     <div class="clear"></div>
   </main>

@@ -106,7 +106,7 @@ export default {
             <article class="tile is-child box">
                 <h4 class="title">产品列表</h4>
                 <table class="table">
-                    <thead><tr><th>名称</th><th>价格</th><th>重量</th><th>删除</th></tr></thead>
+                    <thead><tr><th>名称</th><th>价格</th><th>重量(kg)</th><th>删除</th></tr></thead>
                     <tbody>
                         <tr v-for="p in products">
                             <td>{{ p.name }}</td>

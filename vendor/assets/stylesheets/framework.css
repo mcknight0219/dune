@@ -111,6 +111,7 @@ html, body {
     border-radius: 4px;
     text-transform: uppercase;
     border: 1px solid;
+    cursor: pointer;
 }
 
 .clear, .group {
