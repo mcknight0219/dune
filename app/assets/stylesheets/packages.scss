@@ -14,7 +14,7 @@
 }
 
 .title-divider {
-  background-image: image-url("title_divider");
+  background: transparent image-url("title_divider") repeat-x 0 0;
 
   span {
     color: #2BB656;
