@@ -27,6 +27,10 @@ class Product < ApplicationRecord
   end
 
   def urls_hash
-    (1..9).reduce({}) { |hsh, n| hash["image#{n}"] = self.send("image#{n}").url if self.send("image#{n}").size } || {}
+    (1..9).each_with_object({}) do |n, hsh|
+      if self.send("image#{n}").size
+        hsh["image#{n}".to_sym] = self.send("image#{n}").url
+      end
+    end
   end
 end

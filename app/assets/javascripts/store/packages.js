@@ -1,5 +1,5 @@
 import api from 'api';
-import addressModule from 'address'
+import addressModule from 'store/address'
 
 const packageModule = {
     state: {
@@ -72,7 +72,7 @@ const packageModule = {
 
 export default new Vuex.Store({
     modules: {
-        package: packageModules,
+        package: packageModule,
         address: addressModule
     }
 });
