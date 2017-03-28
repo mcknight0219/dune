@@ -23,4 +23,9 @@ class OrderTest < ActiveSupport::TestCase
     cancelled = Order.cancel(@single_order.id)
     assert_nil(Order.find_by_id(cancelled.id))
   end
+
+  test 'get detail summary on payment' do
+    summary = @single_order.summary
+    assert_equal(1,summary.size)
+  end
 end

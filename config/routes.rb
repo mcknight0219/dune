@@ -9,7 +9,8 @@ Rails.application.routes.draw do
 
   get 'packages/confirm', :to  => 'packages#confirm'
   resources :packages
-  
+
+  get 'myorder', to: 'myorder#index'
   # 购物车
   resource :cart
   # admin

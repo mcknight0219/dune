@@ -1,3 +1,4 @@
+
 export default {
     name: 'Order',
 
@@ -8,7 +9,7 @@ export default {
             <article class="tile is-child box">
                 <h4 class="title">订单列表</h4>
                 <table class="table">
-                    <thead><tr><th>ID</th><th>用户</th><th>总价</th><th>地址</th><th>详情</th><th>Action</th> </tr></thead>
+                    <thead><tr><th>ID</th><th>用户</th><th>总价</th><th>地址</th><th>详情</th><th>追踪号码</th></tr></thead>
                     <tbody>
                         <tr v-for="o in orders">
                             <td>{{ o.id }}</td>
@@ -16,8 +17,10 @@ export default {
                             <td>{{ o.total_price }}</td>
                             <td>{{ o.address.address_line1 + ' ' + o.address.city + ' ' + o.address.state + ' ' + o.address.city }}</td>
                             <td><ul><li v-for="item in getOrderDetail(o.items)">{{ item }}</li></ul></td>
-                            <td v-if="!o.is_shipped"><a v-on:click="markOrderShipped(o)"><i class="fa fa-truck""></i></a></td>
-                            <td v-else><a><i class="fa fa-trash""></i></a></td>
+                            <td>
+                                <input type="text" placeholder="Tracking number" v-on:change="setTrackingNumber(o.id, $event)">
+                                <button class="button is-primary" v-on:click="saveTrackingNumber(o)">保存</button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -33,6 +36,12 @@ export default {
         }
     },
 
+    data () {
+        return {
+            trackingNumbers: {}
+        }
+    },
+
     methods: {
         getOrderDetail(items) {
             let result = []
@@ -42,8 +51,13 @@ export default {
             return result
         },
 
-        markOrderShipped(order) {
-            this.$store.dispatch('shipOrder', {id: order.id})
+        saveTrackingNumber(order) {
+            this.$store.dispatch('shipOrder', {id: order.id, trackingNumber: this.trackingNumber[id.toString()]})
+        },
+
+        setTrackingNumber(id, e) {
+            debugger
+            this.$set(this.trackingNumbers, id.toString(), e.target.value)
         }
     },
 

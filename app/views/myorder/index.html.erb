@@ -1,0 +1,65 @@
+<div class="wrapper row3">
+  <main class="hoc container clear">
+    <h2 class="title-divider"><span>我的订单</span></h2>
+    <table>
+      <thead>
+        <tr>
+          <th>订单号</th>
+          <th>详细信息</th>
+          <th>总价</th>
+          <th>下单时间</th>
+          <th>查询</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @orders.each do |o| %>
+          <tr>
+            <td><%= o.id %></td>
+            <td>
+              <ul style="list-style: none; padding-left:0;">
+                <% item_lines(o).each do |name, data| %>
+                  <li>
+                    <span><%= name %></span>
+                    <span>X</span>
+                    <span><%= data[:quantity] %></span>
+                  </li>
+                <% end %>
+              </ul>
+
+            </td>
+            <td><%= total_price(o) %>加币</td>
+            <td><%= o.created_at %></td>
+            <td>等待寄出</td>
+          </tr>
+        <% end %>
+      </tbody>
+
+    </table>
+  </main>
+
+  <main class="hoc container clear">
+    <h2 class="title-divider"><span>我的寄件</span></h2>
+    <table>
+      <thead>
+      <tr>
+        <th>寄件单号</th>
+        <th>提交时间</th>
+        <th>查询</th>
+      </tr>
+      </thead>
+      <tbody>
+        <% @packages.each do |p| %>
+          <tr>
+            <td><%= p.serial %></td>
+            <td><%= p.created_at %></td>
+            <td>跟踪包裹(UPS)</td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </main>
+  <main class="hoc container clear">
+    <h2 class="title-divider"><span>我的余额</span></h2>
+    <p>此功能还未开通</p>
+  </main>
+</div>

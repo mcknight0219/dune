@@ -16,4 +16,14 @@ class Order < ApplicationRecord
   def ship(address)
     update(:shipped => true)
   end
+
+  def summary
+    self.order_items.each_with_object({}) do |item, hsh|
+      if hsh.has_key?(item.product.name)
+        hsh[item.product.name][:quantity] += 1
+      else
+        hsh[item.product.name] = {quantity: 1, price: item.product.price}
+      end
+    end
+  end
 end

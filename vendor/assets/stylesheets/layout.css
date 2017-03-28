@@ -198,6 +198,8 @@ table, th{table-layout:auto;}
 table{width:100%; margin-bottom:15px;}
 th, td{padding:5px 8px;}
 td{border-width:0 1px;}
+tr {border: 1px solid #D7D7D7;}
+tbody tr:nth-child(odd) { background-color: #f9f9f9;}
 
 
 /* Gallery & Figures
@@ -317,7 +319,7 @@ input:focus, textarea:focus, *:required:focus{border-color:#2BB656;}
 /* Tables + Comments */
 table, th, td, #comments .avatar, #comments input, .subscribe input, #comments textarea{border-color:#D7D7D7;}
 #comments input:focus, .subscribe input:focus, #comments textarea:focus, #comments *:required:focus{border-color:#2BB656;}
-th{color:#FFFFFF; background-color:#373737;}
+th {font-weight:700}
 
 tr, #comments, #comments input[type="submit"], #comments input[type="reset"] {
     padding: 10px;
