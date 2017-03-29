@@ -161,16 +161,6 @@ img {
     clear: right;
 }
 
-/* Fonts
---------------------------------------------------------------------------------------------------------------- */
-body, input, textarea, select {
-    font-family: Helvetica, Geneva, sans-serif;
-}
-
-h1, h2, h3, h4, h5, h6, .heading {
-    font-family: Helvetica, "Times New Roman", Times, serif;
-}
-
 /* Forms
 --------------------------------------------------------------------------------------------------------------- */
 form, fieldset, legend {
@@ -206,8 +196,6 @@ label {
 h1, h2, h3, h4, h5, h6, .heading {
     margin: 0 0 20px 0;
     font-size: 22px;
-    line-height: normal;
-    font-weight: normal;
     text-transform: capitalize;
 }
 

@@ -8,10 +8,14 @@ body {
 	min-height: 100%;
 	display: flex;
 	flex-direction: column;
+	font-family: "PingFang SC", "Helvetica Neue", "Helvetica", "STHeitiSC-Light", "Segoe UI", "Microsoft YaHei", "Arial", sans-serif;
 }
 /* Rows
 --------------------------------------------------------------------------------------------------------------- */
-.row1{z-index:1;}/* Required for the drop shadow - do not delete, unless the drop shadow isn't wanted */
+.row1 {
+}
+
+/* Required for the drop shadow - do not delete, unless the drop shadow isn't wanted */
 .row2, .row2 a{}
 .row3, .row3 a{}
 .row4, .row4 a{}
@@ -53,7 +57,18 @@ body {
 .infoboxes li:last-child{margin-bottom:0;}/* Used when elements stack in small viewports */
 .infoboxes li *{margin:0 0 10px 0; padding:0; line-height:1.6;}
 .infoboxes article{display:block; position:relative; padding:35px 20px 25px 20px;}
-.infoboxes article i{display:inline-block; position:absolute; top:0; left:50%; width:50px; height:50px; line-height:50px; margin:-25px 0 0 -25px; font-size:18px; z-index:1;}
+
+.infoboxes article i {
+	display: inline-block;
+	position: absolute;
+	top: 0;
+	left: 50%;
+	width: 50px;
+	height: 50px;
+	line-height: 50px;
+	margin: -25px 0 0 -25px;
+	font-size: 18px;
+}
 .infoboxes article .fa{font-size:18px;}
 .infoboxes li .btn{padding:11px 20px;}
 
@@ -137,7 +152,12 @@ body {
 nav ul, nav ol{margin:0; padding:0; list-style:none;}
 
 #mainav, #breadcrumb, .sidebar nav{line-height:normal;}
-#mainav .drop::after, #mainav li li .drop::after, #breadcrumb li a::after, .sidebar nav a::after{position:absolute; font-family:"FontAwesome"; font-size:10px; line-height:10px;}
+
+#mainav .drop::after, #mainav li li .drop::after, #breadcrumb li a::after, .sidebar nav a::after {
+	position: absolute;
+	font-size: 10px;
+	line-height: 10px;
+}
 
 /* Top Navigation */
 #mainav{}
