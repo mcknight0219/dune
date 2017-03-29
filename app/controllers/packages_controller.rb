@@ -49,6 +49,8 @@ class PackagesController < ApplicationController
       flash[:error] = '无法提交，请稍后重试'
       render 'index'
     else
+      session.delete :package_items
+      session.delete :package_luxury
       redirect_to :action => "confirm", :params => {id: new_package.serial}
     end
   end
