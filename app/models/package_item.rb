@@ -5,5 +5,5 @@ class PackageItem < ApplicationRecord
   alias category item_category
 
   validates :name, presence: true
-  validates :quantity, presence: true, numericality: { greater_than: 0 }
+  validates :quantity, presence: true
 end

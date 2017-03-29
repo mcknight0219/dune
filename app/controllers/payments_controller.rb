@@ -9,7 +9,6 @@ class PaymentsController < ApplicationController
   end
 
   def create
-    byebug
     begin
       charge = Stripe::Charge.create(
         :amount => (PriceCalculator.new(Order.find(session['order_id'])).total_price).to_i,

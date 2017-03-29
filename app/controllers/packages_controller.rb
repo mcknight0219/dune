@@ -4,11 +4,35 @@ class PackagesController < ApplicationController
 
   def index
     @package = Package.new
-    @categories = ItemCategory.all.map { |cat| [cat.name, cat.id]}
     respond_to do |format|
       format.json { render :json => {packages: getPackages(current_user).map { |p| replace_with_real_address_and_items p }} }
       format.html
     end
+  end
+
+  def new
+    @categories = ItemCategory.all.map { |cat| [cat.name, cat.id]}
+    unless session.has_key? :package_items
+      session[:package_items] = []
+    end
+    @added = session[:package_items]
+  end
+
+  def add_package_item
+    session[:package_items] << {name: params[:name], item_category_id: params[:category].to_i, quantity: params[:quantity]}
+    redirect_to action: :new
+  end
+
+  def remove_package_item
+    session[:package_items].delete_if { |item| item['name'] == params[:name] }
+    redirect_to action: :new
+  end
+
+  def choose_address
+    session[:package_luxury] = params[:luxury].present?
+    @total = current_user.addresses.count
+    @addresses = current_user.addresses.paginate(:page => params[:page], :per_page => 10)
+    render 'packages/address'
   end
 
   def destroy
@@ -16,8 +40,8 @@ class PackagesController < ApplicationController
   end
 
   def create
-    new_package = current_user.packages.create package_params
-    JSON.parse(params['package']['package_items']).each do |item|
+    new_package = current_user.packages.create luxury: session[:package_luxury], address_id: params[:address_id]
+    session[:package_items].each do |item|
       new_package.package_items.create item
     end
 

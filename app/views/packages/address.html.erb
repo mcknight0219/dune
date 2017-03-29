@@ -1,0 +1,72 @@
+<div class="wrapper row3" style="flex:1;">
+  <main class="hoc container clear btmpad-none">
+    <div class="content">
+      <ul class="progress-tracker progress-tracker--word progress-tracker--word-center">
+        <li class="progress-step is-complete">
+          <span class="progress-marker"></span>
+          <span class="progress-text">
+              添加物品
+            </span>
+        </li>
+
+        <li class="progress-step is-active">
+          <span class="progress-marker"></span>
+          <span class="progress-text">
+              选择地址
+            </span>
+        </li>
+
+        <li class="progress-step">
+          <span class="progress-marker"></span>
+          <span class="progress-text">
+              完成
+            </span>
+        </li>
+      </ul>
+      <h4 class="title-divider"><span>选择邮寄地址</span></h4>
+      <div id="comments">
+        <% if flash[:error] %>
+          <div id="flash_alert"><%= flash[:error] %></div>
+        <% end %>
+        <p>您有<%= @total %>个联系人在此列表。添加更多联系人，请 <%= link_to '新建收件人地址', new_address_path(:return => Base64.encode64('/packages/address')) %></p>
+        <% if @total > 0 %>
+            <table id="address-table">
+              <thead>
+                <tr>
+                  <td>选择</td>
+                  <td>收件人</td>
+                  <td>地址</td>
+                </tr>
+              </thead>
+              <tbody>
+                <% @addresses.each do |addr| %>
+                  <tr style="cursor:pointer;" data-address-id=<%= addr.id %>>
+                    <td><%= addr.name %></td>
+                    <td>
+                      <ul style="list-style: none;padding-left:0">
+                        <li><%= addr.address_line1 %></li>
+                        <li><%= "#{addr.city} #{addr.state} #{addr.country}, #{addr.post_code}"%></li>
+                      </ul>
+                    </td>
+                    <td>
+                      <%= link_to '编辑', edit_address_path(addr.id, return: Base64.encode64('/packages/address')) %>
+                      <%= link_to '删除', address_path(addr.id, return: Base64.encode64('/packages/address')), method: :delete %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+            <%= will_paginate @addresses %>
+
+            <%= form_tag packages_path do %>
+                <%= hidden_field_tag :address_id, '' %>
+                <div class="block btmspace-80">
+                  <%= submit_tag '提交', :class => 'btn'%>
+                </div>
+            <% end %>
+        <% end %>
+      </div>
+
+    </div>
+  </main>
+</div>

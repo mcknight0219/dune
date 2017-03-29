@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   resources :addresses
 
   get 'packages/confirm', :to  => 'packages#confirm'
+  post 'packages/add', :to => 'packages#add_package_item'
+  post 'packages/remove', :to => 'packages#remove_package_item'
+  get 'packages/address', :to => 'packages#choose_address'
   resources :packages
 
   get 'myorder', to: 'myorder#index'

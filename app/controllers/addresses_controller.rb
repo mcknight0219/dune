@@ -3,16 +3,14 @@ class AddressesController < ApplicationController
   load_and_authorize_resource
 
   def index
-    unless user_signed_in?
-      render :status => :forbidden, :json => {success: false}
-    else
-      addresses = current_user.admin? ? Address.all : current_user.addresses
-      render :json => {addresses: addresses}
-    end
+    addresses = current_user.admin? ? Address.all : current_user.addresses
+    render :json => {addresses: addresses}
   end
 
   def new
-    authenticate_user!
+    if params[:return].present?
+      session[:return] = Base64.decode64(params[:return])
+    end
     @address = current_user.addresses.new
   end
 
@@ -21,27 +19,43 @@ class AddressesController < ApplicationController
   end
 
   def edit
+    if params[:return].present?
+      session[:return] = Base64.decode64(params[:return])
+    end
     @address = Address.find params[:id]
   end
 
   def destroy
     address = Address.find(params[:id])
-    if address.orders.empty?
-      address.destroy
-      render :json => { success: true }
-    else
-      render :status => 403, :json => { success: false, error: 'address is still in use' }
+    respond_to do |format|
+      format.json {
+        if address.orders.empty?
+          address.destroy
+          render :json => { success: true }
+        else
+          render :status => 403, :json => { success: false, error: 'address is still in use' }
+        end
+      }
+      format.html {
+        if address.orders.empty?
+          address.destroy
+        else
+          flash[:error] = '无法删除该地址'
+        end
+        redirect_back fallback_location: :root_path
+      }
     end
   end
 
   def create
     new_address = current_user.addresses.create address_params
-
     if new_address.persisted?
-      if params[:returnUrl]
-        redirect_to params[:returnUrl]
+      redirection = session[:return]
+      if redirection
+        session.delete :return
+        redirect_to redirection
       else
-        redirect_to controller: 'packages', action: 'index'
+        redirect_back fallback_location: :root_path
       end
     else
       flash[:errors] = new_address.errors
@@ -52,7 +66,13 @@ class AddressesController < ApplicationController
   def update
     updated = Address.find(params[:id]).update address_params
     if updated
-      redirect_to :controller => 'packages', :action => 'index'
+      redirection = session[:return]
+      if redirection
+        session.delete :return
+        redirect_to redirection
+      else
+        redirect_back :root_path
+      end
     else
       flash[:error] = 'Error saving update. Please try later.'
       redirect_to action: :edit, id: params[:id]
