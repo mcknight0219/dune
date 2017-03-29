@@ -45,6 +45,10 @@ class CartsController < ApplicationController
     end
   end
 
+  def create_order_for_one
+    redirect_to :action => :show
+  end
+
   private
 
   def get_cart

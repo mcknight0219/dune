@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get 'myorder', to: 'myorder#index'
   # 购物车
   resource :cart
+  post 'cart/new', to: 'carts#create_order_for_one'
   # admin
   get 'dashboard', to: 'dashboard#index'
   # checkout

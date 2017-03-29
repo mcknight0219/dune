@@ -1,4 +1,4 @@
-<div class="wrapper row3">
+<div class="wrapper row3" style="flex:1;">
   <main class="hoc container clear">
     <div class="content">
 
@@ -11,23 +11,15 @@
         <p style="font-weight: 600;font-size: 25px;"><%= @product.name %></p>
         <div style="">
           <span style="float:left;font-size: 18px;">价格:</span>
-          <span style="float:right;font-size: 19px;color: red;text-align: left;"><%= "CDN$#{@product.price}" %></span>
+          <span style="float:left;font-size: 19px;color: red;text-align: left;margin-left:20px"><%= "#{@product.price} 加元" %></span>
         </div>
         <div class="clear"></div>
         <div style="font-weight: 400; font-size: 17px; margin-top:20px;">产品描述</div>
         <p style="padding-top:0px;color:gray;"><%= @product.detail %></p>
-        <div>
-          <div style="margin-bottom: 6px;">
-            <label style="display:inline;padding-right: 5px;">数量：</label>
-            <select style="display: inline;">
-              <option value="1" selected>1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
-          </div>
-          <a class="btn btn-lg">加入购物车</a>
+        <div style="margin-top:25px;">
+          <%= form_tag new_cart_path do %>
+              <%= submit_tag "加入购物车", :class => 'btn btn-lg' %>
+          <% end %>
         </div>
       </div>
       </div>

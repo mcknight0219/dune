@@ -9,7 +9,8 @@
         <li><%= link_to '寄件', packages_path %></li>
         <li><%= link_to '邮寄费率', rates_path %></li>
         <li><%= link_to '联系我们', contact_path %></li>
-        <li><a href=<%=cart_path %>><i class="fa fa-shopping-cart" aria-hidden="true"></i></a></li>
+        <li><a href=<%= cart_path %> style="font-size:20px;"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+        </li>
 
         <% if user_signed_in? %>
             <li>
