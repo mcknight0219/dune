@@ -13,6 +13,7 @@ body {
 /* Rows
 --------------------------------------------------------------------------------------------------------------- */
 .row1 {
+    z-index: 9999;
 }
 
 /* Required for the drop shadow - do not delete, unless the drop shadow isn't wanted */
