@@ -17,7 +17,7 @@
         <div style="font-weight: 400; font-size: 17px; margin-top:20px;">产品描述</div>
         <p style="padding-top:0px;color:gray;"><%= @product.detail %></p>
         <div style="margin-top:25px;">
-          <%= form_tag new_cart_path, method: :post do %>
+          <%= form_tag '/cart/new', method: :post do %>
               <%= hidden_field_tag :product, @product.id %>
               <%= submit_tag "加入购物车", :class => 'btn btn-lg' %>
           <% end %>

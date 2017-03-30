@@ -2,7 +2,7 @@ require 'exceptions'
 
 class CartsController < ApplicationController
   before_action :authenticate_user!
-  before_action :redirect_if_no_cart, :except => [:show]
+  before_action :redirect_if_no_cart, :except => [:show, :add_to_cart]
 
   # Step 1. show cart items
   def show
@@ -57,7 +57,6 @@ class CartsController < ApplicationController
   end
 
   def order
-    byebug
     order = get_cart.generate_order(current_user, Address.find(params[:address_id]))
     session[:order_id] = order.id
     @order = order
