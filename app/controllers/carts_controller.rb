@@ -2,8 +2,11 @@ require 'exceptions'
 
 class CartsController < ApplicationController
   before_action :authenticate_user!
+  before_action :redirect_if_no_cart, :except => [:show]
 
+  # Step 1. show cart items
   def show
+    session[:in_cart] = true
     @cart = get_cart.full_form
     if request.variant == :mobile
       render :template => 'carts/show.mobile'
@@ -71,5 +74,11 @@ class CartsController < ApplicationController
 
   def cart_params
     params.require(:cart)
+  end
+
+  def redirect_if_no_cart
+    if !session[:in_cart] || get_cart.empty?
+      redirect_to action: :show
+    end
   end
 end

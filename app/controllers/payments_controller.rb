@@ -14,6 +14,7 @@ class PaymentsController < ApplicationController
         @order_id = session['order_id']
         session.delete :address_id
         session.delete :cart
+        session.delete :in_cart
 
         render 'confirmation'
       end
