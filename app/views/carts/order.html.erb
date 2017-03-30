@@ -1,0 +1,89 @@
+<div class="wrapper row3">
+  <main class="hoc container clear">
+    <ul class="progress-tracker progress-tracker--word progress-tracker--word-center">
+      <li class="progress-step is-complete">
+        <span class="progress-marker"></span>
+        <span class="progress-text">
+              购物车
+            </span>
+      </li>
+
+      <li class="progress-step is-complete">
+        <span class="progress-marker"></span>
+        <span class="progress-text">
+              寄送地址
+            </span>
+      </li>
+
+      <li class="progress-step is-active">
+        <span class="progress-marker"></span>
+        <span class="progress-text">
+              确认付款
+            </span>
+      </li>
+      <li class="progress-step">
+        <span class="progress-marker"></span>
+        <span class="progress-text">
+              完成
+        </span>
+      </li>
+    </ul>
+    <h4 class="title-divider"><span>订单信息</span></h4>
+    <table>
+      <thead>
+      <tr>
+        <th>名称</th>
+        <th>价格</th>
+        <th>数量</th>
+        <th>合计</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @summary.each do |k, v| %>
+          <tr>
+            <td><%= k %></td>
+            <td><%= v[:price] %></td>
+            <td><%= v[:quantity] %></td>
+            <td><%= "#{v[:price] * v[:quantity]} 加币" %></td>
+          </tr>
+      <% end %>
+      <tr>
+        <th colspan="3">邮寄费用</th>
+        <td><%= "#{@shipping_cost} 加币"%></td>
+      </tr>
+      <tr>
+        <th colspan="3">合计</th>
+        <td><%= "#{@total_price/100} 加币" %></td>
+      </tr>
+      </tbody>
+
+    </table>
+  </main>
+  <main class="hoc container clear">
+    <h2 class="title-divider"><span>邮寄地址</span></h2>
+    <div class="one_quarter first" style="font-weight: 600">收件人姓名</div>
+    <div class="one_quarter"><%= @order.address.name %></div>
+    <div class="one_quarter first" style="font-weight: 600">地址</div>
+    <div class="one_quarter">
+      <ul style="list-style: none;padding-left:0;">
+        <li><%= @order.address.address_line1 %></li>
+        <li><%= "#{@order.address.city}, #{@order.address.state}, #{@order.address.country}" %></li>
+        <li><%= @order.address.post_code %></li>
+      </ul>
+    </div>
+  </main>
+  <main class="hoc container clear">
+    <h2 class="title-divider"><span>支付方式</span></h2>
+    <p>点击付款后将弹出Stripe支付窗口。付款完成后将转回本站，方便您继续操作。<p>
+
+    <p>如果遇到问题，请联系<%= link_to '我们', contact_path %></p>
+    <%= form_tag payments_path do %>
+        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+                data-description="SuperUnique"
+                data-amount="<%= @total_price %>"
+                data-locale="zh-CN"
+                data-label="信用卡付款"></script>
+    <% end %>
+  </main>
+</div>

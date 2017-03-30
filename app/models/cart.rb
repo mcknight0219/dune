@@ -17,6 +17,10 @@ class Cart
     end
   end
 
+  def delete(id)
+    update({:id => id, :quantity => 0})
+  end
+
   def full_form
     # collapse items first
     return [] if @items.empty?

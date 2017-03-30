@@ -52,3 +52,9 @@ $("#mainav select").change(function () {
         window.location = $(this).find("option:selected").val()
     }
 })
+
+
+$("#address-table tr").click(function(){
+    $(this).addClass("selected").siblings().removeClass("selected")
+    $('#address_id').val($(this).data('address-id'))
+});

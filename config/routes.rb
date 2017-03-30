@@ -3,9 +3,9 @@ Rails.application.routes.draw do
   get 'home/index'
   get 'rates', :to => 'rate#index'
 
-  resources :products
   resources :orders
   resources :addresses
+  resources :products
 
   get 'packages/confirm', :to  => 'packages#confirm'
   post 'packages/add', :to => 'packages#add_package_item'
@@ -16,7 +16,9 @@ Rails.application.routes.draw do
   get 'myorder', to: 'myorder#index'
   # 购物车
   resource :cart
-  post 'cart/new', to: 'carts#create_order_for_one'
+  post 'cart/new', to: 'carts#add_to_cart'
+  get 'cart/address', to: 'carts#choose_address'
+  get 'cart/order', to: 'carts#order'
   # admin
   get 'dashboard', to: 'dashboard#index'
   # checkout

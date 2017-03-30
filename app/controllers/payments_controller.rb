@@ -1,13 +1,6 @@
 class PaymentsController < ApplicationController
   before_action :authenticate_user!
 
-  def show
-      @order = Order.find(session[:order_id])
-      @summary = @order.summary
-      @shipping_cost = 100
-      @total_price = PriceCalculator.new(@order).total_price
-  end
-
   def create
     begin
       charge = Stripe::Charge.create(
@@ -19,6 +12,9 @@ class PaymentsController < ApplicationController
       )
       if charge[:paid]
         @order_id = session['order_id']
+        session.delete :address_id
+        session.delete :cart
+
         render 'confirmation'
       end
     rescue Stripe::CardError => e

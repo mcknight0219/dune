@@ -1,13 +1,10 @@
 class PackagesController < ApplicationController
+  respond_to :json, :only => [:index]
   before_action :authenticate_user!
   load_and_authorize_resource :except => [:confirm, :create]
 
   def index
-    @package = Package.new
-    respond_to do |format|
-      format.json { render :json => {packages: getPackages(current_user).map { |p| replace_with_real_address_and_items p }} }
-      format.html
-    end
+    render :json => { packages: getPackages(current_user).map { |p| replace_with_real_address_and_items p }}
   end
 
   def new

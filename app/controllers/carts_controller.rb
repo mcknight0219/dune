@@ -4,36 +4,30 @@ class CartsController < ApplicationController
   before_action :authenticate_user!
 
   def show
-    set_no_cache
     @cart = get_cart.full_form
-    respond_to do |format|
-      format.json { render :json => { :success => true, :cart => @cart } }
-      format.html {
-        if request.variant == :mobile
-          render :template => 'carts/show.mobile'
-        else
-          render :template => 'carts/show'
-        end
-      }
+    if request.variant == :mobile
+      render :template => 'carts/show.mobile'
+    else
+      render :template => 'carts/show'
     end
   end
 
   def update
     cart = get_cart
-    begin
-      cart_params.each do |item|
-        raise ::Exception::CartError if item[:quantity].to_i < 0
-        cart.update(item)
-      end
-      # save it to session
-      session[:cart] = cart.items
-      render :json => { success: true }
-    rescue ::Exceptions::CartError
-      render :json => { error: '无法更新购物车。请稍后重试', success: false }, :status => 500
-    end
+    cart.update({:id => params[:id].to_i, :quantity => params[:quantity].to_i})
+    session[:cart] = cart.items
+
+    redirect_to :action => :show
   end
 
-  # 创建订单， 并转到付款页面
+  def destroy
+    cart = get_cart
+    cart.delete(params[:id].to_i)
+    session[:cart] = cart.items
+
+    redirect_to :action => :show
+  end
+
   def create
     begin
       order = get_cart.generate_order(current_user, Address.find(params[:address_id]))
@@ -45,8 +39,28 @@ class CartsController < ApplicationController
     end
   end
 
-  def create_order_for_one
+  def add_to_cart
+    cart = get_cart
+    cart.update({:id => params[:product].to_i, :quantity => 1})
+    session[:cart] = cart.items
     redirect_to :action => :show
+  end
+
+  def choose_address
+    @total = current_user.addresses.count
+    @addresses = current_user.addresses.paginate(:page => params[:page], :per_page => 10)
+
+    render 'carts/address'
+  end
+
+  def order
+    byebug
+    order = get_cart.generate_order(current_user, Address.find(params[:address_id]))
+    session[:order_id] = order.id
+    @order = order
+    @summary = order.summary
+    @shipping_cost = 100
+    @total_price = PriceCalculator.new(@order).total_price
   end
 
   private
@@ -57,11 +71,5 @@ class CartsController < ApplicationController
 
   def cart_params
     params.require(:cart)
-  end
-
-  def set_no_cache
-    response.headers["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate"
-    response.headers["Pragma"] = "no-cache"
-    response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
   end
 end

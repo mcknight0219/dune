@@ -1,13 +1,39 @@
-<div class="container">
-  <section>
-    <div id="container_demo">
-      <div id="wrapper" class="hoc">
+<div class="wrapper row3" style="flex:1;">
+  <main class="hoc container clear btmpad-none">
+    <div class="content">
+        <ul class="progress-tracker progress-tracker--word progress-tracker--word-center">
+          <li class="progress-step is-complete">
+            <span class="progress-marker"></span>
+            <span class="progress-text">
+              购物车
+            </span>
+          </li>
+
+          <li class="progress-step is-complete">
+            <span class="progress-marker"></span>
+            <span class="progress-text">
+              寄送地址
+            </span>
+          </li>
+
+          <li class="progress-step is-complete">
+            <span class="progress-marker"></span>
+            <span class="progress-text">
+              确认付款
+            </span>
+          </li>
+          <li class="progress-step is-active">
+            <span class="progress-marker"></span>
+            <span class="progress-text">
+              完成
+        </span>
+          </li>
+        </ul>
         <div class="form">
           <h2>付款成功！</h2>
           <p>您的订单号 <span style="font-weight: 600;"><%= @order_id %></span></p>
           <p>谢谢您的订单。我们将尽快寄出您的物品。</p>
         </div>
       </div>
-    </div>
-  </section>
+  </main>
 </div>

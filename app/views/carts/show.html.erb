@@ -1,73 +1,83 @@
-<div class="wrapper row3" id="carts_app" style="flex:1;">
+<div class="wrapper row3" style="flex:1;">
   <main class="hoc container clear">
-    <div class="wrapper">
-      <h2 class="receivername title-divider"><span>购物车详情</span></h2>
+    <div class="content">
+      <ul class="progress-tracker progress-tracker--word progress-tracker--word-center">
+        <li class="progress-step is-active">
+          <span class="progress-marker"></span>
+          <span class="progress-text">
+              购物车
+            </span>
+        </li>
+
+        <li class="progress-step">
+          <span class="progress-marker"></span>
+          <span class="progress-text">
+              寄送地址
+            </span>
+        </li>
+
+        <li class="progress-step">
+          <span class="progress-marker"></span>
+          <span class="progress-text">
+              确认付款
+            </span>
+        </li>
+        <li class="progress-step">
+          <span class="progress-marker"></span>
+          <span class="progress-text">
+              完成
+            </span>
+        </li>
+      </ul>
+      <h4 class="title-divider"><span>购物车详情</span></h4>
       <% if @cart.empty? %>
           <p>你的购物车还没有任何物品</p>
           <%= link_to '现在去选购商品', products_path, style: "color: #2BB656; text-decoration: underline;font-size:17px" %>
       <% else %>
-          <div class="title-line clearfix" style="border-bottom: 1px solid #DDD">
-            <div class="two_quarter first empty-label">&nbsp;</div>
-            <div class="one_quarter" style="font-size: 13px; color: silver">价格</div>
-            <div class="one_quarter" style="font-size: 13px; color: silver">数量</div>
-
-            <div v-for="item in cart">
-              <div class="clearfix" style="padding: 14px 20px; border-bottom: 1px solid #DDD">
-                <div class="two_quarter first">
-                  <div class="one_third first" style="margin:auto;">
-                    <div class="">
-                      <img v-bind:src="item.product.image1" width="100" height="100">
+          <table>
+            <thead>
+              <tr>
+                <th>商品</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @cart.each do |item| %>
+                <tr>
+                  <td>
+                    <div class="one_half first">
+                      <%= image_tag item[:product][:image1] || 'http://bulma.io/images/placeholders/128x128.png', size: '128x128' %>
                     </div>
-                  </div>
-                  <div class="two_third">
-                    <ul style="list-style: none; margin-top:0px;">
-                      <li style="font-size: 18px;"><strong>{{ item.product.name }}</strong></li>
-                      <li style="font-size: 14px; color: gray">规格说明 100粒/瓶</li>
-                      <li style="font-size: 14px;">
-                        <a style="cursor: pointer;padding-right: 4px;" @click="removeFromCart(item.product.id)">删除</a> |
-                        <a style="padding-left: 4px" v-bind:href="productUrl(item.product)">详情</a></li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="one_quarter">
-                  <div style="color: red; font-weight: 400;">
-                    CDN$ {{ item.product.price * item.quantity }}
-                  </div>
-                </div>
-                <div class="one_quarter">
-                  <input type="number" min="1" v-bind:value="item.quantity" v-on:change="updateQuantity(item.product.id, $event)">
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="wrapper row3">
-            <main class="hoc container clear btmpad-none">
-              <div class="content">
-                <h2 class="receivername title-divider"><span>选择寄送地址</span></h2>
+                    <div class="one_half">
+                      <ul style="list-style: none; padding-left:0;">
+                        <li style="font-weight: 400;font-size:17px;"><%= item[:product]['name'] %></li>
+                        <li style="padding-top: 10px;"><span style="padding-right:8px;">单价:</span><%= item[:product]['price']%>加元</li>
+                      </ul>
+                    </div>
+                  </td>
+                  <td>
+                    <div>
+                      <%= form_tag cart_path, method: :put do %>
+                          <%= number_field_tag(:quantity, item[:quantity], :style => 'display: inline-block;padding-right: 7px;') %>
+                          <%= hidden_field_tag :id, item[:product]['id'] %>
+                          <%= submit_tag '更新购物车', :style => 'border:none;display:inline;background-color:transparent;color:#2BB656;cursor:pointer' %>
+                      <% end %>
+                    </div>
 
-                <div id="comments">
-                  <p class="divider">收件人是否在列表中？如果是，请点击选此收件人。若否，请 <%= link_to '新建收件人地址', new_address_path(:returnUrl => packages_path) %></p>
-                  <div class="one_third first" v-if="addresses.length > 6 || inSearch">
-                    <input type="text" placeholder="姓名，电话，身份证" v-model="query">
-                  </div>
-                  <div class="clear"></div>
-                  <address-label v-for="(address, index) in addresses" v-bind:pos="index" v-bind:selected="selectedAddress === address" v-bind:address="address" v-on:delete="removeAddress(address)" v-on:selected="selectAddress(address)"></address-label>
-                </div>
+                    <%= link_to '删除', cart_path(id: item[:product]['id'],return: Base64.encode64(cart_path)), method: :delete %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+          <%= form_tag 'cart/address', method: :get do %>
+              <div class="block btmspace-80">
+                <%= submit_tag '选择邮寄地址', :class => 'btn'%>
               </div>
-            </main>
-          </div>
-          <!-- / main body -->
-          <div class="clear"></div>
-          <div style="margin-top: 20px;">
-            <%= form_tag '/cart', html: {} do %>
-                <div class="block">
-                  <%= hidden_field_tag :address_id, nil, "v-model": "selectedAddress.id" %>
-                  <%= submit_tag '确认订单', "v-bind:disabled": "disableSubmit", "class": 'btn' %>
-                </div>
-            <% end %>
-          </div>
+          <% end %>
       <% end %>
-    </div>
 
+
+    </div>
   </main>
 </div>

@@ -13,7 +13,7 @@
     <%= yield %>
   <%= render 'layouts/footer' %>
   <%= javascript_include_tag 'application' %>
-  <% if %w( dashboard packages carts ).include? params[:controller] %>
+  <% if %w( dashboard ).include? params[:controller] %>
       <%= javascript_include_tag params[:controller] %>
   <% end %>
   </body>
