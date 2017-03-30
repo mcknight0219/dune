@@ -28,7 +28,7 @@
 
             </td>
             <td><%= total_price(o) %>加币</td>
-            <td><%= o.created_at %></td>
+            <td><%= o.created_at.localtime.strftime '%Y-%m-%d %H:%M:%S' %></td>
             <td>等待寄出</td>
           </tr>
         <% end %>
@@ -51,7 +51,7 @@
         <% @packages.each do |p| %>
           <tr>
             <td><%= p.serial %></td>
-            <td><%= p.created_at %></td>
+            <td><%= p.created_at.localtime.strftime '%Y-%m-%d %H:%M:%S' %></td>
             <td>跟踪包裹(UPS)</td>
           </tr>
         <% end %>

@@ -10,5 +10,6 @@ case Rails.env
 when 'development'
   ItemCategory.create [{name: '包'}, {name: '维生素'}, {name: '衣服'},{name: '其它'}]
 when 'production'
+  ItemCategory.delete_all
   ItemCategory.create [{name: '包'}, {name: '维生素'}, {name: '衣服'},{name: '其它'}]
 end
