@@ -365,6 +365,7 @@ nav ul, nav ol {
     position: absolute;
     font-size: 10px;
     line-height: 10px;
+    font-family:"FontAwesome";
 }
 
 /* Top Navigation */
