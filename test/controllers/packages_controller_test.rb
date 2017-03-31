@@ -5,83 +5,69 @@ class PackagesControllerTest < ActionDispatch::IntegrationTest
 
   setup do
     @admin = users(:admin)
-    @user = users(:qiang)
-    @address = @user.addresses.first
-    @package = @user.packages.first
+    @client = users(:client)
   end
 
-  test 'delete package also deletes associated package_item' do
-    perform_action_as @user do
-      delete package_path(@package.id), xhr: true
-      assert_response :success
-      assert_equal(3, Package.count)
-    end
-  end
-
-  test 'user could create package' do
-    perform_action_as @user do
-      post packages_path, xhr: true, params: { package: { package_items: JSON.generate([{name: 'test', item_category_id: item_categories(:bag).id, quantity: 1}]), address_id: @address.id} }
-      assert_response :success
-      assert_equal(3, @user.packages.count)
-      assert(PackageItem.find_by(:name => 'test'))
-    end
-  end
-
-  test 'user can only delete his package' do
-    other_package = users(:client).packages.first 
-    perform_action_as @user do
-      delete package_path(other_package.id), xhr: true
-      assert_response :forbidden
-
-      delete package_path(@package.id), xhr: true
-      assert_response :success
-    end
-  end
-
-  test 'admin gets all packages' do
+  test 'get a list of packages' do
     perform_action_as @admin do
-      get packages_path + '.json', xhr: true
+      get packages_path, xhr: :json
       assert_response :success
+      payload = JSON.parse response.body
+      assert(payload['packages'])
+      assert_equal(4, payload['packages'].count, 'Admin should see all packages')
+    end
 
-      packages = JSON.parse(response.body)['packages']
-      assert_equal(4, packages.count)
+    perform_action_as @client do
+      get packages_path, xhr: :json
+      assert_response :success
+      payload = JSON.parse response.body
+      assert_equal(1, payload['packages'].count, 'User should only see his packages')
     end
   end
 
-  test 'normal user only sees his packages' do
-    perform_action_as @user do
-      get packages_path + '.json', xhr: true
+  test 'can add/rm package item' do
+    perform_action_as @client do
+      get new_package_path
       assert_response :success
+      assert(assigns(:added).empty?)
 
-      packages = JSON.parse(response.body)['packages']
-      assert_equal(2, packages.count)
-      assert_equal(@user.id, packages.first['user_id'])
-      assert_equal(@user.id, packages.second['user_id'])
+      post '/packages/add', params: {name: '包', category: item_categories(:bag).id, quantity: '1个'}
+      assert_redirected_to action: :new
+      follow_redirect!
+      assert_equal(1,assigns(:added).count, 'An item should be added')
+
+      post '/packages/remove', params: {name: '包'}
+      assert_redirected_to action: :new
+      follow_redirect!
+      assert(assigns(:added).empty?, 'Item should be deleted')
     end
   end
 
-  test 'package contains address and items details' do
-    perform_action_as @user do
-      get packages_path + '.json', xhr: true
-      assert_response :success
+  test 'choose address' do
+    perform_action_as @client do
+      get new_package_path
+      post '/packages/add', params: {name: '包', category: item_categories(:bag).id, quantity: '1个'}
+      get '/packages/address', headers: {'HTTP_REFERER' =>  new_package_url}
 
-      address = JSON.parse(response.body)['packages'].first['address']
-      items = JSON.parse(response.body)['packages'].first['package_items']
-      assert(address)
-      assert_equal('Qiang Guo', address['name'])
-
-      assert(items)
-      assert_equal(2, items.count)
+      assert_equal(2, assigns(:total))
     end
   end
 
-  test 'update package' do
-    perform_action_as @admin do
-      assert_not(@package.is_received)
-      put package_path(@package), params: {package: {is_received: true}}, xhr: true
-      assert_response :success
-      assert_not Package.find(@package.id).is_shipped
-      assert Package.find(@package.id).is_received
+  test 'create package request' do
+    perform_action_as @client do
+      get new_package_path
+      post '/packages/add', params: {name: '包', category: item_categories(:bag).id, quantity: '1个'}
+      get '/packages/address', headers: {'HTTP_REFERER' =>  new_package_url}
+      post packages_path, params: {address_id: @client.addresses.first.id}, headers: {'HTTP_REFERER' =>  packages_url}
+      assert_response :redirect
+      follow_redirect!
+    end
+  end
+
+  test 'no access to address selection unless from new package' do
+    perform_action_as @client do
+      get '/packages/address'
+      assert_redirected_to action: :new
     end
   end
 end

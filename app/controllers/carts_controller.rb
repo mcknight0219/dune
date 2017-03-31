@@ -4,7 +4,6 @@ class CartsController < ApplicationController
   before_action :authenticate_user!
   before_action :redirect_if_no_cart, :except => [:show, :add_to_cart]
 
-  # Step 1. show cart items
   def show
     session[:in_cart] = true
     @cart = get_cart.full_form
@@ -50,6 +49,10 @@ class CartsController < ApplicationController
   end
 
   def choose_address
+    if request.referer.nil? || URI(request.referer).path != cart_path
+      redirect_back fallback_location: cart_path and return
+    end
+
     @total = current_user.addresses.count
     @addresses = current_user.addresses.paginate(:page => params[:page], :per_page => 10)
 
@@ -57,6 +60,10 @@ class CartsController < ApplicationController
   end
 
   def order
+    if request.referer.nil? || URI(request.referer).path != cart_address_path
+      redirect_back fallback_location: cart_path and return
+    end
+
     order = get_cart.generate_order(current_user, Address.find(params[:address_id]))
     session[:order_id] = order.id
     @order = order

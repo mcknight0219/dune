@@ -1,10 +1,9 @@
 class PackagesController < ApplicationController
-  respond_to :json, :only => [:index]
+  respond_to :json, :only => [:index, :update]
   before_action :authenticate_user!
-  load_and_authorize_resource :except => [:confirm, :create]
 
   def index
-    render :json => { packages: getPackages(current_user).map { |p| replace_with_real_address_and_items p }}
+    render :json => { packages: get_packages(current_user).map { |p| decorate_package p }}
   end
 
   def new
@@ -13,6 +12,16 @@ class PackagesController < ApplicationController
       session[:package_items] = []
     end
     @added = session[:package_items]
+  end
+
+  def choose_address
+    if request.referer.nil? || URI(request.referer).path != new_package_path
+      redirect_back fallback_location: new_package_path and return
+    end
+    session[:package_luxury] = params[:luxury].present?
+    @total = current_user.addresses.count
+    @addresses = current_user.addresses.paginate(:page => params[:page], :per_page => 10)
+    render 'packages/address'
   end
 
   def add_package_item
@@ -25,13 +34,6 @@ class PackagesController < ApplicationController
     redirect_to action: :new
   end
 
-  def choose_address
-    session[:package_luxury] = params[:luxury].present?
-    @total = current_user.addresses.count
-    @addresses = current_user.addresses.paginate(:page => params[:page], :per_page => 10)
-    render 'packages/address'
-  end
-
   def destroy
     Package.find(params[:id]).destroy!
   end
@@ -42,17 +44,20 @@ class PackagesController < ApplicationController
       new_package.package_items.create item
     end
 
-    unless new_package.persisted?
+    if !new_package.persisted?
       flash[:error] = '无法提交，请稍后重试'
-      render 'index'
+      redirect_back fallback_location: new_package_path
     else
       session.delete :package_items
       session.delete :package_luxury
-      redirect_to :action => "confirm", :params => {id: new_package.serial}
+      redirect_to :action => 'confirm', :params => {id: new_package.serial}
     end
   end
 
   def confirm
+    if request.referer.nil? || URI(request.referer).path != package_path
+      redirect_back fallback_location: new_package_path and return
+    end
     @confirm_id = params[:id]
     render :template => 'packages/success'
   end
@@ -64,7 +69,7 @@ class PackagesController < ApplicationController
 
   private
 
-  def getPackages(user)
+  def get_packages(user)
     if user.admin? then Package.all else user.packages end
   end
 
@@ -72,7 +77,7 @@ class PackagesController < ApplicationController
     params.require(:package).permit(:is_received, :is_shipped, :is_cancelled, :address_id, :luxury)
   end
 
-  def replace_with_real_address_and_items(package)
+  def decorate_package(package)
     package.as_json.merge({
                               address: package.address.as_json(:except => ["created_at", "updated_at"]).merge({:id_front => package.address.id_front.url, :id_back => package.address.id_back.url}),
                               package_items: package.package_items.as_json(:except => ["created_at", "updated_at", "package_id"])

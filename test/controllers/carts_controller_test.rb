@@ -4,58 +4,66 @@ class CartsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   setup do
-    @product1 = products(:fishoil)
-    @product2 = products(:cream)
+    @client = users(:client)
+    @laptop = products(:mbp)
   end
 
-  def assert_cart_size(expected)
-    assert_equal(expected, @request.session['cart'].size)
-  end
-
-  test "return empty cart initially" do
-    perform_action_as users(:client) do
-      get cart_path + '.json', xhr: true
-      assert_equal "application/json", @response.content_type
-      assert_response(:success)
-      assert_empty(JSON.parse(response.body)['cart'])
+  test 'add product to cart' do
+    perform_action_as @client do
+      post new_cart_path, params: {product: @laptop.id}
+      assert_redirected_to action: :show
+      follow_redirect!
+      assert_equal(1, assigns(:cart).count, 'Cart should contain one product')
     end
   end
 
-  test "update cart" do
-    perform_action_as users(:client) do
-      put cart_path, xhr: true, params: {:cart => [{:id => @product1.id, :quantity => 1}, {:id => @product2.id, :quantity => 2}]}
-      assert_response :success
-      assert_equal(3, session[:cart].length)
-
-      put cart_path, xhr: true, params: {:cart => [{:id => @product2.id, :quantity => 0}]}
-      assert_response :success
-      assert_equal(1, session[:cart].length)
-      assert_equal(@product1.id, session[:cart].first.to_i)
+  test 'updates quantity of product' do
+    perform_action_as @client do
+      post new_cart_path, params: {product: @laptop.id}
+      follow_redirect!
+      put  cart_path, params: {id: @laptop.id, quantity: 3}
+      assert_redirected_to action: :show
+      follow_redirect!
+      assert_equal(3, assigns(:cart).first[:quantity], 'Cart should be updated with new quantity')
     end
   end
 
-  test "submit cart creates order and redirects to payments" do
-    perform_action_as users(:client) do
-      # add items to cart
-      buy [{:id => @product1.id, :quantity => 1}, {:id => @product2.id, :quantity => 2}]
-      # select an address
-      addr = users(:client).addresses.first
-      # go to payment
-      post cart_path, params: { :cart => { :address_id => addr.id } }
-      assert_redirected_to controller: 'payments', action: 'show'
-      assert(session.key? :order_id)
+  test 'removes item from cart' do
+    perform_action_as @client do
+      post new_cart_path, params: { product: @laptop.id }
+      follow_redirect!
+      delete cart_path, params: { id: @laptop.id }
+      assert_redirected_to action: :show
+      follow_redirect!
+      assert_empty(assigns(:cart), 'cart should be empty')
     end
   end
 
-  test 'submit cart fails' do
-    perform_action_as users(:client) do
-      buy [{:id => @product1.id, :quantity => 1}]
-
+  test 'chooses shipping address' do
+    perform_action_as @client do
+      post new_cart_path, params: { product: @laptop.id }
+      follow_redirect!
+      get '/cart/address', headers: {'HTTP_REFERER' =>  cart_url}
+      assert_equal(2, assigns(:total), 'user should have two addresses')
     end
   end
 
-  private
-  def buy(products)
-    put cart_path, xhr: true, params: { :cart => products }
+  test 'arrives at order review' do
+    perform_action_as @client do
+      post new_cart_path, params: { product: @laptop.id }
+      follow_redirect!
+      get '/cart/order', params: { address_id: @client.addresses.first.id }, headers: {'HTTP_REFERER' =>  cart_address_url}
+      # At this stage, the order is created
+      assert_equal(1, assigns(:order).order_items.count, 'order should contain exactly one item')
+    end
   end
+
+  test 'no access to address selection unless in order' do
+    perform_action_as @client do
+      get '/cart/address'
+      assert_redirected_to cart_path
+      get '/cart/order'
+    end
+  end
+
 end
