@@ -10,12 +10,21 @@ const state = {
     updateOrderStatus: null,
     addresses: [],
     packages: [],
-    products: []
+    products: [],
+    productCategories: []
 }
 
 export const mutations = {
     [types.RECEIVE_PRODUCTS] (state, { products }) {
         state.products = products
+    },
+
+    [types.RECEIVE_PRODUCT_CATEGORIES] (state, categories) {
+        state.productCategories = categories
+    },
+
+    [types.ADD_PRODUCT_CATEGORY] (state, category) {
+        state.productCategories.push(category)
     },
 
     [types.ADD_NEW_PRODUCT] (state, {product}) {
@@ -85,6 +94,26 @@ export const actions = {
             })
     },
 
+    getAllProductCategories({commit}) {
+        api.getProductCategories()
+            .then((response) => {
+                return response.json()
+            })
+            .then((data) => {
+                commit(types.RECEIVE_PRODUCT_CATEGORIES, data)
+            })
+    },
+
+    addProductCategory({commit}, { category }) {
+        api.addProductCategory(category)
+            .then((response) => {
+                return response.json()
+            })
+            .then((data) => {
+                commit(types.ADD_PRODUCT_CATEGORY, data.productCategory)
+            })
+    },
+
     getAllPackages ({commit}) {
         api.getPackages()
             .then(response => response.json())
@@ -141,6 +170,7 @@ export default new Vuex.Store({
 
     getters: {
         allProducts: state => state.products,
+        allProductCategories: state => state.productCategories,
         allOrders: state => state.orders,
         allAddresses: state => state.addresses,
         allPackages: state => state.packages

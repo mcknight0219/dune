@@ -42,6 +42,19 @@ export default {
         return this.csrf_fetch('GET', '/products')
     },
 
+    getProductCategories: function () {
+        return this.csrf_fetch('GET', '/product_categories')
+    },
+
+    addProductCategory: function(data) {
+        if (data.parentId === -1)
+            data.parent_id = null
+        else
+            data.parent_id = data.parentId
+
+        return this.csrf_fetch('POST', '/product_categories', JSON.stringify({product_category: data}))
+    },
+
     newProduct: function (form) {
         return fetch('/products', {
             method: 'POST',

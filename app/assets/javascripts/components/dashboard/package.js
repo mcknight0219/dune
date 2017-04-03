@@ -4,7 +4,7 @@ export default {
     template: `
 <div>
   <div class="panel-title">
-    <strong>Packages</strong>
+    <strong>寄件管理</strong>
   </div>
   <div class="tile is-parent">
     <article class="tile is-child box">

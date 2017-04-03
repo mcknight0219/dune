@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170329222406) do
+ActiveRecord::Schema.define(version: 20170403030919) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -101,19 +101,23 @@ ActiveRecord::Schema.define(version: 20170329222406) do
     t.index ["user_id"], name: "index_packages_on_user_id", using: :btree
   end
 
+  create_table "product_categories", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "parent_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "products", force: :cascade do |t|
     t.string   "sku"
     t.string   "name"
     t.float    "price"
     t.float    "weight"
     t.string   "dimension"
-    t.string   "category"
     t.string   "detail"
     t.boolean  "active"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
-    t.string   "cover"
-    t.string   "grids"
     t.string   "image1_file_name"
     t.string   "image1_content_type"
     t.integer  "image1_file_size"
@@ -150,6 +154,9 @@ ActiveRecord::Schema.define(version: 20170329222406) do
     t.string   "image9_content_type"
     t.integer  "image9_file_size"
     t.datetime "image9_updated_at"
+    t.string   "brand"
+    t.integer  "product_category_id"
+    t.index ["product_category_id"], name: "index_products_on_product_category_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -179,4 +186,5 @@ ActiveRecord::Schema.define(version: 20170329222406) do
   add_foreign_key "package_items", "packages"
   add_foreign_key "packages", "addresses"
   add_foreign_key "packages", "users"
+  add_foreign_key "products", "product_categories"
 end

@@ -6,7 +6,7 @@ fishoil:
   price: 9.99
   weight: 1.5
   dimension: 11cmx12cmx8cm
-  category: health products
+  product_category: health
   detail: 
   active: true
 
@@ -16,7 +16,7 @@ cream:
   price: 99.99
   weight: 1.5
   dimension: 8cmx8cmx8cm
-  category: cosmetics
+  product_category: other
   detail: 
   active: true
 
@@ -26,7 +26,7 @@ mbp:
   price: 2999.99
   weight: 3
   dimension: 24cmx24cmx5cm
-  category: electronics
+  product_category: other
   detail:
   active: true
   
@@ -35,6 +35,6 @@ offshelf:
   name: Seal Oil
   price: 100.00
   weight: 0
-  category: health products
+  product_category: other
   detail:
   active: false

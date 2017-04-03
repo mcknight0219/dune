@@ -1,7 +1,7 @@
 class Product < ApplicationRecord
   has_many :order_items
+  belongs_to :product_category
   validates_presence_of :weight
-  validates_inclusion_of :category, in: ["health products", "cosmetics", "clothes"]
   scope :active, -> { where(active: true) }
   before_save :default_values
 

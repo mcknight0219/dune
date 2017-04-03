@@ -4,11 +4,43 @@ export default {
     template: `
     <div>
         <div class="panel-title">
-            <strong>Products</strong>
+            <strong>商品管理</strong>
+        </div>
+    
+        <div class="tile is-ancestor"> 
+        <div class="tile is-parent  is-4">
+            <article class="tile is-child box">
+                <h4 class="title">商品类别管理</h4>
+                <p class="control has-addons">
+                    <span class="select">
+                        <select v-model="newProductCategory.parentId">
+                            <option v-for="option in options" v-bind:value="option.id">
+                                {{ option.name }}
+                            </option>
+                         
+                        </select>
+                    </span>
+                    <input type="text" placeholder="类别名称" class="input" v-model="newProductCategory.name">
+                    <a class="button is-success" @click="addProductCategory">添加</a>
+                </p>
+                <table class="table">
+                    <thead><tr><th>ID</th><th>名称</th><th>父类别</th><th></th></tr></thead>
+                    <tbody>
+                        <tr v-for="pc in productCategories">
+                            <td>{{ pc.id }}</td>
+                            <td>{{ pc.name }}</td>
+                            <td>{{ pc.parent_id }}</td>
+                            <td class="is-icon">
+                                <a v-on:click=""><i class="fa fa-trash"></i></a>
+                            </td>
+                        </tr>   
+                    </tbody>
+                </table>
+            </article>
         </div>
         <div class="tile is-parent">
             <article class="tile is-child box">
-                <h1 class="title">添加新产品</h1>
+                <h4 class="title">添加新产品</h4>
                 <div class="block">
                     <div class="control is-horizontal">
                         <div class="control-label"><label class="label">名称</label></div>
@@ -100,7 +132,8 @@ export default {
                         <div class="control"><button class="button is-primary" @click="addProduct" v-bind:disabled="!submitable">添加</button><button class="button is-link">取消</button></div>
                     </div>
                 </div>
-            </article>          
+            </article>
+        </div>
         </div>
         <div class="tile is-parent">
             <article class="tile is-child box">
@@ -120,12 +153,29 @@ export default {
                 </table>
             </article>
         </div>
+        </div>
     </div>
     `,
 
     computed: {
         products() {
             return this.$store.getters.allProducts
+        },
+
+        productCategories() {
+            return this.$store.getters.allProductCategories
+        },
+
+        // root category
+        options() {
+            return this.productCategories.filter((pc) => {
+                return pc.parent_id === null
+            }).map((pc) => {
+                return {
+                    name: pc.name,
+                    id: pc.id
+                }
+            }).concat([{name: '无', id: -1}])
         },
 
         submitable() {
@@ -168,6 +218,12 @@ export default {
             }
         },
 
+        addProductCategory () {
+            this.$store.dispatch('addProductCategory', {category: this.newProductCategory})
+            this.newProductCategory.name = ''
+            this.newProductCategory.parentId = null
+        },
+
         deleteProduct (product) {
             this.$store.dispatch('deleteProduct', {product: product})
         },
@@ -195,6 +251,10 @@ export default {
                 detail: '',
                 category: ''
             },
+            newProductCategory: {
+                name: '',
+                parentId: -1
+            },
             // number of images uploaded so far
             count: 0,
             uploads: {},
@@ -213,5 +273,6 @@ export default {
 
     created () {
         this.$store.dispatch('getAllProducts')
+        this.$store.dispatch('getAllProductCategories')
     }
 }

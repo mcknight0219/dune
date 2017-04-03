@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+health:
+  id: 1
+  name: "营养品"
+
+other:
+  id: 2
+  name: "其它"
+
+vitamin:
+  name: "维生素"
+  parent_id: 1
+
+cloth:
+  name: "衣服"
+  parent_id: 2
