@@ -58,3 +58,23 @@ $("#address-table tr").click(function(){
     $(this).addClass("selected").siblings().removeClass("selected")
     $('#address_id').val($(this).data('address-id'))
 });
+
+// Package pages
+$('#name_input').change(function () {
+    $('#name').val($(this).val())
+})
+
+$('#category_input').change(function () {
+    $('#category').val($(this).val())
+})
+
+$('#quantity_input').change(function () {
+    $('#quantity').val($(this).val())
+})
+
+// Product details
+$('.thumbnail-strip figure').click(function () {
+    $('.thumbnail-strip figure').removeClass('selected')
+    $(this).addClass("selected")
+    $('.large-view figure img').attr('src', $(this).children('img').attr('src'))
+})

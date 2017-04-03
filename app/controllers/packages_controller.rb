@@ -30,7 +30,7 @@ class PackagesController < ApplicationController
   end
 
   def remove_package_item
-    session[:package_items].delete_if { |item| item['name'] == params[:name] }
+    session[:package_items].delete_if { |item| item['name'] == params[:item_name] }
     redirect_to action: :new
   end
 
@@ -55,9 +55,6 @@ class PackagesController < ApplicationController
   end
 
   def confirm
-    if request.referer.nil? || URI(request.referer).path != package_path
-      redirect_back fallback_location: new_package_path and return
-    end
     @confirm_id = params[:id]
     render :template => 'packages/success'
   end

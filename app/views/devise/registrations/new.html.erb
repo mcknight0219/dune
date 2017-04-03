@@ -17,13 +17,13 @@
               <%= f.label :确认密码 %>
               <%= f.password_field :password_confirmation, :required => true, :type => "password", autocomplete: "off" %>
               </p>
-            <p class="signin button">
-              <%= f.submit "注册", :class => 'btn' %>
+              <p>
+                <%= f.submit "注册", :class => 'btn', style: "width:30%" %>
             </p>
               <p>
               已经是会员?
                 <%= link_to "登陆", new_session_path(resource_name), :class => "to_register" %>
-            </p>
+              </p>
           <% end %>
         </div>
 

@@ -565,31 +565,6 @@ nav ul, nav ol {
     left: 45px;
 }
 
-/* Pagination */
-.pagination {
-    display: block;
-    width: 100%;
-    text-align: center;
-    clear: both;
-}
-
-.pagination li {
-    display: inline-block;
-    margin: 0 2px 0 0;
-}
-
-.pagination li:last-child {
-    margin-right: 0;
-}
-
-.pagination a, .pagination strong {
-    display: block;
-    padding: 8px 11px;
-    border: 1px solid;
-    background-clip: padding-box;
-    font-weight: normal;
-}
-
 /* Back to Top */
 #backtotop {
     z-index: 999;
@@ -783,20 +758,10 @@ input:focus, textarea:focus, *:required:focus {
     background-color: rgba(43, 182, 86, 0.8) /* #2BB656 */;
 }
 
-.btn, .btn.inverse:hover {
+.btn {
     color: #FFFFFF;
     background-color: #2BB656;
     border-color: #2BB656;
-}
-
-.btn:hover, .btn.inverse {
-    color: #FFFFFF;
-    background-color: #000000;
-    border-color: inherit;
-}
-
-.btn:active {
-    background-color: #2a2a2a;
 }
 
 /* Rows */
@@ -919,13 +884,74 @@ input:focus, textarea:focus, *:required:focus {
     color: #2BB656;
 }
 
-.pagination a, .pagination strong {
-    border-color: #D7D7D7;
+.pagination {
+    background: white;
+    cursor: default;
+    /* self-clearing method: */
+    margin: auto;
+    width: 150px;
 }
 
-.pagination .current * {
-    color: #FFFFFF;
-    background-color: #2BB656;
+.pagination a, .pagination span, .pagination em {
+    padding: 0.2em 0.5em;
+    display: block;
+    float: left;
+    margin-right: 1px;
+}
+
+.pagination .disabled {
+    color: #999999;
+    border: 1px solid #dddddd;
+}
+
+.pagination .current {
+    font-style: normal;
+    font-weight: bold;
+    background: #2BB656;
+    color: white;
+    border: 1px solid #2BB656;
+}
+
+.pagination a {
+    text-decoration: none;
+    color: #2BB656;
+    border: 1px solid #2CA650;
+}
+
+.pagination a:hover, .pagination a:focus {
+    color: #000033;
+    border-color: #000033;
+}
+
+.pagination .page_info {
+    background: #2BB656;
+    color: white;
+    padding: 0.4em 0.6em;
+    width: 22em;
+    margin-bottom: 0.3em;
+    text-align: center;
+}
+
+.pagination .page_info b {
+    color: #000033;
+    background: #2BB656;
+    padding: 0.1em 0.25em;
+}
+
+.pagination:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+* html .pagination {
+    height: 1%;
+}
+
+*:first-child + html .pagination {
+    overflow: hidden;
 }
 
 #backtotop {
@@ -1099,11 +1125,6 @@ table a {
 
     .subscribe input[type="reset"] {
         margin-top: 10px;
-    }
-
-    .pagination li {
-        display: inline-block;
-        margin: 0 5px 5px 0;
     }
 
     #footer {

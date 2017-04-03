@@ -16,8 +16,12 @@ class Product < ApplicationRecord
     self.active ||= true
   end
 
-  def as_json
+  def as_json(options = nil)
     super.as_json(except: exclude_list).merge(urls_hash)
+  end
+
+  def available_images
+    (1..9).map { |n| self.send("image#{n}") }.reject { |img| img.size.nil? }
   end
 
   private

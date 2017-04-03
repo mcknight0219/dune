@@ -1,11 +1,29 @@
 <div class="wrapper row3" style="flex:1;">
   <main class="hoc container clear">
     <div class="content">
-
+      <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="">商品</a></li>
+        <li class="breadcrumb-item"><a href="">保健品</a></li>
+      </ul>
       <div class="one_half first" style="margin-top: 20px;">
-        <figure>
-          <%= image_tag @product.image1.url, size: "350x350", style: "width:350px;height:350px" %>
-        </figure>
+        <div class="large-view">
+          <figure>
+            <%= image_tag @product.image1.url, size: '350x350' %>
+          </figure>
+        </div>
+        <div class="thumbnail-strip">
+          <% @product.available_images.each_with_index do |img, index| %>
+              <div class="one_quarter <%= if index % 4 == 0 then
+                                            'first'
+                                          end %>" style="margin-top: 5px;">
+                <figure class="<%= if index == 0 then
+                                     'selected'
+                                   end %>">
+                  <%= image_tag img.url, size: '100x100' %>
+                </figure>
+              </div>
+          <% end %>
+        </div>
       </div>
       <div class="one_half">
         <p style="font-weight: 600;font-size: 25px;"><%= @product.name %></p>
@@ -19,7 +37,7 @@
         <div style="margin-top:25px;">
           <%= form_tag '/cart/new', method: :post do %>
               <%= hidden_field_tag :product, @product.id %>
-              <%= submit_tag "加入购物车", :class => 'btn btn-lg' %>
+              <%= submit_tag '加入购物车', :class => 'btn btn-lg' %>
           <% end %>
         </div>
       </div>

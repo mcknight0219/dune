@@ -13,7 +13,6 @@ class PaymentsControllerTest < ActionDispatch::IntegrationTest
         description: 'card charge'
     )
     perform_action_as users(:client) do
-      buy
       post payments_path, params: {:stripeToken => StripeMock.create_test_helper.generate_card_token}
       assert_response(:success)
       assert_not_nil(session[:order_id])
@@ -26,19 +25,11 @@ class PaymentsControllerTest < ActionDispatch::IntegrationTest
     StripeMock.start
     StripeMock.prepare_card_error(:card_declined)
     perform_action_as users(:client) do
-      buy
       post payments_path, params: {:stripeToken => StripeMock.create_test_helper.generate_card_token}
       assert_response(:redirect)
       assert_equal('The card was declined', flash[:alert])
     end
     StripeMock.stop
-  end
-
-  private
-
-  def buy
-    put cart_path, xhr: true, params: { :cart => [{id: products(:fishoil).id, quantity: 1}] }
-    post cart_path, params: { :cart => { :address_id => users(:client).addresses.first.id }}
   end
 
 end

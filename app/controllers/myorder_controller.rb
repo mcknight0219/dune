@@ -4,8 +4,8 @@ class MyorderController < ApplicationController
   helper_method :item_lines, :total_price
 
   def index
-    @orders = current_user.orders
-    @packages = current_user.packages
+    @orders = current_user.orders.paginate(:page => params[:page], :per_page => 8)
+    @packages = current_user.packages.paginate(:page => params[:page], :per_page => 8)
   end
 
   def item_lines(order)

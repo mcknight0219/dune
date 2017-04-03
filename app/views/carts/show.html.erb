@@ -45,10 +45,10 @@
               <% @cart.each do |item| %>
                 <tr>
                   <td>
-                    <div class="one_half first">
-                      <%= image_tag item[:product][:image1] || 'http://bulma.io/images/placeholders/128x128.png', size: '128x128' %>
+                    <div class="one_third first">
+                      <%= image_tag item[:product][:image1] || 'http://bulma.io/images/placeholders/128x128.png', size: '128x128', style: "width: 128px; height: 128px;" %>
                     </div>
-                    <div class="one_half">
+                    <div class="two_third">
                       <ul style="list-style: none; padding-left:0;">
                         <li style="font-weight: 400;font-size:17px;"><%= item[:product]['name'] %></li>
                         <li style="padding-top: 10px;"><span style="padding-right:8px;">单价:</span><%= item[:product]['price']%>加元</li>
@@ -58,13 +58,12 @@
                   <td>
                     <div>
                       <%= form_tag cart_path, method: :put do %>
-                          <%= number_field_tag(:quantity, item[:quantity], :style => 'display: inline-block;padding-right: 7px;') %>
+                          <%= number_field_tag(:quantity, item[:quantity], :style => 'display: inline-block;padding-right: 7px;width: 80px;') %>
                           <%= hidden_field_tag :id, item[:product]['id'] %>
                           <%= submit_tag '更新购物车', :style => 'border:none;display:inline;background-color:transparent;color:#2BB656;cursor:pointer' %>
+                          <%= link_to '删除', cart_path(id: item[:product]['id'], return: Base64.encode64(cart_path)), method: :delete %>
                       <% end %>
                     </div>
-
-                    <%= link_to '删除', cart_path(id: item[:product]['id'],return: Base64.encode64(cart_path)), method: :delete %>
                   </td>
                 </tr>
               <% end %>

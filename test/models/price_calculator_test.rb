@@ -6,6 +6,6 @@ class PriceCalculatorTest < ActiveSupport::TestCase
   end
 
   test 'make correct calculation or price' do
-    assert_equal(2817, PriceCalculator.new(@order).total_price)
+    assert_equal(999, PriceCalculator.new(@order).total_price)
   end
 end
