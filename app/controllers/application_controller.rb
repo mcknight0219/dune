@@ -17,4 +17,10 @@ class ApplicationController < ActionController::Base
   def get_cart
     return Cart.new(session.key?('cart') ? session['cart'] : [])
   end
+
+  def only_admin
+    unless current_user.admin?
+      render json: {:success => false}, status: :forbidden && return
+    end
+  end
 end

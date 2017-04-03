@@ -6,10 +6,4 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-case Rails.env
-when 'development'
-  ItemCategory.create [{name: '包'}, {name: '维生素'}, {name: '衣服'},{name: '其它'}]
-when 'production'
-  ItemCategory.delete_all
-  ItemCategory.create [{name: '包'}, {name: '维生素'}, {name: '衣服'},{name: '其它'}]
-end
+ItemCategory.create [{name: '其它'}]

@@ -23,7 +23,7 @@ class ProductsController < ApplicationController
   end
   
   def create
-    p = Product.create params.permit([:name, :price, :weight, :dimension, :detail, :category] + (1..9).map { |n| "image#{n}".to_sym })
+    p = Product.create params.permit([:name, :brand, :price, :weight, :dimension, :detail, :product_category_id] + (1..9).map { |n| "image#{n}".to_sym })
     render :json => {product: p.as_json}
   end
 

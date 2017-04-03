@@ -46,6 +46,14 @@ export default {
         return this.csrf_fetch('GET', '/product_categories')
     },
 
+    getItemCategories: function () {
+        return this.csrf_fetch('GET', '/item_categories')
+    },
+
+    deleteItemCategory: function(id) {
+        return this.csrf_fetch('DELETE', '/item_categories/' + id)
+    },
+
     addProductCategory: function(data) {
         if (data.parentId === -1)
             data.parent_id = null
@@ -53,6 +61,10 @@ export default {
             data.parent_id = data.parentId
 
         return this.csrf_fetch('POST', '/product_categories', JSON.stringify({product_category: data}))
+    },
+
+    addItemCategory: function(data) {
+        return this.csrf_fetch('POST', '/item_categories', JSON.stringify({item_category: data}))  
     },
 
     newProduct: function (form) {

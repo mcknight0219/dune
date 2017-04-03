@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :addresses
   resources :products
   resources :product_categories
+  resources :item_categories
 
   get 'packages/confirm', :to  => 'packages#confirm'
   post 'packages/add', :to => 'packages#add_package_item'

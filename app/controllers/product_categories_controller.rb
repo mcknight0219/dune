@@ -13,14 +13,8 @@ class ProductCategoriesController < ApplicationController
   end
 
   def destroy
-    ProductCategory.destroy(params[:id])
+    ProductCategory.find(params[:id]).destroy
+    render json: {success: true}
   end
 
-  private
-
-  def only_admin
-    unless current_user.admin?
-      render json: {:success => false}, status: :forbidden && return
-    end
-  end
 end

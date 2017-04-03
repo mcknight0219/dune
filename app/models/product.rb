@@ -12,7 +12,6 @@ class Product < ApplicationRecord
   end
 
   def default_values
-    self.sku ||= Sku.new(self.category).to_str
     self.active ||= true
   end
 

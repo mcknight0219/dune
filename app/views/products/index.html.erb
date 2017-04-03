@@ -4,8 +4,10 @@
       <div class="sidebar">
         <div class="category-title">商品种类</div>
         <ul style="list-style: none;">
-          <li><a href="">保健品</a></li>
-          <li><a href="">奶粉</a></li>
+          <li><%= link_to '全部', products_path %></li>
+          <%  @categories.each do |category| %>
+            <li><%= link_to category.name, packages_path(:fitler => category.id)%></li>
+          <% end %>
         </ul>
         <div class="category-title">品牌</div>
         <ul style="list-style: none;">

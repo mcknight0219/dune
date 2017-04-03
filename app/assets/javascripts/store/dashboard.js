@@ -11,7 +11,8 @@ const state = {
     addresses: [],
     packages: [],
     products: [],
-    productCategories: []
+    productCategories: [],
+    itemCategories: []
 }
 
 export const mutations = {
@@ -23,8 +24,23 @@ export const mutations = {
         state.productCategories = categories
     },
 
+    [types.RECEIVE_ITEM_CATEGORIES] (state, categories) {
+        state.itemCategories = categories
+    },
+
     [types.ADD_PRODUCT_CATEGORY] (state, category) {
         state.productCategories.push(category)
+    },
+
+    [types.ADD_ITEM_CATEGORY] (state, category) {
+        state.itemCategories.push(category)
+    },
+
+    [types.DELETE_ITEM_CATEGORY] (state, id) {
+        const record = state.itemCategories.find(o => o.id === id)
+        if (record) {
+            state.itemCategories.splice(state.itemCategories.indexOf(record), 1)
+        }
     },
 
     [types.ADD_NEW_PRODUCT] (state, {product}) {
@@ -104,6 +120,14 @@ export const actions = {
             })
     },
 
+    getAllItemCategories({commit}) {
+        api.getItemCategories()
+            .then((response) => response.json())
+            .then((data) => {
+                commit(types.RECEIVE_ITEM_CATEGORIES, data)
+            })
+    },
+
     addProductCategory({commit}, { category }) {
         api.addProductCategory(category)
             .then((response) => {
@@ -111,6 +135,22 @@ export const actions = {
             })
             .then((data) => {
                 commit(types.ADD_PRODUCT_CATEGORY, data.productCategory)
+            })
+    },
+
+    addItemCategory({commit}, { category }) {
+        api.addItemCategory(category)
+          .then((response) => response.json())
+          .then((data) => {
+            commit(types.ADD_ITEM_CATEGORY, data.itemCategory)
+          })
+    },
+
+    deleteItemCategory({commit}, id) {
+        api.deleteItemCategory(id)
+            .then((response) => response.json())
+            .then(() => {
+                commit(types.DELETE_ITEM_CATEGORY, id)
             })
     },
 
@@ -171,6 +211,7 @@ export default new Vuex.Store({
     getters: {
         allProducts: state => state.products,
         allProductCategories: state => state.productCategories,
+        allItemCategories: state => state.itemCategories,
         allOrders: state => state.orders,
         allAddresses: state => state.addresses,
         allPackages: state => state.packages
