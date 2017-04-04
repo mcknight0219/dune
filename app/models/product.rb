@@ -2,11 +2,12 @@ class Product < ApplicationRecord
   has_many :order_items
   belongs_to :product_category
 
-  validates_presence_of :brand, :name, :detail, :product_category_id
+  validates_presence_of :price, :name, :product_category_id
   before_save :default_values
 
   scope :active, -> { where(active: true) }
-  scope :categorized, lambda { |id| where(product_category_id: id) }
+  scope :categorized, -> (id) { where(product_category_id: id) }
+  scope :branded, -> (name) { if name then where(brand: name) end }
 
   # we have at most 9 images for one product
   (1..9).each do |n|

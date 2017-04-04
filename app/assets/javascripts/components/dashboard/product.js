@@ -57,101 +57,104 @@ export default {
                 <div class="block">
                     <div class="control is-horizontal">
                         <div class="control-label"><label class="label">品牌</label></div>
-                    <p class="control"><input class="input" type="text" placeholder="品牌" v-model="newProduct.brand"></p>
+                        <p class="control"><input class="input" type="text" placeholder="品牌" v-model="newProduct.brand"></p>
+                    </div>
+                    <div class="control is-horizontal">
+                        <div class="control-label"><label class="label">参数</label></div>
+                        <div class="control is-grouped">
+                            <p class="control is-expanded"><input class="input" type="number" placeholder="价格"
+                                                                  v-model="newProduct.price"></p>
+                            <p class="control is-expanded"><input class="input" type="number" placeholder="重量"
+                                                                  v-model="newProduct.weight"></p>
+                        </div>
+                    </div>
+                    <div class="control is-horizontal">
+                        <div class="control-label"><label class="label">类别</label></div>
+                        <div class="control">
+                            <div class="select is-fullwidth">
+                                <select v-model="newProduct.product_category_id">
+                                    <option v-for="category in productCategories" v-bind:value="category.id">
+                                        {{ category.name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control is-horizontal">
+                        <div class="control-label"><label class="label">产品描述</label></div>
+                        <div class="control"><textarea class="textarea" placeholder="添加商品的描述信息"
+                                                       v-model="newProduct.detail"></textarea></div>
+                    </div>
+                    <div class="control is-horizontal">
+                        <div class="control-label"><label class="label">产品照片</label></div>
+                        <div class="control">
+                            <input type="file" @change="handleUpload"> {{ 9 - count}}</input>
+                        </div>
+                    </div>
+                    <div class="control is-horizontal">
+                        <div class="control-label"></div>
+                        <div class="control">
+                            <div class="columns is-multiline">
+                                <div class="column">
+                                    <figure class="image is-128x128" style="border: 1px dotted #DDD">
+                                        <img v-bind:src="src1 || placeholder">
+                                    </figure>
+                                </div>
+                                <div class="column" v-if="src2 !== null">
+                                    <figure class="image is-128x128">
+                                        <img v-bind:src="src2">
+                                    </figure>
+                                </div>
+                                <div class="column" v-if="src3 !== null">
+                                    <figure class="image is-128x128">
+                                        <img v-bind:src="src3">
+                                    </figure>
+                                </div>
+                                <div class="column" v-if="src4 !== null">
+                                    <figure class="image is-128x128">
+                                        <img v-bind:src="src4">
+                                    </figure>
+                                </div>
+                                <div class="column" v-if="src5 !== null">
+                                    <figure class="image is-128x128">
+                                        <img v-bind:src="src5">
+                                    </figure>
+                                </div>
+                                <div class="column" v-if="src6 !== null">
+                                    <figure class="image is-128x128">
+                                        <img v-bind:src="src6">
+                                    </figure>
+                                </div>
+                                <div class="column" v-if="src7 !== null">
+                                    <figure class="image is-128x128">
+                                        <img v-bind:src="src7">
+                                    </figure>
+                                </div>
+                                <div class="column" v-if="src8 !== null">
+                                    <figure class="image is-128x128">
+                                        <img v-bind:src="src8">
+                                    </figure>
+                                </div>
+                                <div class="column" v-if="src9 !== null">
+                                    <figure class="image is-128x128">
+                                        <img v-bind:src="src9">
+                                    </figure>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control is-horizontal">
+                        <div class="control-label"><label class="label"></label></div>
+                        <div class="control">
+                            <button class="button is-primary" @click="addProduct" v-bind:disabled="!submitable">添加</button>
+                            <button class="button is-link">取消</button>
+                        </div>
+                    </div>
                 </div>
-        <div class="control is-horizontal">
-            <div class="control-label"><label class="label">参数</label></div>
-            <div class="control is-grouped">
-                <p class="control is-expanded"><input class="input" type="number" placeholder="价格"
-                                                      v-model="newProduct.price"></p>
-                <p class="control is-expanded"><input class="input" type="number" placeholder="重量"
-                                                      v-model="newProduct.weight"></p>
-            </div>
-        </div>
-        <div class="control is-horizontal">
-            <div class="control-label"><label class="label">类别</label></div>
-            <div class="control">
-                <div class="select is-fullwidth">
-                    <select v-model="newProduct.product_category_id">
-                        <option v-for="category in productCategories" v-bind:value="category.id">
-                            {{ category.name }}
-                        </option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div class="control is-horizontal">
-            <div class="control-label"><label class="label">产品描述</label></div>
-            <div class="control"><textarea class="textarea" placeholder="添加商品的描述信息"
-                                           v-model="newProduct.detail"></textarea></div>
-        </div>
-        <div class="control is-horizontal">
-            <div class="control-label"><label class="label">产品照片</label></div>
-            <div class="control">
-                <input type="file" @change="handleUpload"> {{ 9 - count}}</input>
-            </div>
-        </div>
-        <div class="control is-horizontal">
-            <div class="control-label"></div>
-            <div class="control">
-                <div class="columns is-multiline">
-                    <div class="column">
-                        <figure class="image is-128x128" style="border: 1px dotted #DDD">
-                            <img v-bind:src="src1 || placeholder">
-                        </figure>
-                    </div>
-                    <div class="column" v-if="src2 !== null">
-                        <figure class="image is-128x128">
-                            <img v-bind:src="src2">
-                        </figure>
-                    </div>
-                    <div class="column" v-if="src3 !== null">
-                        <figure class="image is-128x128">
-                            <img v-bind:src="src3">
-                        </figure>
-                    </div>
-                    <div class="column" v-if="src4 !== null">
-                        <figure class="image is-128x128">
-                            <img v-bind:src="src4">
-                        </figure>
-                    </div>
-                    <div class="column" v-if="src5 !== null">
-                        <figure class="image is-128x128">
-                            <img v-bind:src="src5">
-                        </figure>
-                    </div>
-                    <div class="column" v-if="src6 !== null">
-                        <figure class="image is-128x128">
-                            <img v-bind:src="src6">
-                        </figure>
-                    </div>
-                    <div class="column" v-if="src7 !== null">
-                        <figure class="image is-128x128">
-                            <img v-bind:src="src7">
-                        </figure>
-                    </div>
-                    <div class="column" v-if="src8 !== null">
-                        <figure class="image is-128x128">
-                            <img v-bind:src="src8">
-                        </figure>
-                    </div>
-                    <div class="column" v-if="src9 !== null">
-                        <figure class="image is-128x128">
-                            <img v-bind:src="src9">
-                        </figure>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="control is-horizontal">
-            <div class="control-label"><label class="label"></label></div>
-            <div class="control">
-                <button class="button is-primary" @click="addProduct" v-bind:disabled="!submitable">添加</button>
-                <button class="button is-link">取消</button>
-            </div>
+            </article>
         </div>
     </div>
-
+    <div class="tile is-ancestor">
     <div class="tile is-parent">
         <article class="tile is-child box">
             <h4 class="title">产品列表</h4>
@@ -176,6 +179,7 @@ export default {
                 </tbody>
             </table>
         </article>
+    </div>
     </div>
 </div>
     `,

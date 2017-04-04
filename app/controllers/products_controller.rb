@@ -4,13 +4,25 @@ class ProductsController < ApplicationController
 
   # 显示所有商品
   def index
-    #render :template => 'products/future'
     respond_to do |format|
       format.json { render :json => { products: Product.all } }
       format.html {
         @categories = ProductCategory.where(:parent_id => nil)
-        @products = Product.active.paginate(:page => params[:page], :per_page => 12)
-        render 'index' 
+        @currentCategoryId = params[:category_id]
+        if @currentCategoryId
+          if params[:brand]
+            @products = Product.where(product_category_id: @currentCategoryId, brand: params[:brand])
+          else
+            @products =Product.categorized(@currentCategoryId)
+          end
+          @brands = @products.pluck(:brand).uniq
+        else
+          @products = Product.all
+          @brands = []
+        end
+
+        # do pagination
+        @products = @products.paginate(:page => params[:page], :per_page => 12)
       }
     end
   end
@@ -44,6 +56,6 @@ class ProductsController < ApplicationController
 
   private
   def product_params
-    params.require(:product).permit([:name, :price, :weight, :dimension, :detail, :category])
+    params.require(:product).permit([:name, :price, :weight, :brand, :dimension, :detail, :product_category_id])
   end
 end

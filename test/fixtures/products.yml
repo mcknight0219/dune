@@ -35,6 +35,6 @@ offshelf:
   name: Seal Oil
   price: 100.00
   weight: 0
-  product_category: other.
+  product_category: other
   detail:
   active: false
