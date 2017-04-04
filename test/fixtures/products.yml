@@ -1,6 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 fishoil:
+  brand: Centrum
   name: Fish Oil
   price: 9.99
   weight: 1.5
@@ -10,6 +11,7 @@ fishoil:
   active: true
 
 cream:
+  brand: Lanco
   name: Lanco
   price: 99.99
   weight: 1.5
@@ -19,6 +21,7 @@ cream:
   active: true
 
 mbp:
+  brand: Apple
   name: Macbook Pro
   price: 2999.99
   weight: 3
@@ -28,9 +31,10 @@ mbp:
   active: true
   
 offshelf:
+  brand: Centrum
   name: Seal Oil
   price: 100.00
   weight: 0
-  product_category: other
+  product_category: other.
   detail:
   active: false

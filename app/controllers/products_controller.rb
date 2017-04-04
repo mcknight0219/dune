@@ -8,6 +8,7 @@ class ProductsController < ApplicationController
     respond_to do |format|
       format.json { render :json => { products: Product.all } }
       format.html {
+        @categories = ProductCategory.where(:parent_id => nil)
         @products = Product.active.paginate(:page => params[:page], :per_page => 12)
         render 'index' 
       }
