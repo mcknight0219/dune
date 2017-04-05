@@ -15,11 +15,6 @@ class OrdersController < ApplicationController
   end
 
   private
-
-  def summarize_order_details(order)
-    order.order_items.map { |i| i.product }
-  end
-
   def decorate_result(orders)
     orders.map do |o|
       {
@@ -32,6 +27,10 @@ class OrdersController < ApplicationController
           items: summarize_order_details(o)
       }
     end
+  end
+
+  def summarize_order_details(order)
+    order.order_items.map { |i| i.product }
   end
 end
 

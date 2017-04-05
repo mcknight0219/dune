@@ -118,6 +118,8 @@ ActiveRecord::Schema.define(version: 20170405061522) do
     t.boolean  "active"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+    t.string   "cover"
+    t.string   "grids"
     t.string   "image1_file_name"
     t.string   "image1_content_type"
     t.integer  "image1_file_size"
@@ -156,7 +158,7 @@ ActiveRecord::Schema.define(version: 20170405061522) do
     t.datetime "image9_updated_at"
     t.string   "brand"
     t.integer  "product_category_id"
-    t.integer "shipping_price"
+    t.integer  "shipping_price"
     t.index ["product_category_id"], name: "index_products_on_product_category_id", using: :btree
   end
 
