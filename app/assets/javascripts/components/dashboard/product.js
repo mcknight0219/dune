@@ -162,6 +162,8 @@ export default {
                 <thead>
                 <tr>
                     <th>名称</th>
+                    <th>品牌</th>
+                    <th>类别</th>
                     <th>价格</th>
                     <th>重量(kg)</th>
                     <th>删除</th>
@@ -170,6 +172,8 @@ export default {
                 <tbody>
                 <tr v-for="p in products">
                     <td>{{ p.name }}</td>
+                    <td>{{ p.brand }}</td>
+                    <td>{{ p.product_category_id }}</td>
                     <td>{{ p.price }}</td>
                     <td>{{ p.weight }}</td>
                     <td class="is-icon">

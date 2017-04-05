@@ -2,13 +2,13 @@
   <main class="hoc container clear">
     <div class="content">
       <ul class="breadcrumb">
-        <li class="breadcrumb-item"><a href="">商品</a></li>
-        <li class="breadcrumb-item"><a href="">保健品</a></li>
+        <li class="breadcrumb-item"><%= link_to '全部商品', products_path %></li>
+        <li class="breadcrumb-item"><%= link_to @product.product_category.name, products_path(:category_id => @product.product_category.id) %></li>
       </ul>
       <div class="one_half first" style="margin-top: 20px;">
         <div class="large-view">
           <figure>
-            <%= image_tag @product.image1.url, size: '350x350' %>
+            <%= image_tag @product.image1.url, size: '350x350', style: 'height: 350px; width: 350px;object-fit:contain;' %>
           </figure>
         </div>
         <div class="thumbnail-strip">
@@ -19,7 +19,7 @@
                 <figure class="<%= if index == 0 then
                                      'selected'
                                    end %>">
-                  <%= image_tag img.url, size: '100x100' %>
+                  <%= image_tag img.url, size: '100x100', style: 'height: 100px; width: 100px;object-fit:contain;' %>
                 </figure>
               </div>
           <% end %>

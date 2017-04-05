@@ -12,10 +12,6 @@ class ProductTest < ActiveSupport::TestCase
 
   test 'categorized scope' do
     assert_equal(3, Product.categorized(product_categories(:other).id).count)
-    assert_equal(0, Product.categorized(1).count)
   end
 
-  test 'get category path' do
-
-  end
 end

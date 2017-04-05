@@ -6,8 +6,11 @@ class Product < ApplicationRecord
   before_save :default_values
 
   scope :active, -> { where(active: true) }
-  scope :categorized, -> (id) { where(product_category_id: id) }
-  scope :branded, -> (name) { if name then where(brand: name) end }
+  scope :categorized, -> (id) {
+    ProductCategory.find(id).descendants.reduce(where(product_category_id: id)) do |set, pc|
+      set.or(where(product_category_id: pc.id))
+    end
+  }
 
   # we have at most 9 images for one product
   (1..9).each do |n|

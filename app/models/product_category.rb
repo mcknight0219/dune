@@ -1,13 +1,16 @@
 class ProductCategory < ApplicationRecord
-  def sub_categories
-    ProductCategory.where(parent_id: id)
+  has_many :subcategories, class_name: 'ProductCategory',
+           foreign_key: "parent_id"
+  belongs_to :parent, class_name: "ProductCategory"
+
+  def self.top_levels
+    ProductCategory.where(parent_id: nil)
   end
 
-  def parent
-    ProductCategory.try(:find, parent_id)
+  def descendants
+    subcategories.map do |category|
+      [category] + (category.descendants.flatten || [])
+    end.flatten
   end
 
-  def root?
-    parent_id.nil?
-  end
 end

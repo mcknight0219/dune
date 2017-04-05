@@ -7,14 +7,12 @@ class ProductsController < ApplicationController
     respond_to do |format|
       format.json { render :json => { products: Product.all } }
       format.html {
-        @categories = ProductCategory.where(:parent_id => nil)
+        @categories = ProductCategory.top_levels
         @currentCategoryId = params[:category_id]
         if @currentCategoryId
-          if params[:brand]
-            @products = Product.where(product_category_id: @currentCategoryId, brand: params[:brand])
-          else
-            @products =Product.categorized(@currentCategoryId)
-          end
+          # include ones of children categories
+          @products =Product.categorized(@currentCategoryId)
+          @products = @products.where(brand: params[:brand]) if params[:brand]
           @brands = @products.pluck(:brand).uniq
         else
           @products = Product.all
