@@ -34,7 +34,7 @@ class ProductsController < ApplicationController
   end
   
   def create
-    p = Product.create params.permit([:name, :brand, :price, :weight, :dimension, :detail, :product_category_id] + (1..9).map { |n| "image#{n}".to_sym })
+    p = Product.create params.permit([:name, :brand, :price, :shipping_price, :weight, :dimension, :detail, :product_category_id] + (1..9).map { |n| "image#{n}".to_sym })
     render :json => {product: p.as_json}
   end
 
@@ -54,6 +54,6 @@ class ProductsController < ApplicationController
 
   private
   def product_params
-    params.require(:product).permit([:name, :price, :weight, :brand, :dimension, :detail, :product_category_id])
+    params.require(:product).permit([:name, :price, :shipping_price, :weight, :brand, :dimension, :detail, :product_category_id])
   end
 end

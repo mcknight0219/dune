@@ -64,8 +64,8 @@ export default {
                         <div class="control is-grouped">
                             <p class="control is-expanded"><input class="input" type="number" placeholder="价格"
                                                                   v-model="newProduct.price"></p>
-                            <p class="control is-expanded"><input class="input" type="number" placeholder="重量"
-                                                                  v-model="newProduct.weight"></p>
+                            <p class="control is-expanded"><input class="input" type="number" placeholder="邮费（每件）"
+                                                                  v-model="newProduct.shipping_price"></p>
                         </div>
                     </div>
                     <div class="control is-horizontal">
@@ -165,7 +165,7 @@ export default {
                     <th>品牌</th>
                     <th>类别</th>
                     <th>价格</th>
-                    <th>重量(kg)</th>
+                    <th>邮寄价格</th>
                     <th>删除</th>
                 </tr>
                 </thead>
@@ -175,7 +175,7 @@ export default {
                     <td>{{ p.brand }}</td>
                     <td>{{ p.product_category_id }}</td>
                     <td>{{ p.price }}</td>
-                    <td>{{ p.weight }}</td>
+                    <td>{{ p.shipping_price }}</td>
                     <td class="is-icon">
                         <a v-on:click="deleteProduct(p)"><i class="fa fa-trash"></i></a>
                     </td>
@@ -279,7 +279,7 @@ export default {
                 name: '',
                 brand: '',
                 price: '',
-                weight: '',
+                shipping_price: '',
                 detail: '',
                 product_category_id: ''
             },

@@ -68,7 +68,7 @@ class CartsController < ApplicationController
     session[:order_id] = order.id
     @order = order
     @summary = order.summary
-    @shipping_cost = 100
+    @shipping_cost = PriceCalculator.new(@order).shipping_price
     @total_price = PriceCalculator.new(@order).total_price
   end
 

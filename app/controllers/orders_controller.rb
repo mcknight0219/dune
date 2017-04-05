@@ -17,15 +17,7 @@ class OrdersController < ApplicationController
   private
 
   def summarize_order_details(order)
-    details = {}
-    order.order_items.map { |i| i.product }.each do |p|
-      if details.has_key? p.sku
-        details[p.sku] = details[p.sku] + 1
-      else
-        details[p.sku] = 1
-      end
-    end
-    details
+    order.order_items.map { |i| i.product }
   end
 
   def decorate_result(orders)
