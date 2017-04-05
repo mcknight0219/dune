@@ -63,9 +63,9 @@ Rails.application.configure do
   config.action_mailer.default :charset => 'utf-8'
   config.action_mailer.smtp_settings = {
     address: 'mail.hover.com',
-    port: 465,
+    port: 587,
     domain: 'superunique.ca',
-    authentication: 'plain',
+    authentication: :plain,
     enable_starttls_auto: true,
     user_name: ENV['EMAIL_USERNAME'],
     password: ENV['EMAIL_PASSWORD']
