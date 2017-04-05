@@ -45,7 +45,6 @@ export default {
     methods: {
         getOrderDetail(items) {
             let result = []
-            debugger
             for (let sku in items) {
                 result.push(sku + 'x' + items[sku])
             }

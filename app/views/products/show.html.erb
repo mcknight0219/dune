@@ -32,6 +32,11 @@
           <span style="float:left;font-size: 19px;color: red;text-align: left;margin-left:20px"><%= "#{@product.price} 加元" %></span>
         </div>
         <div class="clear"></div>
+        <div style="">
+          <span style="float:left;font-size: 18px;">邮费:</span>
+          <span style="float:left;font-size: 17px;color: gray;text-align: left;margin-left:20px"><%= "#{@product.shipping_price} 加元／件（瓶）" %></span>
+        </div>
+        <div class="clear"></div>
         <div style="font-weight: 400; font-size: 17px; margin-top:20px;">产品描述</div>
         <p style="padding-top:0px;color:gray;"><%= @product.detail %></p>
         <div style="margin-top:25px;">
