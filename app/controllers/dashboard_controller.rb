@@ -1,5 +1,5 @@
 class DashboardController < ApplicationController
-  before_action :redirect_if_not_admin
+  before_action :require_admin
   layout 'simple_application'
 
   def index
@@ -7,7 +7,7 @@ class DashboardController < ApplicationController
   
   private
 
-  def redirect_if_not_admin
+  def require_admin
     redirect_to root_url unless current_user && current_user.admin?
   end
 
