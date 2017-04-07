@@ -34,7 +34,7 @@ jQuery(window).scroll(function () {
 });
 
 $('<form action="#"><select /></form>').appendTo("#mainav");
-$("<option />", {selected: "selected", value: "", text: "MENU"}).appendTo("#mainav select");
+$("<option />", {selected: "selected", value: "", text: "菜单"}).appendTo("#mainav select");
 $("#mainav a").each(function () {
     var e = $(this);
     if ($(e).parents("ul ul ul").length >= 1) {
