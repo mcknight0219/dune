@@ -33,13 +33,17 @@
               <%=	f.label :mobile, '电话号码' %>
               <%=	f.phone_field :mobile, :required => true %>
             </div>
+            <div class="block">
+              <%= f.label :id_number, '身份证号' %>
+              <%= f.text_field :id_number, :required => true %>
+            </div>
             <div class=block>
               <%= f.label :id_front, '身份证正面' %>
-              <%= f.file_field :id_front %>
+              <%= f.file_field :id_front, :required => true %>
             </div>
             <div class=block>
               <%= f.label :id_front, '身份证背面' %>
-              <%= f.file_field :id_back %>
+              <%= f.file_field :id_back, :required => true %>
             </div>
             <div class="block">
               <%= f.submit '添加', class: 'btn' %>

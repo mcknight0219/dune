@@ -15,9 +15,6 @@ class PackagesController < ApplicationController
   end
 
   def choose_address
-    if request.referer.nil? || URI(request.referer).path != new_package_path
-      redirect_back fallback_location: new_package_path and return
-    end
     session[:package_luxury] = params[:luxury].present?
     @total = current_user.addresses.count
     @addresses = current_user.addresses.paginate(:page => params[:page], :per_page => 10)
@@ -25,7 +22,7 @@ class PackagesController < ApplicationController
   end
 
   def add_package_item
-    session[:package_items] << {name: params[:name], item_category_id: params[:category].to_i, quantity: params[:quantity]}
+    session[:package_items] << {name: params[:name], item_category_id: params[:category].to_i, specification: params[:specification], quantity: params[:quantity].to_i}
     redirect_to action: :new
   end
 

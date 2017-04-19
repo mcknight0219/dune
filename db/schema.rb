@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170405061522) do
+ActiveRecord::Schema.define(version: 20170419222137) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20170405061522) do
     t.string   "id_back_content_type"
     t.integer  "id_back_file_size"
     t.datetime "id_back_updated_at"
+    t.string   "id_number"
     t.index ["user_id"], name: "index_addresses_on_user_id", using: :btree
   end
 
@@ -78,11 +79,12 @@ ActiveRecord::Schema.define(version: 20170405061522) do
 
   create_table "package_items", force: :cascade do |t|
     t.string   "name"
-    t.string   "quantity"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.integer  "package_id"
     t.integer  "item_category_id"
+    t.integer  "quantity"
+    t.string   "specification"
     t.index ["item_category_id"], name: "index_package_items_on_item_category_id", using: :btree
     t.index ["package_id"], name: "index_package_items_on_package_id", using: :btree
   end

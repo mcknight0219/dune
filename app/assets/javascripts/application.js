@@ -68,6 +68,10 @@ $('#category_input').change(function () {
     $('#category').val($(this).val())
 })
 
+$('#specification_input').change(function () {
+    $('#specification').val($(this).val())
+})
+
 $('#quantity_input').change(function () {
     $('#quantity').val($(this).val())
 })
