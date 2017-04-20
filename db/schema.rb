@@ -120,8 +120,6 @@ ActiveRecord::Schema.define(version: 20170419222137) do
     t.boolean  "active"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
-    t.string   "cover"
-    t.string   "grids"
     t.string   "image1_file_name"
     t.string   "image1_content_type"
     t.integer  "image1_file_size"

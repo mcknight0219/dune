@@ -36,6 +36,12 @@ class PackagesController < ApplicationController
   end
 
   def create
+    unless params[:address_id] && !params[:address_id].empty?
+      flash[:error] = '必须选择一个地址'
+      redirect_to :action => 'choose_address'
+      return
+    end
+
     new_package = current_user.packages.create luxury: session[:package_luxury], address_id: params[:address_id]
     session[:package_items].each do |item|
       new_package.package_items.create item

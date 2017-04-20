@@ -19,6 +19,7 @@
 //= require vue-resource
 //= require jquery_ujs
 //= require turbolinks
+//= require jquery.webui-popover.min
 
 jQuery("#backtotop").click(function () {
     jQuery("body,html").animate({
