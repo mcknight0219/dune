@@ -36,6 +36,8 @@ gem 'jbuilder', '~> 2.5'
 # gem 'bcrypt', '~> 3.1.7'
 gem 'rails-i18n'
 
+gem 'dropbox_api'
+
 # Use Capistrano for deployment
 group :development do
   gem 'capistrano-rails', group: :development
