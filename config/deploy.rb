@@ -17,3 +17,18 @@ namespace :deploy do
     invoke 'puma:smart_restart'
   end
 end
+
+namespace :rake do
+  desc "Run a task on remote server."
+  task :invoke do
+    fail 'no task provided' unless ENV['task']
+
+    on roles(:app) do
+      within release_path do
+        with rails_env: fetch(:rails_env) do
+          execute :rake, ENV['task']
+        end
+      end
+    end
+  end
+end
