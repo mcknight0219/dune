@@ -14,6 +14,11 @@ class PackagesController < ApplicationController
   end
 
   def choose_address
+    if session[:package_items].empty?
+      flash[:error] = '请点击+来添加'
+      redirect_to action: 'new'
+      return
+    end
     session[:package_luxury] = params[:luxury].present?
     @total = current_user.addresses.count
     @addresses = current_user.addresses.paginate(:page => params[:page], :per_page => 10)
