@@ -24,6 +24,15 @@ class PackageTest < ActiveSupport::TestCase
     assert_equal(expected_serial(new_package), new_package.serial)
   end
 
+  test 'get status of package' do
+    new_package = @client.packages.create(address: addresses(:canada_address), luxury: true)
+    assert_equal('pending', new_package.status)
+    new_package.is_received = true
+    assert_equal('received', new_package.status)
+    new_package.is_shipped = true
+    assert_equal('shipped', new_package.status)
+  end
+
   def expected_serial(package)
     prefix = package.luxury ? 'SU' : 'AC'
     "#{prefix}#{(package.id.to_i + 170000).to_s}"

@@ -7,7 +7,6 @@ class PackagesController < ApplicationController
   end
 
   def new
-    @categories = ItemCategory.all.map { |cat| [cat.name, cat.id]}
     unless session.has_key? :package_items
       session[:package_items] = []
     end
@@ -22,7 +21,7 @@ class PackagesController < ApplicationController
   end
 
   def add_package_item
-    session[:package_items] << {name: params[:name], item_category_id: params[:category].to_i, specification: params[:specification], quantity: params[:quantity].to_i}
+    session[:package_items] << {name: params[:name], brand: params[:brand], specification: params[:specification], quantity: params[:quantity].to_i}
     redirect_to action: :new
   end
 
@@ -78,10 +77,8 @@ class PackagesController < ApplicationController
   end
 
   def decorate_package(package)
-    package.as_json.merge({
-                              address: package.address.as_json(:except => ["created_at", "updated_at"]).merge({:id_front => package.address.id_front.url, :id_back => package.address.id_back.url}),
-                              package_items: package.package_items.as_json(:except => ["created_at", "updated_at", "package_id"])
-    })
+    package.as_json(:excpet => ['is_shipped', 'is_received', 'is_cancelled'])
+        .merge({status: package.status, address: package.address.as_json(:except => ["created_at", "updated_at"]).merge({:id_front => package.address.id_front.url, :id_back => package.address.id_back.url}), package_items: package.package_items.as_json(:except => ["created_at", "updated_at", "package_id"])})
   end
 
 end

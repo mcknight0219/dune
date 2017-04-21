@@ -24,8 +24,8 @@ export default {
         return this.csrf_fetch('PUT', '/packages/' + pac.id, JSON.stringify(
             {
                 'package': {
-                    is_shipped: pac.is_shipped,
-                    is_received: pac.is_received
+                    is_shipped: pac.status === 'shipped',
+                    is_received: pac.status === 'received'
                 }
             }))
     },

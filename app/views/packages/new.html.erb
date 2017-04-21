@@ -29,7 +29,7 @@
           <thead>
             <tr>
               <th>品牌</th>
-              <th>产品类别</th>
+              <th>产品名称</th>
               <th>规格</th>
               <th>数量</th>
               <th></th>
@@ -38,8 +38,8 @@
           <tbody>
             <% @added.each do |item| %>
               <tr>
+                <td><%= item['brand'] %></td>
                 <td><%= item['name'] %></td>
-                <td><%= @categories.find { |c| c.second == item['item_category_id'] }.first %></td>
                 <td><%= item['specification'] %></td>
                 <td><%= item['quantity'] %></td>
                 <td>
@@ -51,14 +51,14 @@
               </tr>
             <% end %>
             <tr id="add-package-row">
-              <td><%= text_field_tag(:name_input, '',  :placeholder => '例如Coach，健美生') %></td>
-              <td><%= select_tag(:category_input, options_for_select(@categories)) %></td>
+              <td><%= text_field_tag(:brand_input, '', :placeholder => '例如Coach，健美生') %></td>
+              <td><%= text_field_tag(:name_input, '', :placeholder => '例如维生素D') %></td>
               <td><%= text_field_tag(:specification_input, '', :placeholder => '例如100粒/瓶') %></td>
               <td><%= number_field_tag(:quantity_input, '', :placeholder => '例如1个') %></td>
               <td>
                 <%= form_tag 'add' do %>
+                    <%= hidden_field_tag :brand, '', required: true %>
                     <%= hidden_field_tag :name, '', required: true %>
-                    <%= hidden_field_tag :category, @categories.last.second %>
                     <%= hidden_field_tag :specification, '', required: true %>
                     <%= hidden_field_tag :quantity, '', required: true %>
                     <button type="submit" style="border: none;background-color: transparent;font-size:18px;cursor: pointer;color: #2BB656;">

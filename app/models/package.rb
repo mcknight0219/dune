@@ -14,6 +14,15 @@ class Package < ApplicationRecord
     end
   end
 
+  def status
+    if is_shipped
+      return 'shipped'
+    elsif is_received
+      return 'received'
+    else
+      return 'pending'
+    end
+  end
   private
 
   def default_values

@@ -44,7 +44,8 @@
       <tr>
         <th>寄件单号</th>
         <th>提交时间</th>
-        <th>查询</th>
+        <th>地址</th>
+        <th>状态</th>
       </tr>
       </thead>
       <tbody>
@@ -52,7 +53,19 @@
           <tr>
             <td><%= p.serial %></td>
             <td><%= p.created_at.localtime.strftime '%Y-%m-%d %H:%M:%S' %></td>
-            <td>跟踪包裹(UPS)</td>
+            <td>
+              <span style="font-weight: 500"><%= p.address.name %></span>
+              <span><%= "#{p.address.address_line1} #{p.address.city} #{p.address.state}"%></span>
+            </td>
+            <td>
+              <% if p.status == 'pending' %>
+                等待寄送
+              <% elsif p.status == 'received' %>
+                已收到
+              <% else %>
+                查询
+              <% end %>
+            </td>
           </tr>
         <% end %>
       </tbody>
