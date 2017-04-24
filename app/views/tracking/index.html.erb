@@ -1,0 +1,23 @@
+<div class="wrapper row3" style="flex: 1;">
+  <main class="hoc container clear">
+    <div class="content single-col">
+      <h4 class="title-divider"><span>查询快递</span></h4>
+        <div id="comments" class="form">
+          <% if flash[:error] %>
+            <div id="flash_alert"><%= flash[:error] %></div>
+          <% end %>
+          <%= form_tag '/', method: :post do %>
+            <div class="block">
+	            <p>请输入您的寄件的订单号码。您可以在<%= link_to '我的订单', myorder_path %>查询到</p>
+            </div>
+              <div class="block">
+                <%= text_field_tag :tracking_no, '', :placeholder => '例如 STE100...YVR', required: true, :style => 'width: 35%' %>
+              </div>
+              <div class="block topspace-25">
+                <%= submit_tag '查询', :class => 'btn' %>
+              </div>
+          <% end %>
+        </div>
+    </div> 
+  </main>
+</div>

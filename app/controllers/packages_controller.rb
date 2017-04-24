@@ -7,32 +7,46 @@ class PackagesController < ApplicationController
   end
 
   def new
+  end
+
+  def choose_type
+    session[:package_luxury] = params[:type] == 'luxury'
+    redirect_to action: :item
+  end
+
+  def item
     unless session.has_key? :package_items
       session[:package_items] = []
     end
+    @luxury = session[:package_luxury]
     @added = session[:package_items]
   end
 
   def choose_address
     if session[:package_items].empty?
       flash[:error] = '请点击+来添加'
-      redirect_to action: 'new'
+      redirect_to action: 'item'
       return
     end
-    session[:package_luxury] = params[:luxury].present?
+
     @total = current_user.addresses.count
     @addresses = current_user.addresses.paginate(:page => params[:page], :per_page => 10)
     render 'packages/address'
   end
 
+  MAX_ITEM_PER_PACKAGE = 10
   def add_package_item
-    session[:package_items] << {name: params[:name], brand: params[:brand], specification: params[:specification], quantity: params[:quantity].to_i}
-    redirect_to action: :new
+    if session[:package_items].count + 1 == MAX_ITEM_PER_PACKAGE
+      flash[:error] = '太多放不下啦。请考虑分成多个包裹来寄送'
+    else
+      session[:package_items] << {name: params[:name], brand: params[:brand], specification: params[:specification], quantity: params[:quantity].to_i}
+    end
+    redirect_to action: :item
   end
 
   def remove_package_item
-    session[:package_items].delete_if { |item| item['name'] == params[:item_name] }
-    redirect_to action: :new
+    session[:package_items].delete_if { |item| item['name'] == params[:item_name] && item['brand'] == params[:item_brand]}
+    redirect_to action: :item
   end
 
   def destroy

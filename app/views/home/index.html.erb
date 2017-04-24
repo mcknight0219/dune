@@ -56,21 +56,27 @@
           <article class="infobox"><i class="fa fa-codepen"></i>
             <p><a href="#">购物邮寄一站通</a></p>
             <h6>大量折扣产品库存，一键邮寄中国</h6>
-            <footer><a class="btn" href="#">开始选购 &raquo;</a></footer>
+            <footer>
+              <%= link_to '开始选购', products_path, class: 'btn' %>
+            </footer>
           </article>
         </li>
         <li class="one_third">
           <article class="infobox"><i class="fa fa-scissors"></i>
-            <p><a href="#">优惠寄件</a></p>
+            <p>优惠寄件</p>
             <h6>专业物流，渠道稳定，专业清关，价格优惠</h6>
-            <footer><a class="btn" href="#">我要寄件 &raquo;</a></footer>
+            <footer>
+              <%= link_to '我要寄件', new_package_path, class: 'btn' %>
+            </footer>
           </article>
         </li>
         <li class="one_third">
           <article class="infobox"><i class="fa fa-crosshairs"></i>
-            <p><a href="#">在线查询包裹</a></p>
+            <p>在线查询包裹</p>
             <h6>一键追踪全球运单，实时跟踪</h6>
-            <footer><a class="btn" href="#">运单查询 &raquo;</a></footer>
+            <footer>
+              <%= link_to "运单查询", tracking_path, class: 'btn' %>
+            </footer>
           </article>
         </li>
       </ul>

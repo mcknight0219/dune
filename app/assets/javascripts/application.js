@@ -55,6 +55,13 @@ $("#mainav select").change(function () {
 })
 
 
+$('#package-type-radios label').click(function() {
+    $(this).addClass('is-active').parent().siblings().children('label').removeClass('is-active')
+    $(this).find('input').prop('checked', true)
+    $(this).parent().siblings().children('label').find('input').prop('checked', false)
+})
+
+
 $("#address-table tr").click(function(){
     $(this).addClass("selected").siblings().removeClass("selected")
     $('#address_id').val($(this).data('address-id'))

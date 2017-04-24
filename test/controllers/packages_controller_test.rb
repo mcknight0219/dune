@@ -64,7 +64,7 @@ class PackagesControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'no access to address selection unless from new package' do
+  test 'no access to address selection unless from item package' do
     perform_action_as @client do
       get '/packages/address'
       assert_redirected_to action: :new

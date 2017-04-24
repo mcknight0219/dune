@@ -24,7 +24,7 @@ class CartsControllerTest < ActionDispatch::IntegrationTest
       put  cart_path, params: {id: @laptop.id, quantity: 3}
       assert_redirected_to action: :show
       follow_redirect!
-      assert_equal(3, assigns(:cart).first[:quantity], 'Cart should be updated with new quantity')
+      assert_equal(3, assigns(:cart).first[:quantity], 'Cart should be updated with item quantity')
     end
   end
 

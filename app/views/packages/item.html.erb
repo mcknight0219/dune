@@ -1,0 +1,100 @@
+<div class="wrapper row3" style="flex:1;">
+  <main class="hoc container clear">
+    <div class="content">
+      <ul class="progress-tracker progress-tracker--word progress-tracker--word-center">
+        <li class="progress-step is-complete">
+          <span class="progress-marker"></span>
+          <span class="progress-text is-bold">类型</span>
+        </li>
+        <li class="progress-step is-active">
+          <span class="progress-marker"></span>
+          <span class="progress-text is-bold">
+              添加物品
+            </span>
+        </li>
+
+        <li class="progress-step">
+          <span class="progress-marker"></span>
+          <span class="progress-text is-bold">
+              选择地址
+            </span>
+        </li>
+
+        <li class="progress-step">
+          <span class="progress-marker"></span>
+          <span class="progress-text is-bold">
+              完成
+            </span>
+        </li>
+      </ul>
+      <h4 class="title-divider"><span>添加物品</span></h4>
+      <div id="comments">
+        <% if flash[:error] %>
+            <div id="flash_alert"><%= flash[:error] %></div>
+        <% end %>
+        <table>
+          <thead>
+            <tr>
+              <th>品牌</th>
+              <th>产品名称</th>
+              <% unless @luxury %>
+                <th>规格</th>
+              <% end %>
+              <th>数量</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @added.each do |item| %>
+              <tr>
+                <td><%= item['brand'] %></td>
+                <td><%= item['name'] %></td>
+                <% unless @luxury %>
+                  <td><%= item['specification'] %></td>
+                <% end %>
+                <td><%= item['quantity'] %></td>
+                <td>
+                  <%= form_tag 'remove' do %>
+                      <%= hidden_field_tag :item_name, item['name'] %>
+                      <%= hidden_field_tag :item_brand, item['brand'] %>
+                      <button type="submit" style="border: none;background-color: transparent;font-size:18px;cursor: pointer;color: red;"><i class="fa fa-times" aria-hidden="true"></i></button>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+            <tr id="add-package-row">
+              <% if @luxury %>
+                <td><%= text_field_tag(:brand_input, '', :placeholder => '例如Coach等英文品牌') %></td>
+              <% else %>
+                  <td><%= text_field_tag(:brand_input, '', :placeholder => '例如健美生等中文品牌') %></td>
+              <% end %>
+              <td><%= text_field_tag(:name_input, '', :placeholder => '例如维生素D') %></td>
+              <% unless @luxury %>
+                <td><%= text_field_tag(:specification_input, '', :placeholder => '例如100粒/瓶') %></td>
+              <% end %>
+              <td><%= number_field_tag(:quantity_input, '', :placeholder => '例如1个') %></td>
+              <td>
+                <%= form_tag 'add' do %>
+                    <%= hidden_field_tag :brand, '', required: true %>
+                    <%= hidden_field_tag :name, '', required: true %>
+                    <% unless @luxury %>
+                      <%= hidden_field_tag :specification, '', required: true %>
+                    <% end %>
+                    <%= hidden_field_tag :quantity, '', required: true %>
+                    <button type="submit" style="border: none;background-color: transparent;font-size:18px;cursor: pointer;color: #2BB656;">
+                      <i class="fa fa-plus" aria-hidden="true"></i></button>
+                <% end %>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <%= form_tag 'address', method: :get do %>
+            <div class="clear block btmspace-80 topspace-25">
+              <%= submit_tag '选择邮寄地址', :class => 'btn'%>
+            </div>
+        <% end %>
+      </div>
+    </div>
+  </main>
+</div>

@@ -12,7 +12,7 @@ describe("mutations", () => {
         expect(state.products.length).toEqual(1)
     })
 
-    it('add new product', () => {
+    it('add item product', () => {
         const state = {products: []}
         const payload = {product: {"sku": 'A00001', "name": "fishoil", "price": 9.99}}
         ADD_NEW_PRODUCT(state, payload)
@@ -146,7 +146,7 @@ describe('actions', () => {
         }], done)
     })
 
-    it('add new product', (done) => {
+    it('add item product', (done) => {
         let state = {products: []}
         testAction(actions.addNewProduct, {product: {"name": "fishoil", "price": 9.99}}, state, [
             {type: 'ADD_NEW_PRODUCT', payload: {product: {"sku": 'A00001', "name": "fishoil", "price": 9.99}}}

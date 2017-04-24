@@ -101,3 +101,34 @@
     }
   }
 }
+
+.radio-container {
+  width: 100%;
+  padding: 4px;
+  text-align: center;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #CCC;
+
+  &:hover {
+    background-color: white;
+  }
+
+  &.is-active {
+    border-color: #2BB656;
+    background-color: white;
+  }
+
+  .type-text {
+    font-weight: 600;
+    font-size: 18px;
+  }
+
+  .radio-icon {
+    display: none;
+  }
+}
+
+.topspace-25 {
+  margin-top: 25px;
+}
