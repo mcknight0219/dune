@@ -42,7 +42,8 @@ export default {
                     <td>
                         <ul style="list-style: none">
                             <li v-for="item in p.package_items">
-                                <span>{{ item.brand + ' ' + item.name + '（' + item.specification + '）'}}</span>
+                                <span v-if="isLuxury(p)">{{ item.brand + '（' + item.name + '）'}}</span>
+                                <span v-else>{{ item.name + ' ' + item.specification + ' ' + item.brand}}</span>
                                 <span style="font-weight: 500">{{ item.quantity }}</span>
                             </li>
                         </ul>
@@ -110,6 +111,10 @@ export default {
     },
 
     methods: {
+        isLuxury(pkg) {
+          return pkg.serial.substring(0, 1) == 'SU'
+        },
+
         toggleSortID () {
             this.sortID = (this.sortID === 'desc') ? 'asc' : 'desc'
             this.packages.sort((a, b) => {
