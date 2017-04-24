@@ -76,6 +76,10 @@ $('#brand_input').change(function () {
     $('#brand').val($(this).val())
 })
 
+$('#article_input').change(function () {
+    $('#article').val($(this).val())
+})
+
 $('#specification_input').change(function () {
     $('#specification').val($(this).val())
 })

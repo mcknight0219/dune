@@ -7,6 +7,9 @@ class PackagesController < ApplicationController
   end
 
   def new
+    if session[:package_items]
+      session[:package_items] = []
+    end
   end
 
   def choose_type
@@ -39,7 +42,7 @@ class PackagesController < ApplicationController
     if session[:package_items].count + 1 == MAX_ITEM_PER_PACKAGE
       flash[:error] = '太多放不下啦。请考虑分成多个包裹来寄送'
     else
-      session[:package_items] << {name: params[:name], brand: params[:brand], specification: params[:specification], quantity: params[:quantity].to_i}
+      session[:package_items] << {name: params[:name], brand: params[:brand], specification: params[:specification], quantity: params[:quantity].to_i, article: params[:article]}
     end
     redirect_to action: :item
   end

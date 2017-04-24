@@ -6,5 +6,5 @@ class PackageItem < ApplicationRecord
 
   validates :name, presence: true
   validates :quantity, presence: true
-  validates :specification, presence: true
+  validates :brand, presence: true
 end

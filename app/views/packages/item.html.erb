@@ -41,6 +41,9 @@
                 <th>规格</th>
               <% end %>
               <th>数量</th>
+              <% if @luxury %>
+                <th>单位</th>
+              <% end %>
               <th></th>
             </tr>
           </thead>
@@ -53,6 +56,9 @@
                   <td><%= item['specification'] %></td>
                 <% end %>
                 <td><%= item['quantity'] %></td>
+                <% if @luxury %>
+                  <td><%= item['article'] %></td>
+                <% end %>
                 <td>
                   <%= form_tag 'remove' do %>
                       <%= hidden_field_tag :item_name, item['name'] %>
@@ -72,14 +78,20 @@
               <% unless @luxury %>
                 <td><%= text_field_tag(:specification_input, '', :placeholder => '例如100粒/瓶') %></td>
               <% end %>
-              <td><%= number_field_tag(:quantity_input, '', :placeholder => '例如1个') %></td>
+              <td><%= number_field_tag(:quantity_input, '', :placeholder => '') %></td>
+              <% if @luxury %>
+                <td><%= text_field_tag(:article_input, '', :placeholder => '例如个，只') %></td>
+              <% end %>
               <td>
                 <%= form_tag 'add' do %>
                     <%= hidden_field_tag :brand, '', required: true %>
                     <%= hidden_field_tag :name, '', required: true %>
                     <% unless @luxury %>
                       <%= hidden_field_tag :specification, '', required: true %>
+                    <% else %>
+                      <%= hidden_field_tag :article, '', required: true %>
                     <% end %>
+
                     <%= hidden_field_tag :quantity, '', required: true %>
                     <button type="submit" style="border: none;background-color: transparent;font-size:18px;cursor: pointer;color: #2BB656;">
                       <i class="fa fa-plus" aria-hidden="true"></i></button>
