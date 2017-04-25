@@ -979,11 +979,6 @@ table a {
         margin-bottom: 0;
     }
 
-    /* Experimental - Needs more testing in different situations, stops double margin when stacking */
-    #header {
-        text-align: center;
-    }
-
     #header #logo {
         margin-bottom: 15px;
     }
