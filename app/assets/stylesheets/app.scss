@@ -192,15 +192,15 @@ nav {
   right: 0;
   background: #ffffff;
   border: 1px solid #2BB656;
-  height: 60px;
-  width: 60px;
+  height: 50px;
+  width: 50px;
 }
 @media only screen and (max-width: 800px) {
   .nav-mobile {
     display: block;
     float: right;
     right: 15px;
-    top: 40px;
+    top: 45px;
   }
 
   nav {
@@ -237,15 +237,15 @@ nav {
 
 #nav-toggle {
   position: absolute;
-  left: 13px;
-  top: 17px;
+  left: 10px;
+  top: 12px;
   cursor: pointer;
   padding: 10px 35px 16px 0px;
   span, span:before, span:after {
     cursor: pointer;
     border-radius: 1px;
     height: 5px;
-    width: 35px;
+    width: 30px;
     background: #2BB656;
     position: absolute;
     display: block;
