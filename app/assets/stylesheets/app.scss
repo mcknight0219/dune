@@ -199,7 +199,7 @@ nav {
   .nav-mobile {
     display: block;
     float: right;
-    right: 25px;
+    right: 15px;
     top: 40px;
   }
 
@@ -212,6 +212,8 @@ nav {
         display: list-item;
         float: none;
         a {
+          text-align: left;
+          font-size: 21px;
           padding: 15px;
           line-height: 20px;
         }
