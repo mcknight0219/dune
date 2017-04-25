@@ -3,8 +3,11 @@
     <div class="fl_left">
       <a href="/"><%= image_tag("logo.png") %></a>
     </div>
-    <nav id="mainav" class="fl_right">
-      <ul class="clear">
+    <nav>
+      <div class="nav-mobile">
+        <a id="nav-toggle"><span></span></a>
+      </div>
+      <ul class="nav-list">
         <li class="<%= if set_active_class(root_path) then
                          "active"
                        end %>"><%= link_to '主页', root_path %></li>
@@ -20,15 +23,15 @@
         <li class="<%= if set_active_class(contact_path) then
                          "active"
                        end %>"><%= link_to '联系我们', contact_path %></li>
-        <li><a href=<%= cart_path %> style="font-size:20px;"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+        <li><a href=<%= cart_path %>>购物车</a>
         </li>
 
         <% if user_signed_in? %>
             <li class="<%= if set_active_class() then
                              "active"
                            end %>">
-              <a href="" class="drop">我的帐户</a>
-              <ul>
+              <a>我的帐户</a>
+              <ul class="nav-dropdown">
                 <li>
                   <%= link_to '更改邮箱', edit_user_registration_path %>
                 </li>
@@ -37,7 +40,7 @@
                 </li>
                 <li><%= link_to '我的订单', myorder_path %></li>
                 <% if current_user.admin? %>
-                    <li><%= link_to '管理员界面', dashboard_path, :style => '' %></li>
+                    <li><%= link_to '管理员界面', dashboard_path %></li>
                 <% end %>
                 <li>
                   <%= link_to "注销", destroy_user_session_path %>

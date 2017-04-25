@@ -34,35 +34,33 @@ jQuery(window).scroll(function () {
     }
 });
 
-$('<form action="#"><select /></form>').appendTo("#mainav");
-$("<option />", {selected: "selected", value: "", text: "菜单"}).appendTo("#mainav select");
-$("#mainav a").each(function () {
-    var e = $(this);
-    if ($(e).parents("ul ul ul").length >= 1) {
-        $("<option />", {value: e.attr("href"), text: "- - - " + e.text()}).appendTo("#mainav select")
-    } else if ($(e).parents("ul ul").length >= 1) {
-        $("<option />", {value: e.attr("href"), text: "- - " + e.text()}).appendTo("#mainav select")
-    } else if ($(e).parents("ul").length >= 1) {
-        $("<option />", {value: e.attr("href"), text: "" + e.text()}).appendTo("#mainav select")
-    } else {
-        $("<option />", {value: e.attr("href"), text: e.text()}).appendTo("#mainav select")
-    }
+$('nav ul li a:not(:only-child)').click(function (e) {
+    $(this).siblings('.nav-dropdown').toggle();
+    // Close one dropdown when selecting another
+    $('.nav-dropdown').not($(this).siblings()).hide();
+    e.stopPropagation();
 });
-$("#mainav select").change(function () {
-    if ($(this).find("option:selected").val() !== "#") {
-        window.location = $(this).find("option:selected").val()
-    }
-})
+// Clicking away from dropdown will remove the dropdown class
+$('html').click(function () {
+    $('.nav-dropdown').hide();
+});
 
+$('#nav-toggle').click(function () {
+    $('nav ul').slideToggle();
+});
 
-$('#package-type-radios label').click(function() {
+$('#nav-toggle').on('click', function () {
+    this.classList.toggle('active');
+});
+
+$('#package-type-radios label').click(function () {
     $(this).addClass('is-active').parent().siblings().children('label').removeClass('is-active')
     $(this).find('input').prop('checked', true)
     $(this).parent().siblings().children('label').find('input').prop('checked', false)
 })
 
 
-$("#address-table tr").click(function(){
+$("#address-table tr").click(function () {
     $(this).addClass("selected").siblings().removeClass("selected")
     $('#address_id').val($(this).data('address-id'))
 });
