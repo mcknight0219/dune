@@ -161,7 +161,7 @@ nav {
       }
 
       &.active {
-      a {
+      >a {
         background-color: #2BB656;
         color: #ffffff;
       } 
@@ -196,6 +196,9 @@ nav {
   width: 50px;
 }
 @media only screen and (max-width: 800px) {
+  #header {
+    border-bottom: none;
+  }
   .nav-mobile {
     display: block;
     float: right;
@@ -213,7 +216,7 @@ nav {
         float: none;
         a {
           text-align: left;
-          font-size: 21px;
+          font-size: 18px;
           padding: 15px;
           line-height: 20px;
         }
