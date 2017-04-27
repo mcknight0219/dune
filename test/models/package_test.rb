@@ -6,9 +6,9 @@ class PackageTest < ActiveSupport::TestCase
   end
 
   test 'generate csv' do
-    CSV.parse(Package.to_csv(filter: {luxury: true})) do |row|
-      byebug
-    end
+    lines = read_csv(Package.to_csv(filter: {luxury: true}))
+    assert_equal(3, lines.count)
+    assert_equal(Package.class_variable_get('@@CSV_HEADER_LUXURY'), lines.first)
   end
 
   test 'serial number' do
@@ -32,5 +32,9 @@ class PackageTest < ActiveSupport::TestCase
     prefix = package.luxury ? 'SU' : 'AC'
     base = package.luxury ? 160000 : 180000
     "#{prefix}#{(package.id.to_i + base).to_s}"
+  end
+
+  def read_csv(str)
+    CSV.parse(str).map { |l| l }
   end
 end

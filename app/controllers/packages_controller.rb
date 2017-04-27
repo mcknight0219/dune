@@ -1,9 +1,21 @@
 class PackagesController < ApplicationController
   respond_to :json, :only => [:index, :update]
   before_action :authenticate_user!
+  before_action :only_admin, :only => [:index]
 
   def index
-    render :json => { packages: get_packages(current_user).map { |p| decorate_package p }}
+    respond_to do |format|
+      format.json {
+        render :json => {packages: get_packages(current_user).map { |p| decorate_package p } }
+      }
+      format.csv {
+        args = {}
+        args[:luxury] = params[:luxury] if params[:luxury]
+        args[:start_date] = Date.parse(params[:start_date]) if params[:start_date]
+        args[:end_date] = Date.parse(params[:end_date]) if params[:end_date]
+        send_data Package.to_csv(filter: args), filename: ".csv"
+      }
+    end
   end
 
   def new

@@ -44,18 +44,26 @@ class Package < ApplicationRecord
   # Export items
   def to_csv(writer)
     is_first = true
-    self.package_items.each do |c|
+    self.package_items.each do |it|
       line = if luxury?
-               ['', '', "#{c.name}(#{c.brand})", c.quantity, c.article, '']
+               ['', '', "#{it.name}(#{it.brand})", it.quantity, it.article, '']
              else
-               [c.name, c.specification, c.brand, '', c.quantity, '', '', '']
+               [it.name, it.specification, it.brand, '', it.quantity, '', '', '']
              end
       if is_first
         line.unshift serial
         if luxury?
-          line.append [address.name, address.address_line1, address.mobile, address.city, address.id_number]
+          line += [address.name, address.address_line1, address.mobile, address.city, address.id_number]
         else
-          line.append [address.name, address.id_num, address.address_line1, address.mobile, address.post_code, address.city]
+          line += [address.name, address.id_number, address.address_line1, address.mobile, address.post_code, address.city]
+        end
+        is_first = false
+      else
+        line.unshift ''
+        if luxury?
+          line += 5.times.map {|x| '' }
+        else
+          line += 6.times.map {|x| '' }
         end
       end
       writer << line
@@ -73,7 +81,7 @@ class Package < ApplicationRecord
                   {start_date: start_date.to_s(:db), end_date: end_date.to_s(:db)})
               .select { |p| p.luxury? == luxury }
               .each do |p| 
-                csv << p.to_csv(csv)    
+                p.to_csv(csv)    
               end
     end
   end
