@@ -5,23 +5,18 @@ class PackageTest < ActiveSupport::TestCase
     @client = users(:qiang)
   end
 
-  test 'association between package and user' do
-    assert_equal(2, @client.packages.count)
-    assert_equal(2, @client.packages.first.package_items.count)
+  test 'generate csv' do
+    CSV.parse(Package.to_csv(filter: {luxury: true})) do |row|
+      byebug
+    end
   end
 
-  test 'user create package' do
-    new_package = @client.packages.create(address: addresses(:canada_address))
-    assert_not(new_package.is_received)
-    assert_not(new_package.is_shipped)
-    new_package_item = new_package.package_items.create(name: 'some thing', quantity: 1, item_category: item_categories(:bag))
-    assert(new_package_item)
-    assert_equal(@client, new_package_item.package.user)
-  end
+  test 'serial number' do
+    p = @client.packages.create(address:addresses(:canada_address), luxury: true)
+    assert_equal('SU', p.serial[0, 2])
 
-  test 'package should have correct serial number' do
-    new_package = @client.packages.create(address: addresses(:canada_address), luxury: true) 
-    assert_equal(expected_serial(new_package), new_package.serial)
+    p = @client.packages.create(address:addresses(:canada_address), luxury: false)
+    assert_equal('AC', p.serial[0, 2])
   end
 
   test 'get status of package' do
@@ -35,6 +30,7 @@ class PackageTest < ActiveSupport::TestCase
 
   def expected_serial(package)
     prefix = package.luxury ? 'SU' : 'AC'
-    "#{prefix}#{(package.id.to_i + 170000).to_s}"
+    base = package.luxury ? 160000 : 180000
+    "#{prefix}#{(package.id.to_i + base).to_s}"
   end
 end

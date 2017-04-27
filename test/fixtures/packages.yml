@@ -5,7 +5,7 @@ two_item_packages:
   address: new_address
   is_shipped: false
   is_received: false
-  serial: AC170000
+  serial: SU170000
 
 one_item_package:
   user: qiang

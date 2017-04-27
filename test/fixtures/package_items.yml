@@ -2,18 +2,24 @@
 
 laptop:
   name: Laptop
+  brand: Lenovo
+  specification:
+  article: 台
   quantity: 2
   package: two_item_packages
-  item_category: bag
 
 bag:
-  name: Coach
+  name: Woman Bag
+  brand: Coach
+  specification:
+  article: 个
   quantity: 1
   package: two_item_packages
-  item_category: bag
 
 fishoil:
   name: fishoil
+  brand: 健美生
+  specification: 200粒
+  article:
   quantity: 2
   package: admin_package
-  item_category: vitamin

@@ -1,7 +1,0 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-bag:
-  name: Bag
-
-vitamin:
-  name: Vitamin C

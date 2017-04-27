@@ -1,3 +1,5 @@
+require 'csv'
+
 class Package < ApplicationRecord
   belongs_to :user
   belongs_to :address
@@ -9,8 +11,9 @@ class Package < ApplicationRecord
 
   def make_serial_no
     unless self.serial
-      prefix = self.luxury ? 'SU' : 'AC'
-      self.update(:serial => prefix + (self.id.to_i + 170000).to_s)
+      prefix = luxury ? 'SU' : 'AC'
+      base = luxury ? 160000 : 180000
+      self.update(:serial => prefix + (self.id.to_i + base).to_s)
     end
   end
 
@@ -23,7 +26,10 @@ class Package < ApplicationRecord
       return 'pending'
     end
   end
-  private
+  
+  def luxury?
+    self.serial.start_with? 'SU'
+  end
 
   def default_values
     self.is_shipped ||= false
@@ -37,7 +43,23 @@ class Package < ApplicationRecord
 
   # Export items
   def to_csv(writer)
-
+    is_first = true
+    self.package_items.each do |c|
+      line = if luxury?
+               ['', '', "#{c.name}(#{c.brand})", c.quantity, c.article, '']
+             else
+               [c.name, c.specification, c.brand, '', c.quantity, '', '', '']
+             end
+      if is_first
+        line.unshift serial
+        if luxury?
+          line.append [address.name, address.address_line1, address.mobile, address.city, address.id_number]
+        else
+          line.append [address.name, address.id_num, address.address_line1, address.mobile, address.post_code, address.city]
+        end
+      end
+      writer << line
+    end
   end
 
   def self.to_csv(filter: {})
@@ -47,11 +69,11 @@ class Package < ApplicationRecord
 
     CSV.generate(headers: true) do |csv|
       csv << self.class_variable_get("@@CSV_HEADER_#{luxury ? 'LUXURY' : 'NORMAL'}".to_sym)
-      Package.where("created_at >= :start_date AND created_at <= :end_date AND",
+      Package.where("created_at >= :start_date AND created_at <= :end_date",
                   {start_date: start_date.to_s(:db), end_date: end_date.to_s(:db)})
-              .filter { |p| p.luxury == luxury }
+              .select { |p| p.luxury? == luxury }
               .each do |p| 
-                csv << p.to_csv    
+                csv << p.to_csv(csv)    
               end
     end
   end

@@ -12,6 +12,7 @@ canada_address:
   post_code: T2L7A2
   address_line1: 123 Alphine Rd
   mobile: +14031234567
+  id_number: 1234567890
   user: client
 
 china_address:
@@ -22,6 +23,7 @@ china_address:
   post_code: 721000
   address_line1: 99 荒村
   mobile: +861321234567
+  id_number: 1234567890
   user: client
 
 new_address:
@@ -32,4 +34,5 @@ new_address:
   post_code: T2L2G3
   address_line1: 91 Tuscarora Cres
   mobile: +14031234567
+  id_number: 1234567890
   user: qiang
