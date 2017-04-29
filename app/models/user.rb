@@ -8,6 +8,8 @@ class User < ApplicationRecord
   has_many :addresses
   has_many :packages
 
+  has_one :profile
+
   def ability
     @ability ||= Ability.new(self)
   end

@@ -23,4 +23,8 @@ class ApplicationController < ActionController::Base
       render json: {:success => false}, status: :forbidden && return
     end
   end
+
+  def not_found
+    raise ActionController::RoutingError.new('Not Found')
+  end
 end

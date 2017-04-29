@@ -4,7 +4,7 @@ module ApplicationHelper
     path = request.path
 
     if link.nil?
-      return path.start_with?('/myorder', '/edit', '/login')
+      return path.start_with?('/myorder', '/edit', '/login', '/profile')
     end
 
     if path == link

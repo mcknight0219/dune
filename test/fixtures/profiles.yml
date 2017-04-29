@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+qiang:
+  name: 郭强
+  mobile: 5877078421
+  user: qiang
+
+admin:
+  name: 曹谦
+  mobile: 5874361024
+  user: admin

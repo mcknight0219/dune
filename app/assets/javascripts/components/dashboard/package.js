@@ -6,7 +6,7 @@ export default {
   <div class="panel-title">
     <strong>寄件管理</strong>
   </div>
-  
+ 
   <article class="tile is-parent">
     <article class="tile is-child box">
         <nav class="level">
@@ -31,11 +31,13 @@ export default {
                             <p>名字：<span class="receivername">{{ p.address.name  }}</span><p>
                             <p>地址：<span class="address">{{ p.address.address_line1 + ' ' + p.address.city + ' ' + p.address.state }}</span></p>
                             <p>电话：<span class="mobile">{{ p.address.mobile }}</span></p>
-                            <span>
+                            <p>
                                 身份证号：{{ p.address.id_number }}
-                                <a v-bind:href="idFrontUrl(p)">正面</a>
+                            </p>
+                            <p v-if="p.address.id_front"><a v-bind:href="idFrontUrl(p)">正面</a>
                                 <a v-bind:href="idBackUrl(p)">背面</a>
-                            </span>
+                            </p>
+                            <p v-else><a v-bind:href="idPhotoUploadUrl(p)">上传地址</a></p>
                         </div>
                      
                     </td>

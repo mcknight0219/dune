@@ -153,62 +153,62 @@ body {
 }
 
 /* Comments */
-#comments ul {
+.form ul {
     padding: 0;
     list-style: none;
 }
 
-#comments .avatar {
+.form .avatar {
     float: right;
     margin: 0 0 10px 10px;
     padding: 3px;
     border: 1px solid;
 }
 
-#comments address {
+.form address {
     font-weight: bold;
 }
 
-#comments time {
+.form time {
     font-size: smaller;
 }
 
-#comments .comcont {
+.form .comcont {
     display: block;
     margin: 0;
     padding: 0;
 }
 
-#comments .comcont p {
+.form .comcont p {
     margin: 10px 5px 10px 0;
     padding: 0;
 }
 
-#comments form {
+.form form {
     display: block;
     width: 100%;
 }
 
-#comments input[type="checkbox"] {
+.form input[type="checkbox"] {
     width: 24px;
     display: inline-block;
 }
 
-#comments input, #comments textarea {
+.form input, .form textarea {
     width: 100%;
-    padding: 10px;
+    padding: 5px;
     border: 1px solid;
 }
 
-#comments textarea {
+.form textarea {
     overflow: auto;
 }
 
-#comments div {
+.form div {
     margin-bottom: 15px;
 }
 
-#comments input[type="submit"], #comments input[type="reset"] {
+.form input[type="submit"], .form input[type="reset"] {
     display: inline-block;
     width: auto;
     min-width: 150px;
@@ -237,7 +237,7 @@ body {
     padding: 0 0 80px 0;
 }
 
-#comments input[type="radio"] {
+.form input[type="radio"] {
     display: inline-block;
     width: auto;
     min-width: 55px;
@@ -459,7 +459,7 @@ tbody tr:nth-child(odd) {
 }
 
 tbody tr.selected {
-    background-color: rgba(43, 182, 86, 0.1);
+    background-color: rgba(43, 182, 86, 0.2);
 }
 
 /* Gallery & Figures
@@ -788,11 +788,12 @@ input:focus, textarea:focus, *:required:focus {
 }
 
 /* Tables + Comments */
-table, th, td, #comments .avatar, #comments input, .subscribe input, #comments textarea {
+table, th, td, .form .avatar, .form input, .subscribe input, .form textarea {
     border-color: #D7D7D7;
+    border-radius: 5px;
 }
 
-#comments input:focus, .subscribe input:focus, #comments textarea:focus, #comments *:required:focus {
+.form input:focus, .subscribe input:focus, .form textarea:focus, .form *:required:focus {
     border-color: #2BB656;
 }
 
@@ -800,11 +801,11 @@ th {
     font-weight: 700
 }
 
-tr, #comments, #comments input[type="submit"], #comments input[type="reset"] {
+tr, .form, .form input[type="submit"], .form input[type="reset"] {
     padding: 10px;
 }
 
-tr:nth-child(even), #comments li:nth-child(even) {
+tr:nth-child(even), .form li:nth-child(even) {
     color: inherit;
 }
 
@@ -936,7 +937,7 @@ table a {
     .container {
     }
 
-    #comments input[type="reset"] {
+    .form input[type="reset"] {
         margin-top: 10px;
     }
 
@@ -991,7 +992,7 @@ table a {
         width: 65%
     }
 
-    #comments li {
+    .form li {
         margin: 0px;
         padding: 0px 0px 0px 0px;
     }

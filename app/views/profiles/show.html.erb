@@ -1,0 +1,14 @@
+<div class="wrapper row3" style="flex:1">
+  <main class="hoc container clear btmpad-none">
+    <div class="content single-col">
+      <h4 class="title-divider"><span>我的用户资料</span></h4>
+      <% if flash[:notice] %>
+          <div id="flash_notice"><%= flash[:notice] %></div>
+      <% end %>
+      <p>Hi, <%= @profile.name %></p>
+      <p>您的☎️ 是 <%= @profile.mobile %></p>
+
+      <p>不对？<%= link_to '编辑资料', edit_profile_path(@profile.id) %></p>
+    </div>
+  </main>
+</div>

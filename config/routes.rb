@@ -8,7 +8,6 @@ Rails.application.routes.draw do
   resources :addresses
   resources :products
   resources :product_categories
-  resources :item_categories
 
   get 'packages/confirm', :to  => 'packages#confirm'
   post 'packages/add', :to => 'packages#add_package_item'
@@ -17,6 +16,9 @@ Rails.application.routes.draw do
   get 'packages/item', :to => 'packages#item'
   post 'packages/new', :to => 'packages#choose_type'
   resources :packages
+
+  get 'photos/:id', :to => 'photos#show'
+  post 'photos/:id', :to => 'photos#create'
 
   get 'myorder', to: 'myorder#index'
   # 购物车
@@ -34,6 +36,7 @@ Rails.application.routes.draw do
   # 查询
   get 'tracking', to: 'tracking#index'
   # 用户
+  resources :profiles
   devise_for :users, path: '', path_names: { sign_in: 'login', sign_out: 'logout'}
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

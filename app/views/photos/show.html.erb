@@ -1,0 +1,40 @@
+<div class="wrapper row3" style="flex: 1">
+  <main class="hoc container clear btmpad-none">
+    <div class="content single-col">
+      <h4 class="title-divider"><span>上传身份证照片</span></h4>
+      <div class="form">
+        <div>
+
+
+        </div>
+        <%= form_tag request.fullpath do %>
+            <% if flash[:error] %>
+                <div id="flash_alert"><%= flash[:error] %></div>
+            <% end %>
+              <div class="one_quarter first"><span style="margin-right:15px;font-size: 18px;">订单号</span></div>
+              <div class="two_quarter"><span style="font-size: 17px; color: #ccc"><%= @package.serial %></span></div>
+              <div class="one_quarter first">
+                <%= label_tag 'id_number', '身份证号码', style: "padding-top: 3px;font-weight: 400; font-size:16px;" %>
+              </div>
+              <div class="two_quarter"> <%= text_field_tag 'id_number', nil, required: true %></div>
+              <div class="one_quarter first">
+                <%= label_tag 'id_front', '身份证正面', style: "padding-top: 3px;font-weight: 400; font-size:16px;" %>
+              </div>
+              <div class="two_quarter">
+                <%= file_field_tag :id_front, required: true %>
+              </div>
+            <div class="one_quarter first">
+              <%= label_tag 'id_front', '身份证背面', style: "padding-top: 3px;font-weight: 400; font-size:16px;" %>
+            </div>
+            <div class="two_quarter">
+              <%= file_field_tag :id_back, required: true %>
+            </div>
+
+            <div class="clear topspace-25">
+              <%= submit_tag '提交', class: 'btn'%>
+            </div>
+        <% end %>
+      </div>
+    </div>
+  </main>
+</div>

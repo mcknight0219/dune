@@ -1,0 +1,27 @@
+<div class="wrapper row3" style="flex:1">
+  <main class="hoc container clear btmpad-none">
+    <div class="content single-col">
+      <h4 class="title-divider"><span>更改用户资料</span></h4>
+      <div class="form">
+        <%= form_for @profile, url: {action: :update} do |f| %>
+            <% if flash[:notice] %>
+                <div id="flash_notice" class="btmspace-30"><%= flash[:notice] %></div>
+            <% end %>
+
+            <%= f.error_messages %>
+            <div class="block">
+              <%= f.label :name, "姓名" %>
+              <%= f.text_field :name, placeholder: @profile.name, required: true %>
+            </div>
+            <div class="block">
+              <%= f.label :mobile, '电话号码' %>
+              <%= f.text_field :mobile, placeholder: @profile.mobile, required: true %>
+            </div>
+            <div class="block">
+              <%= f.submit '保存更改', class: 'btn' %>
+            </div>
+        <% end %>
+      </div>
+    </div>
+  </main>
+</div>

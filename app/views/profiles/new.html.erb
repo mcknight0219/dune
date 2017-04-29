@@ -1,0 +1,24 @@
+<div class="wrapper row3" style="flex:1">
+  <main class="hoc container clear btmpad-none">
+    <div class="content single-col">
+      <h4 class="title-divider"><span>添加用户资料</span></h4>
+      <span>我们需要您的联系方式，以便更方便的与您沟通交流。</span>
+      <div class="form">
+        <%= form_for @profile, url: {action: :create} do |f| %>
+            <%= f.error_messages %>
+            <div class="block">
+              <%= f.label :name, "姓名" %>
+              <%= f.text_field :name, required: true %>
+            </div>
+            <div class="block">
+              <%= f.label :mobile, '电话号码' %>
+              <%= f.text_field :mobile, required: true %>
+            </div>
+            <div class="block">
+              <%= f.submit '添加', class: 'btn' %>
+            </div>
+        <% end %>
+      </div>
+    </div>
+  </main>
+</div>

@@ -15,7 +15,13 @@ class AddressesController < ApplicationController
   end
 
   def show
-    render :json => {address: Address.find(params[:id])}
+    respond_to do |format|
+      format.json { render :json => {address: Address.find(params[:id])} }
+      format.html {
+
+      }
+    end
+
   end
 
   def edit
@@ -29,7 +35,7 @@ class AddressesController < ApplicationController
     address = Address.find(params[:id])
     respond_to do |format|
       format.json {
-        if address.orders.empty?
+        if address.orders.empty? && address.packages.empty?
           address.destroy
           render :json => { success: true }
         else
@@ -37,7 +43,7 @@ class AddressesController < ApplicationController
         end
       }
       format.html {
-        if address.orders.empty?
+        if address.orders.empty? && address.packages.empty?
           address.destroy
         else
           flash[:error] = '无法删除该地址'

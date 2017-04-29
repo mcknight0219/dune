@@ -19,6 +19,10 @@ class PackagesController < ApplicationController
   end
 
   def new
+    if current_user.profile.nil?
+      redirect_to controller: :profiles, action: :new, params: {return: Base64.encode64(new_package_path)} and return
+    end
+
     if session[:package_items]
       session[:package_items] = []
     end

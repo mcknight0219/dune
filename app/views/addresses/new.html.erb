@@ -2,51 +2,63 @@
   <main class="hoc container clear btmpad-none">
     <div class="content single-col">
       <h4 class="title-divider"><span>添加地址</span></h4>
-      <div id="comments">
+      <div class="form">
         <%= form_for @address, url: {action: 'create'}, html: { multipart: true } do |f| %>
             <%= f.error_messages %>
             <div class='block'>
               <%= f.label :name, '收件人' %>
               <%= f.text_field :name, :required => true %>
             </div>
+
             <div class='block'>
-              <%=	f.label :country, '国家' %>
-              <%= f.text_field :country, :required => true %>
+              <div class='one_third first'>
+                <%=	f.label :country, '国家' %>
+                <%= f.text_field :country, :required => true %>
+              </div>
+              <div class="one_third">
+                <%=	f.label :state, '省份' %>
+                <%= f.text_field :state, :required => true %>
+              </div>
+              <div class="one_third">
+                <%=	f.label :city, '城市' %>
+                <%=	f.text_field :city, :required => true %>
+              </div>
             </div>
-            <div class='block'>
-              <%=	f.label :state, '省份' %>
-              <%= f.text_field :state, :required => true %>
-            </div>
+
             <div class="block">
-              <%=	f.label :city, '城市' %>
-              <%=	f.text_field :city, :required => true %>
-            </div>
-            <div class="block">
-              <%=	 f.label :address_line1, '详细地址' %>
-              <%=	 f.text_field :address_line1, :required => true %>
-            </div>
-            <div class="block">
-              <%=	f.label :post_code, '邮政编码' %>
-              <%=	f.text_field :post_code, :required => true %>
+              <div class="two_third first">
+                <%=	 f.label :address_line1, '详细地址' %>
+                <%=	 f.text_field :address_line1, :required => true %>
+              </div>
+              <div class="one_third">
+                <%=	f.label :post_code, '邮政编码' %>
+                <%=	f.text_field :post_code, :required => true %>
+              </div>
             </div>
             <div class="block">
               <%=	f.label :mobile, '电话号码' %>
               <%=	f.phone_field :mobile, :required => true %>
             </div>
             <div class="block">
-              <%= f.label :id_number, '身份证号' %>
-              <%= f.text_field :id_number, :required => true %>
-            </div>
-            <div class=block>
-              <%= f.label :id_front, '身份证正面' %>
-              <%= f.file_field :id_front, :required => true %>
-            </div>
-            <div class=block>
-              <%= f.label :id_front, '身份证背面' %>
-              <%= f.file_field :id_back, :required => true %>
+              <%= f.label :id_number, '身份证号 *' %>
+              <%= f.text_field :id_number %>
             </div>
             <div class="block">
+              <div class="one_half first">
+                <%= f.label :id_front, '身份证正面 *' %>
+                <%= f.file_field :id_front %>
+              </div>
+              <div class="one_half">
+                <%= f.label :id_front, '身份证背面 *' %>
+                <%= f.file_field :id_back %>
+              </div>
+            </div>
+
+            <div class="block">
               <%= f.submit '添加', class: 'btn' %>
+            </div>
+            <div class="block">
+              <p>* 按照海关的规定，我们需要提供收件人的身份证号的复印件已经身份证号码。</p>
             </div>
         <% end %>
       </div>

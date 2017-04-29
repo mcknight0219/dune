@@ -2,39 +2,46 @@
   <main class="hoc container clear btmpad-none">
     <div class="content single-col">
       <h4 class="title-divider"><span>编辑地址</span></h4>
-      <div id="comments">
+      <div class="form">
         <%=	form_for @address, url: address_path(@address), html: { method: 'patch'} do |f| %>
               <%= f.error_messages %>
               <% if flash[:notice] %>
-                  <div class="alert alert-success"><%= flash[:notice] %></div>
+                  <div id="flash_notice"><%= flash[:notice] %></div>
               <% end %>
               <% if flash[:error] %>
-                  <div class="alert alert-warning"><%= flash[:error] %></div>
+                  <div id="flash_alert"><%= flash[:error] %></div>
               <% end %>
+
             <div class='block'>
               <%= f.label :name, '收件人' %>
               <%= f.text_field :name %>
             </div>
-            <div class='block'>
-              <%=	f.label :country, '国家' %>
-              <%= f.text_field :country %>
-            </div>
-            <div class='block'>
-              <%=	f.label :state, '省份' %>
-              <%= f.text_field :state %>
-            </div>
             <div class="block">
-              <%=	f.label :city, '城市' %>
-              <%=	f.text_field :city %>
+              <div class='one_third first'>
+                <%=	f.label :country, '国家' %>
+                <%= f.text_field :country %>
+              </div>
+              <div class='one_third'>
+                <%=	f.label :state, '省份' %>
+                <%= f.text_field :state %>
+              </div>
+              <div class="one_third">
+                <%=	f.label :city, '城市' %>
+                <%=	f.text_field :city %>
+              </div>
             </div>
+
             <div class="block">
-              <%=	 f.label :address_line1, '详细地址' %>
-              <%=	 f.text_field :address_line1 %>
+              <div class="two_third first">
+                <%=	 f.label :address_line1, '详细地址' %>
+                <%=	 f.text_field :address_line1 %>
+              </div>
+              <div class="one_third">
+                <%=	f.label :post_code, '邮政编码' %>
+                <%=	f.text_field :post_code %>
+              </div>
             </div>
-            <div class="block">
-              <%=	f.label :post_code, '邮政编码' %>
-              <%=	f.text_field :post_code %>
-            </div>
+
             <div class="block">
               <%=	f.label :mobile, '电话号码' %>
               <%=	f.phone_field :mobile %>

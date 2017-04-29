@@ -182,10 +182,6 @@ label, input, textarea, select, button {
     vertical-align: middle;
 }
 
-label {
-    margin-bottom: 5px;
-}
-
 :required, :invalid {
     outline: none;
     box-shadow: none;
