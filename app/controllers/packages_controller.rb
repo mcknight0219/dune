@@ -13,6 +13,7 @@ class PackagesController < ApplicationController
         args[:luxury] = params[:luxury] if params[:luxury]
         args[:start_date] = Date.parse(params[:start_date]) if params[:start_date]
         args[:end_date] = Date.parse(params[:end_date]) if params[:end_date]
+        
         send_data Package.to_csv(filter: args), filename: ".csv"
       }
     end

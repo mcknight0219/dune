@@ -15,8 +15,15 @@ export default {
       })
     },
 
-    download: function(date) {
-        return fetch('/packages.csv', {
+    download: function(dates, type) {
+        var start, end
+        [start, end] = util.parseRange(dates)
+        let url = '/packages.csv?start_date=' + start.toISOString().slice(0, 10) + "&end_date=" + end.toISOString().slice(0, 10)
+        if (type === 'luxury') {
+            url = url + '?luxury'
+        }
+
+        return fetch(url, {
             method: 'GET',
             headers: {
                 'X-CSRF-Token': util.csrfToken()
@@ -24,9 +31,18 @@ export default {
             credentials: 'same-origin'
         }).then(response => response.blob())
         .then((blob) => {
-            
-            let objectUrl = URL.createObjectURL(blob)
-            window.open(objectUrl)
+            var a = window.document.createElement("a")
+            a.href = URL.createObjectURL(blob, {type: "text/plain"})
+            let filename = ""
+            if (type === "luxury") {
+                filename = "轻奢-" + start + "-" + end + ".csv"
+            } else {
+                filename = "普货-" + start + "-" + end + ".csv"
+            }
+            a.download = filename
+            document.body.appendChild(a)
+            a.click()
+            document.body.removeChild(a)
         })
     },
 

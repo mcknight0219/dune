@@ -20,5 +20,20 @@ export default {
                 return 0
             return o1.name < o2.name ? -1 : 1
         }).filter((val, i) => i == 0 || (i>0 && arr[i] !== arr[i-1]))
+    },
+
+    // Parse the range string like "2017-04-01 to 2017-05-01" that is returned
+    // by date picker.
+    parseRange: (r) => {
+        const idx = r.indexOf("to")
+        if (r.length === 0 || idx < 0) return []
+        const start = new Date(r.substring(0, idx))
+        const end = new Date(r.substring(idx + 3))
+
+        if (start.getDate() === NaN || end.getDate() === NaN) {
+            return []
+        } else {
+            return [start, end]
+        }
     }
 }

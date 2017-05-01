@@ -73,6 +73,10 @@ class Package < ApplicationRecord
   def self.to_csv(filter: {})
     start_date = filter.fetch(:start_date, Date.new(2000, 1, 1))
     end_date = filter.fetch(:end_date, Date.today + 1)
+    if start_date == end_date 
+      start_date = end_date.yesterday
+    end
+    
     luxury = filter.fetch(:luxury, false)  
 
     CSV.generate(headers: true) do |csv|

@@ -10,17 +10,24 @@ export default {
   </div>
  
   <article class="tile is-parent">
+     <article class="tile is-child box">
+        <p class="control has-addons">
+            <span class="select">
+                <select v-model="downloadType">
+                    <option value="normal">普货</option>
+                    <option value="luxury">轻奢</option>
+                </select>  
+            </span>
+            <input v-model="dateVal" class="input" type="text" ref="pickrEl"> 
+            <a class="button is-success" @click="download" v-bind:disabled="dateVal === null">下载报关表</a>
+        </p>  
+    </article>
+  </article>
+  <article class="tile is-parent">
     <article class="tile is-child box">
         <nav class="level">
             <div class="level-left">
                 <h4 class="title">邮寄列表</h4>
-                <span class="select" style="margin-bottom:13px; padding-left: 10px;">
-                    <select v-model="downloadType">
-                        <option value="normal">普货</option>
-                        <option value="luxury">轻奢</option>
-                    </select>  
-                </span>   
-                <span v-click-outside="hideDatepicker" v-on:click="datepicker($event)" class="icon" style="margin-bottom:15px; padding-left:10px;"><i class="fa fa-file-excel-o" aria-hidden="true"></i></span>
             </div> 
             <div class="level-right"><input type="text" class="input" placeholder="订单号码，名字等" v-model="q"></div> 
         </nav>
@@ -109,7 +116,10 @@ export default {
             sortID: 'desc',
             sortTime: 'desc',
 
-            downloadType: 'normal'
+            downloadType: 'normal',
+            options: {},
+            flatPickr: null,
+            dateVal: null
         }
     },
 
@@ -130,20 +140,8 @@ export default {
     },
 
     methods: {
-        hideDatepicker() {
-            console.log("Closing datepicker")
-        },
-
-        datepicker(event) {
-            $(event.target).flatpickr({
-                onClose: (selectedDates, dateStr, instance) => {
-                    this.download(dateStr)
-                }
-            }).open()
-        },
-
-        download(date) {
-            client.download(date)
+        download () {
+            client.download(this.dateVal, this.downloadType)
         },
 
         isLuxury(pkg) {
@@ -200,6 +198,23 @@ export default {
 
     created() {
         this.$store.dispatch('getAllPackages')
+    },
+
+    mounted () {
+        const el = this.$refs.pickrEl
+        this.options = {
+            mode: 'range',
+            maxDate: "today",
+            dateFormat: "m/d/Y"
+        },
+        this.flatPickr = new Flatpickr(el, this.options)
+    },
+
+    beforeDesotry () {
+        if (this.flatPickr) {
+            this.flatPickr.destroy()
+            this.flatPickr = null
+        } 
     }
 
 }

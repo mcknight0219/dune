@@ -10,7 +10,6 @@
     "whatwg-fetch": "^2.0.2",
     "sinon": "*",
     "sinon-stub-promise": "*",
-    "vue-click-outside": "*",
-    "vue-bulma-datepicker": "*"
+    "vue-click-outside": "*"
   }
 }
