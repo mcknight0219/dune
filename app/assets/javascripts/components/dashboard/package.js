@@ -42,17 +42,23 @@ export default {
             <tbody>
                 <tr v-for="p in packages">
                     <td style="font-weight: 500">{{ p.serial  }}</td>
-                    <td>{{ new Date(p.created_at).toLocaleString() }}</td>
-                    <td>
+                    <td>{{ new Date(p.created_at).toISOString().slice(0, 10) }}</td>
+                    <td style="verticle-align:text-top;">
+                        <input v-bind:id="'address-label-' + p.id" class="toggle" type="checkbox">
+                        <label v-bind:for="'address-label-' + p.id" class="toggle-label">{{ p.address.name }}</label>
                         <div class="address-list">
-                            <p>名字：<span class="receivername">{{ p.address.name  }}</span><p>
-                            <p>地址：<span class="address">{{ p.address.address_line1 + ' ' + p.address.city + ' ' + p.address.state }}</span></p>
-                            <p>电话：<span class="mobile">{{ p.address.mobile }}</span></p>
                             <p>
-                                身份证号：{{ p.address.id_number }}
+                                <span class="icon"><i class="fa fa-home" aria-hidden="true"></i></span> {{ p.address.address_line1 + ' ' + p.address.city + ' ' + p.address.state }}
                             </p>
-                            <p v-if="p.address.id_front"><a v-bind:href="idFrontUrl(p)">正面</a>
-                                <a v-bind:href="idBackUrl(p)">背面</a>
+                            <p>
+                                <span class="icon"><i class="fa fa-mobile" aria-hidden="true"></i></span> {{ p.address.mobile }}
+                            </p>
+                            
+                            <p v-if="p.address.id_front">
+                                <p>
+                                    <span class="icon"><i class="fa fa-id-card" aria-hidden="true"></i></span> {{ p.address.id_number }} <a v-bind:href="idFrontUrl(p)">正面</a>
+                                    <a v-bind:href="idBackUrl(p)">背面</a>
+                                </p>
                             </p>
                             <p v-else><a v-bind:href="idPhotoUploadUrl(p)">上传地址</a></p>
                         </div>
