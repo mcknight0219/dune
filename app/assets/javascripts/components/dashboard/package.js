@@ -1,6 +1,8 @@
+import ClickOutside from 'vue-click-outside'
+import client from '../../api'
+
 export default {
     name: 'Package',
-
     template: `
 <div>
   <div class="panel-title">
@@ -10,10 +12,18 @@ export default {
   <article class="tile is-parent">
     <article class="tile is-child box">
         <nav class="level">
-            <div class="level-left"><h4 class="title">邮寄列表</h4></div> 
+            <div class="level-left">
+                <h4 class="title">邮寄列表</h4>
+                <span class="select" style="margin-bottom:13px; padding-left: 10px;">
+                    <select v-model="downloadType">
+                        <option value="normal">普货</option>
+                        <option value="luxury">轻奢</option>
+                    </select>  
+                </span>   
+                <span v-click-outside="hideDatepicker" v-on:click="datepicker($event)" class="icon" style="margin-bottom:15px; padding-left:10px;"><i class="fa fa-file-excel-o" aria-hidden="true"></i></span>
+            </div> 
             <div class="level-right"><input type="text" class="input" placeholder="订单号码，名字等" v-model="q"></div> 
         </nav>
-        
         <table class="table">
             <thead>
                 <tr>
@@ -97,7 +107,9 @@ export default {
             results: [],
 
             sortID: 'desc',
-            sortTime: 'desc'
+            sortTime: 'desc',
+
+            downloadType: 'normal'
         }
     },
 
@@ -113,7 +125,27 @@ export default {
         }
     },
 
+    directives: {
+        ClickOutside
+    },
+
     methods: {
+        hideDatepicker() {
+            console.log("Closing datepicker")
+        },
+
+        datepicker(event) {
+            $(event.target).flatpickr({
+                onClose: (selectedDates, dateStr, instance) => {
+                    this.download(dateStr)
+                }
+            }).open()
+        },
+
+        download(date) {
+            client.download(date)
+        },
+
         isLuxury(pkg) {
             return pkg.serial.substring(0, 2) == 'SU'
         },

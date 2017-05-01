@@ -15,6 +15,20 @@ export default {
       })
     },
 
+    download: function(date) {
+        return fetch('/packages.csv', {
+            method: 'GET',
+            headers: {
+                'X-CSRF-Token': util.csrfToken()
+            },
+            credentials: 'same-origin'
+        }).then(response => response.blob())
+        .then((blob) => {
+            
+            let objectUrl = URL.createObjectURL(blob)
+            window.open(objectUrl)
+        })
+    },
 
     getPackages: function () {
         return this.csrf_fetch('GET', '/packages')

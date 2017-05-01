@@ -9,6 +9,8 @@
     "request": "^2.79.0",
     "whatwg-fetch": "^2.0.2",
     "sinon": "*",
-    "sinon-stub-promise": "*"
+    "sinon-stub-promise": "*",
+    "vue-click-outside": "*",
+    "vue-bulma-datepicker": "*"
   }
 }

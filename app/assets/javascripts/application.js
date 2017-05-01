@@ -20,6 +20,7 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require jquery.webui-popover.min
+//= require flatpickr.min
 
 jQuery("#backtotop").click(function () {
     jQuery("body,html").animate({
