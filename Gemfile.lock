@@ -1,4 +1,13 @@
 GIT
+  remote: git://github.com/rails/webpacker.git
+  revision: 69c09a51011bca67ff75e544b6a724d441b0018c
+  specs:
+    webpacker (1.2)
+      activesupport (>= 4.2)
+      multi_json (~> 1.2)
+      railties (>= 4.2)
+
+GIT
   remote: git://github.com/thoughtbot/paperclip.git
   revision: 093b4da18444d883de826f58628089c2f480d461
   specs:
@@ -8,12 +17,6 @@ GIT
       cocaine (~> 0.5.5)
       mime-types
       mimemagic (~> 0.3.0)
-
-GIT
-  remote: https://github.com/mcknight0219/vuejs-rails
-  revision: 04653f2d8b42fb5fd1a5eb5a27bd9fd913c7988d
-  specs:
-    vuejs-rails (2.1.10)
 
 GEM
   remote: http://rubygems.org/
@@ -76,8 +79,6 @@ GEM
       railties (>= 4.0.0, < 5.1)
       sprockets (>= 3.6.0)
     builder (3.2.3)
-    bulma-rails (0.3.2)
-      sass (~> 3.2)
     byebug (9.0.6)
     cancancan (1.16.0)
     capistrano (3.7.2)
@@ -101,8 +102,6 @@ GEM
     capistrano3-puma (1.2.1)
       capistrano (~> 3.0)
       puma (>= 2.6)
-    chart-js-rails (0.1.2)
-      railties (> 3.1)
     chronic (0.10.2)
     climate_control (0.1.0)
     cocaine (0.5.8)
@@ -317,14 +316,12 @@ DEPENDENCIES
   bootstrap (~> 4.0.0.alpha6)
   browser
   browserify-rails
-  bulma-rails (~> 0.3.2)
   byebug
   cancancan
   capistrano-npm
   capistrano-rails
   capistrano-rbenv
   capistrano3-puma
-  chart-js-rails
   coffee-rails (~> 4.2)
   devise
   dropbox_api
@@ -352,8 +349,8 @@ DEPENDENCIES
   turbolinks (~> 5)
   tzinfo-data
   uglifier (>= 1.3.0)
-  vuejs-rails!
   web-console
+  webpacker!
   whenever
   will_paginate (~> 3.1.0)
 

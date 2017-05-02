@@ -5,18 +5,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <%= csrf_meta_tags %>
-  <% if params[:controller] == 'dashboard' %>
-    <%= stylesheet_link_tag 'dashboard', media: 'all' %>
-  <% else %>
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-  <% end %>
+  <%= stylesheet_pack_tag 'main', media: 'all' %>
 </head>
 
 <body>
 <%= yield %>
-<%= javascript_include_tag 'application' %>
-<% if %w( dashboard packages products carts ).include? params[:controller] %>
-    <%= javascript_include_tag params[:controller] %>
-<% end %>
+<%= javascript_pack_tag 'main' %>
 </body>
 </html>

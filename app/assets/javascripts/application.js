@@ -13,10 +13,6 @@
 //= require jquery
 //= require tether
 //= require bootstrap
-//= require vue
-//= require vuex
-//= require vue-router
-//= require vue-resource
 //= require jquery_ujs
 //= require turbolinks
 //= require jquery.webui-popover.min

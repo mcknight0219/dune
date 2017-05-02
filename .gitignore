@@ -23,3 +23,5 @@
 /.idea
 /public/assets
 /public/system
+/public/packs
+/node_modules
