@@ -173,8 +173,6 @@ import Product from './components/product'
 import Package from './components/package'
 import store from './store'
 
-import Bulma from 'bulma/css/bulma.css'
-
 export default {
     name: 'dashboard',
     store,
