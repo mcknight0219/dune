@@ -44,8 +44,6 @@ group :development do
   gem 'capistrano-npm'
 end
 
-gem 'browserify-rails'
-
 # 检测是否移动设备
 gem 'browser'
 
