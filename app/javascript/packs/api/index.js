@@ -1,4 +1,4 @@
-import { csrfToken, unique, parseRange } from 'util'
+import { csrfToken, unique, parseRange } from '../util'
 import 'whatwg-fetch'
 
 function csrf_fetch(method, path, body) {
@@ -7,7 +7,7 @@ function csrf_fetch(method, path, body) {
         headers: {
             'Content-Type': 'application/json',
             'X-Requested-With': 'XMLHttpRequest',
-            'X-CSRF-Token': csrfToken
+            'X-CSRF-Token': csrfToken()
         },
         credentials: 'same-origin',
         body: body
@@ -17,6 +17,7 @@ function csrf_fetch(method, path, body) {
 export default {
      download: function(dates, type) {
         var start, end
+       
         [start, end] = parseRange(dates)
         let url = '/packages.csv?start_date=' + start.toISOString().slice(0, 10) + "&end_date=" + end.toISOString().slice(0, 10)
         if (type === 'luxury') {
@@ -26,7 +27,7 @@ export default {
         return fetch(url, {
             method: 'GET',
             headers: {
-                'X-CSRF-Token': csrfToken
+                'X-CSRF-Token': csrfToken()
             },
             credentials: 'same-origin'
         }).then(response => response.blob())
@@ -102,7 +103,7 @@ export default {
             method: 'POST',
             headers: {
                 'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRF-Token': csrfToken
+                'X-CSRF-Token': csrfToken()
             },
             credentials: 'same-origin',
             body: form

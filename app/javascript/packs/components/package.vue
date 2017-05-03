@@ -6,14 +6,14 @@
     
         <article class="tile is-parent">
             <article class="tile is-child box">
-                <p class="control has-addons">
+                <p class="field has-addons field__width--40">
                     <span class="select">
-                        <select v-model="downloadType">
-                            <option value="normal">普货</option>
-                            <option value="luxury">轻奢</option>
-                        </select>  
-                    </span>
-                    <input v-model="dateVal" class="input" type="text" ref="pickrEl">
+                            <select v-model="downloadType">
+                                <option value="normal">普货</option>
+                                <option value="luxury">轻奢</option>
+                            </select>  
+                        </span>
+                    <input v-model="dateVal" class="input" type="text" ref="pickrEl"> 
                     <a class="button is-success" @click="download" v-bind:disabled="dateVal === null">下载报关表</a>
                 </p>
             </article>
@@ -56,9 +56,8 @@
                                     <div v-if="p.address.id_front">
                                         <p>
                                             <span class="icon">
-                                                <i class="fa fa-id-card" aria-hidden="true"></i>
-                                            </span>
-                                            {{ p.address.id_number }} 
+                                                    <i class="fa fa-id-card" aria-hidden="true"></i>
+                                                </span> {{ p.address.id_number }}
                                             <a v-bind:href="idFrontUrl(p)">正面</a>
                                             <a v-bind:href="idBackUrl(p)">背面</a>
                                         </p>
@@ -74,7 +73,7 @@
                                         <span v-else>{{ item.name + ' ' + item.specification + ' ' + item.brand}}</span>
                                         <span style="font-weight: 500">{{ item.quantity }}</span>
                                         <span v-if="isLuxury(p)">{{ item.article }}</span>
-
+    
                                     </li>
                                 </ul>
                             </td>
@@ -82,17 +81,17 @@
                                 <div class="field has-addons">
                                     <p class="control" style="display:inline-block">
                                         <span class="select">
-                                      <select v-model="p.status">
-                                        <option value="pending">等待收取</option>
-                                        <option value="received">已收到</option>
-                                        <option value="shipped">已寄出</option>
-                                      </select>
-                                    </span>
+                                          <select v-model="p.status">
+                                            <option value="pending">等待收取</option>
+                                            <option value="received">已收到</option>
+                                            <option value="shipped">已寄出</option>
+                                          </select>
+                                        </span>
                                     </p>
                                     <p class="control" style="display:inline-block">
                                         <a class="button is-primary" v-on:click="updateStatus(p)" v-bind:class="{ 'is-loading': updatingPackage === p.id }">
-                                      保存更改
-                                    </a>
+                                          保存更改
+                                        </a>
                                     </p>
                                 </div>
                             </td>
@@ -107,6 +106,7 @@
 
 <script>
 import Flatpickr from 'flatpickr'
+import Api from '../api'
 
 export default {
     name: 'Package',
@@ -121,6 +121,14 @@ export default {
 
         updatingPackage() {
             return this.$store.getters.updatingPackage
+        },
+        today() {
+            return new Date()
+        },
+        maxDate() {
+            let d = new Date()
+            d.setDate(32)
+            return d
         }
     },
 
@@ -134,9 +142,9 @@ export default {
             sortTime: 'desc',
 
             downloadType: 'normal',
-            options: {},
+            dateVal: null,
             flatPickr: null,
-            dateVal: null
+            option: {}
         }
     },
 
@@ -153,8 +161,8 @@ export default {
     },
 
     methods: {
-        download() {
-            client.download(this.dateVal, this.downloadType)
+        download () {
+            Api.download(this.dateVal, this.downloadType)
         },
 
         isLuxury(pkg) {
@@ -213,26 +221,31 @@ export default {
         this.$store.dispatch('getAllPackages')
     },
 
-    mounted() {
+    mounted () {
         const el = this.$refs.pickrEl
         this.options = {
             mode: 'range',
             maxDate: "today",
             dateFormat: "m/d/Y"
         },
-            this.flatPickr = new Flatpickr(el, this.options)
+        this.flatPickr = new Flatpickr(el, this.options)
     },
 
-    beforeDesotry() {
+    beforeDesotry () {
         if (this.flatPickr) {
             this.flatPickr.destroy()
             this.flatPickr = null
-        }
+        } 
     }
 
 }
 </script>
 
+<style lang="css">
+    .field__width--40 {
+        width: 40%;
+    }
+</style>
 
 
 
