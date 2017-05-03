@@ -12,4 +12,4 @@ Rails.application.config.assets.version = '1.0'
 %w( dashboard  ).each do |controller|
   Rails.application.config.assets.precompile += ["#{controller}.js"]
 end
-Rails.application.config.assets.precompile += %w( dashboard.css )
+Rails.application.config.assets.precompile += %w( app.scss dashboard.scss )

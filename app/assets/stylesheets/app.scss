@@ -1,4 +1,8 @@
 @import "font-awesome";
+@import "framework";
+@import "layout";
+@import "progress-tracker";
+@import "style-login";
 
 .wrapper {
   .content {
@@ -113,7 +117,7 @@
 
 .radio-container {
   width: 100%;
-  padding: 4px;
+  padding: 8px;
   text-align: center;
   border-radius: 5px;
   border: 1px solid #ccc;

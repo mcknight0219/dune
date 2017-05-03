@@ -8,12 +8,12 @@
             <article class="tile is-child box">
                 <p class="field has-addons field__width--40">
                     <span class="select">
-                            <select v-model="downloadType">
-                                <option value="normal">普货</option>
-                                <option value="luxury">轻奢</option>
-                            </select>  
-                        </span>
-                    <input v-model="dateVal" class="input" type="text" ref="pickrEl"> 
+                                                <select v-model="downloadType">
+                                                    <option value="normal">普货</option>
+                                                    <option value="luxury">轻奢</option>
+                                                </select>  
+                                            </span>
+                    <input v-model="dateVal" class="input" type="text" ref="pickrEl">
                     <a class="button is-success" @click="download" v-bind:disabled="dateVal === null">下载报关表</a>
                 </p>
             </article>
@@ -35,7 +35,17 @@
                             <th>时间 <i class="fa" v-bind:class="{ 'fa-sort-asc': sortTime === 'asc', 'fa-sort-desc': sortTime === 'desc' }" style="vertical-align: middle" v-on:click="toggleSortTime"></i></th>
                             <th>邮寄地址</th>
                             <th>包裹详情</th>
-                            <th>状态</th>
+                            <th>
+                                <span>状态 </span>
+                                <span class="select">
+                                    <select v-model="state">
+                                        <option value="all">全部</option>
+                                        <option value="pending">等待收取</option>
+                                        <option value="received">已收到</option>
+                                        <option value="shipped">已寄出</option>
+                                    </select>                          
+                                </span>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -56,8 +66,8 @@
                                     <div v-if="p.address.id_front">
                                         <p>
                                             <span class="icon">
-                                                    <i class="fa fa-id-card" aria-hidden="true"></i>
-                                                </span> {{ p.address.id_number }}
+                                                                        <i class="fa fa-id-card" aria-hidden="true"></i>
+                                                                    </span> {{ p.address.id_number }}
                                             <a v-bind:href="idFrontUrl(p)">正面</a>
                                             <a v-bind:href="idBackUrl(p)">背面</a>
                                         </p>
@@ -81,17 +91,17 @@
                                 <div class="field has-addons">
                                     <p class="control" style="display:inline-block">
                                         <span class="select">
-                                          <select v-model="p.status">
-                                            <option value="pending">等待收取</option>
-                                            <option value="received">已收到</option>
-                                            <option value="shipped">已寄出</option>
-                                          </select>
-                                        </span>
+                                                              <select v-model="p.status">
+                                                                <option value="pending">等待收取</option>
+                                                                <option value="received">已收到</option>
+                                                                <option value="shipped">已寄出</option>
+                                                              </select>
+                                                            </span>
                                     </p>
                                     <p class="control" style="display:inline-block">
                                         <a class="button is-primary" v-on:click="updateStatus(p)" v-bind:class="{ 'is-loading': updatingPackage === p.id }">
-                                          保存更改
-                                        </a>
+                                                              保存更改
+                                                            </a>
                                     </p>
                                 </div>
                             </td>
@@ -140,6 +150,7 @@ export default {
 
             sortID: 'desc',
             sortTime: 'desc',
+            state: 'all',
 
             downloadType: 'normal',
             dateVal: null,
@@ -157,11 +168,23 @@ export default {
                 this.inSearch = false
                 this.results = []
             }
+        },
+
+        state: function (val) {
+            if (val === 'all') {
+                this.inSearch = false
+                this.results = []
+            } else {
+                this.inSearch = true
+                this.results = this.$store.getters.allPackages.filter(function (p) {  
+                    return p.status === val
+                })
+            }
         }
     },
 
     methods: {
-        download () {
+        download() {
             Api.download(this.dateVal, this.downloadType)
         },
 
@@ -197,10 +220,6 @@ export default {
             this.$store.dispatch('updatePackage', p)
         },
 
-        comparator(p1, p2) {
-
-        },
-
         search(qs) {
             const pkgs = this.$store.getters.allPackages
             var results = []
@@ -221,30 +240,30 @@ export default {
         this.$store.dispatch('getAllPackages')
     },
 
-    mounted () {
+    mounted() {
         const el = this.$refs.pickrEl
         this.options = {
             mode: 'range',
             maxDate: "today",
             dateFormat: "m/d/Y"
         },
-        this.flatPickr = new Flatpickr(el, this.options)
+            this.flatPickr = new Flatpickr(el, this.options)
     },
 
-    beforeDesotry () {
+    beforeDesotry() {
         if (this.flatPickr) {
             this.flatPickr.destroy()
             this.flatPickr = null
-        } 
+        }
     }
 
 }
 </script>
 
 <style lang="css">
-    .field__width--40 {
-        width: 40%;
-    }
+.field__width--40 {
+    width: 40%;
+}
 </style>
 
 

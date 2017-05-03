@@ -52,7 +52,7 @@ export default {
     },
 
     updatePackage: ({commit}, pac) => {
-        commit(types.START_PACKAGE_UPDATING, pac.id)
+        commit('START_PACKAGE_UPDATING', pac.id)
         Api.updatePackage(pac)
             .then(response => response.json())
             .then(() => {
