@@ -8,7 +8,7 @@
             <div class="tile is-parent  is-4">
                 <article class="tile is-child box">
                     <h4 class="title">商品类别管理</h4>
-                    <p class="control has-addons">
+                    <p class="field has-addons">
                         <span class="select">
                             <select v-model="newProductCategory.parentId">
                                 <option v-for="option in options" v-bind:value="option.id">

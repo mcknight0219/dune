@@ -8,11 +8,11 @@
             <article class="tile is-child box">
                 <p class="field has-addons field__width--40">
                     <span class="select">
-                                                <select v-model="downloadType">
-                                                    <option value="normal">普货</option>
-                                                    <option value="luxury">轻奢</option>
-                                                </select>  
-                                            </span>
+                        <select v-model="downloadType">
+                            <option value="normal">普货</option>
+                            <option value="luxury">轻奢</option>
+                        </select>
+                    </span>
                     <input v-model="dateVal" class="input" type="text" ref="pickrEl">
                     <a class="button is-success" @click="download" v-bind:disabled="dateVal === null">下载报关表</a>
                 </p>
@@ -38,13 +38,13 @@
                             <th>
                                 <span>状态 </span>
                                 <span class="select">
-                                    <select v-model="state">
-                                        <option value="all">全部</option>
-                                        <option value="pending">等待收取</option>
-                                        <option value="received">已收到</option>
-                                        <option value="shipped">已寄出</option>
-                                    </select>                          
-                                </span>
+                                            <select v-model="state">
+                                                <option value="all">全部</option>
+                                                <option value="pending">等待收取</option>
+                                                <option value="received">已收到</option>
+                                                <option value="shipped">已寄出</option>
+                                            </select>                          
+                                        </span>
                             </th>
                         </tr>
                     </thead>
@@ -54,7 +54,10 @@
                             <td>{{ new Date(p.created_at).toISOString().slice(0, 10) }}</td>
                             <td style="verticle-align:text-top;">
                                 <input v-bind:id="'address-label-' + p.id" class="toggle" type="checkbox">
-                                <label v-bind:for="'address-label-' + p.id" class="toggle-label">{{ p.address.name }}</label>
+                                <label v-bind:for="'address-label-' + p.id" class="toggle-label">
+                                    {{ p.address.name }}
+                                    <span v-if="!hasId(p.address)" class="icon is-small"><i class="fa fa-exclamation" aria-hidden="true" style="color: red;"></i></span>
+                                </label>
                                 <div class="address-list">
                                     <p>
                                         <span class="icon"><i class="fa fa-home" aria-hidden="true"></i></span> {{ p.address.address_line1 + ' ' + p.address.city + ' ' + p.address.state }}
@@ -63,13 +66,14 @@
                                         <span class="icon"><i class="fa fa-mobile" aria-hidden="true"></i></span> {{ p.address.mobile }}
                                     </p>
     
-                                    <div v-if="p.address.id_front">
+                                    <div v-if="hasId(p.address)">
                                         <p>
-                                            <span class="icon">
-                                                                        <i class="fa fa-id-card" aria-hidden="true"></i>
-                                                                    </span> {{ p.address.id_number }}
-                                            <a v-bind:href="idFrontUrl(p)">正面</a>
-                                            <a v-bind:href="idBackUrl(p)">背面</a>
+                                            <span class="icon"><i class="fa fa-id-card" aria-hidden="true"></i></span> 
+                                            <span>
+                                                {{ p.address.id_number }}
+                                                <a v-bind:href="idFrontUrl(p)">正面</a>
+                                                <a v-bind:href="idBackUrl(p)">背面</a>
+                                            </span>
                                         </p>
                                     </div>
                                     <div v-else><a v-bind:href="idPhotoUploadUrl(p)">上传地址</a></div>
@@ -91,17 +95,17 @@
                                 <div class="field has-addons">
                                     <p class="control" style="display:inline-block">
                                         <span class="select">
-                                                              <select v-model="p.status">
-                                                                <option value="pending">等待收取</option>
-                                                                <option value="received">已收到</option>
-                                                                <option value="shipped">已寄出</option>
-                                                              </select>
-                                                            </span>
+                                                                      <select v-model="p.status">
+                                                                        <option value="pending">等待收取</option>
+                                                                        <option value="received">已收到</option>
+                                                                        <option value="shipped">已寄出</option>
+                                                                      </select>
+                                                                    </span>
                                     </p>
                                     <p class="control" style="display:inline-block">
                                         <a class="button is-primary" v-on:click="updateStatus(p)" v-bind:class="{ 'is-loading': updatingPackage === p.id }">
-                                                              保存更改
-                                                            </a>
+                                                                      保存更改
+                                                                    </a>
                                     </p>
                                 </div>
                             </td>
@@ -176,7 +180,7 @@ export default {
                 this.results = []
             } else {
                 this.inSearch = true
-                this.results = this.$store.getters.allPackages.filter(function (p) {  
+                this.results = this.$store.getters.allPackages.filter(function (p) {
                     return p.status === val
                 })
             }
@@ -214,6 +218,14 @@ export default {
 
         idBackUrl(p) {
             return p.address.id_back
+        },
+
+        hasId (addr) {
+            return addr.id_number.length > 0 && addr.id_front.indexOf("missing") > 0 && addr.id_back.indexOf("missing") > 0
+        },
+
+        idPhotoUploadUrl (p) {
+            return '/photos/' + p.id
         },
 
         updateStatus(p) {
