@@ -8,6 +8,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
+        isMobile: false,
+        sidebar: true,
         orders: [],
         updateOrderStatus: null,
         addresses: [],

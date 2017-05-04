@@ -221,7 +221,7 @@ export default {
         },
 
         hasId (addr) {
-            return addr.id_number.length > 0 && addr.id_front.indexOf("missing") > 0 && addr.id_back.indexOf("missing") > 0
+            return addr.id_number !== null && addr.id_number.length > 0 && addr.id_front.indexOf("missing") > 0 && addr.id_back.indexOf("missing") > 0
         },
 
         idPhotoUploadUrl (p) {

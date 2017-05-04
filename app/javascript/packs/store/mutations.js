@@ -1,5 +1,13 @@
 
 export default {
+    TOGGLE_SIDEBAR: (state, opened) => {
+        state.sidebar = opened
+    },
+
+    TOGGLE_DEVICE: (state, isMobile) => {
+        state.isMobile = isMobile
+    },
+
     RECEIVE_PRODUCTS: (state, { products }) => {
         state.products = products
     },

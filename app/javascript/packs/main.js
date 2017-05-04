@@ -7,6 +7,17 @@
 import Vue from 'vue'
 import App from './app.vue'
 import router from './router'
+import store from './store'
+import { sync } from 'vuex-router-sync'
+
+sync(store, router)
+
+router.beforeEach((route, redirect, next) => {
+  if (store.state.isMobile && store.state.sidebar) {
+    store.commit('TOGGLE_SIDEBAR', false)
+  }
+  next()
+})
 
 document.addEventListener('DOMContentLoaded', () => {
   document.body.appendChild(document.createElement('dashboard'))

@@ -4,12 +4,16 @@
             <div class="hero-head">
                 <nav class="nav">
                     <div class="nav-left">
-                        <a class="nav-item is-hidden-tablet">
+                        <a class="nav-item is-hidden-tablet" @click="toggleSidebar(!show)">
                             <i aria-hidden="true" class="fa fa-bars"></i>
                         </a>
                     </div>
                     <div class="nav-center">
-                        <router-link to="home" class="nav-item hero-brand">Dashboard</router-link>
+                        <a class="nav-item hero-brand" href="/">
+                            <div class="is-hidden-mobile">
+                                <span><strong>Dashboard</strong></span>
+                            </div>
+                        </a>
                     </div>
                     <div class="nav-right is-flex">
                         <a href="/" style="margin-top:15px; margin-right:25px;"><span class="icon"><i class="fa fa-home"></i></span>回到主页</a>
@@ -17,8 +21,10 @@
                 </nav>
             </div>
         </section>
-        <aside class="menu app-sidebar animated slideInLeft">
-            <p class="menu-label"> General</p>
+        <aside class="menu app-sidebar animated" :class="{ slideInLeft: show, slideOutLeft: !show}">
+            <p class="menu-label"> 
+                General
+            </p>
             <ul class="menu-list">
                 <li>
                     <router-link to="home" active-class="is-active">
@@ -57,6 +63,17 @@
 </template>
 
 <style lang="scss">
+// Responsiveness
+// 960, 1152, and 1344 have been chosen because they are divisible by both 12 and 16
+$tablet: 769px !default;
+// 960px container + 40px
+$desktop: 1000px !default;
+// 1152px container + 40
+$widescreen: 1192px !default;
+// 1344px container + 40
+$fullhd: 1384px !default;
+
+
 .app-navbar {
   position: fixed;
   min-width: 100%;
@@ -86,21 +103,33 @@
   background: #fff;
   box-shadow: 0 2px 3px hsla(0, 0%, 7%, .1), 0 0 0 1px hsla(0, 0%, 7%, .1);
   overflow-y: auto;
-  overflow-x: hidden
+  overflow-x: hidden;
+
+  @media screen and (max-width: $tablet - 1px) {
+    transform: translate3d(-180px, 0, 0);
+  }
 }
 
 .menu {
-  font-size: 1rem;
+    font-size: 1rem;
 }
 
 .slideInLeft {
-  animation-name: slideInLeft;
+    animation-name: slideInLeft;
+}
+
+.slideOutLeft {
+    animation-name: slideOutLeft;
 }
 
 .app-main {
   padding-top: 50px;
   margin-left: 180px;
   transform: translateZ(0);
+
+  @media screen and (max-width: $tablet - 1px) {
+      margin-left: 0;
+  }
 }
 
 .app-content {
@@ -189,6 +218,38 @@ export default {
         Order,
         Product,
         Package
+    },
+
+    computed: {
+        show () {
+            return this.$store.getters.sidebar
+        }
+    },
+
+    methods: {
+        toggleSidebar (opened) {
+            this.$store.dispatch('toggleSidebar', opened)
+        }
+    },
+
+    beforeMount () {
+        const { body } = document
+        const WIDTH = 768
+        const RATIO = 3
+
+        const handler = () => {
+            if (!document.hidden) {
+                
+                let rect = body.getBoundingClientRect()
+                let isMobile = rect.width - RATIO < WIDTH
+                this.$store.dispatch('toggleDevice', isMobile)
+                this.toggleSidebar(!isMobile)
+            }
+        }
+
+        document.addEventListener('visibilitychange', handler)
+        window.addEventListener('DOMContentLoaded',  handler)
+        window.addEventListener('resize', handler)
     }
 }
 </script>

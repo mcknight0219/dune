@@ -4,5 +4,6 @@ export default {
     allOrders: state => state.orders,
     allAddresses: state => state.addresses,
     allPackages: state => state.packages,
-    updatingPackage: state => state.updatingPackage
+    updatingPackage: state => state.updatingPackage,
+    sidebar: state => state.sidebar
 }

@@ -5,6 +5,14 @@ function jsonResponse(response) {
 }
 
 export default {
+    toggleDevice: ({commit}, isMobile) => {
+        commit('TOGGLE_DEVICE', isMobile)
+    },
+
+    toggleSidebar: ({commit}, opened) => {
+        commit('TOGGLE_SIDEBAR', opened)
+    },
+    
      getAllAddresses: ({commit}) => {
         Api.getAddresses()
             .then(jsonResponse)
