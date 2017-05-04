@@ -6,7 +6,7 @@
     
         <div class="tile is-parent">
             <article class="tile is-child box">
-                <p class="field has-addons field__width--40">
+                <p class="field has-addons">
                     <span class="select">
                         <select v-model="downloadType">
                             <option value="normal">普货</option>
@@ -14,7 +14,7 @@
                         </select>
                     </span>
                     <input v-model="dateVal" class="input" type="text" ref="pickrEl">
-                    <a class="button is-success" @click="download" v-bind:disabled="dateVal === null">下载报关表</a>
+                    <a class="button" @click="download" v-bind:disabled="dateVal === null"><span class="icon"><i class="fa fa-download" aria-hidden="true"></i></span></a>
                 </p>
             </article>
         </div>
