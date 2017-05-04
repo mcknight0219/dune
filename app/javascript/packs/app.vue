@@ -9,7 +9,7 @@
                         </a>
                     </div>
                     <div class="nav-center">
-                        <router-link to="order" class="nav-item hero-brand">Dashboard</router-link>
+                        <router-link to="home" class="nav-item hero-brand">Dashboard</router-link>
                     </div>
                     <div class="nav-right is-flex">
                         <a href="/" style="margin-top:15px; margin-right:25px;"><span class="icon"><i class="fa fa-home"></i></span>回到主页</a>
@@ -20,6 +20,13 @@
         <aside class="menu app-sidebar animated slideInLeft">
             <p class="menu-label"> General</p>
             <ul class="menu-list">
+                <li>
+                    <router-link to="home" active-class="is-active">
+                        <span class="icon is-small">
+                            <i class="fa fa-tachometer" aria-hidden="true"></i>
+                        </span> Dashboard
+                    </router-link>
+                </li>
                 <li>
                     <router-link to="package" active-class="is-active">
                         <span class="icon is-small">
@@ -168,6 +175,7 @@
 </style>
 
 <script>
+import Home from './components/home'
 import Order from './components/order'
 import Product from './components/product'
 import Package from './components/package'
@@ -177,6 +185,7 @@ export default {
     name: 'dashboard',
     store,
     components: {
+        Home,
         Order,
         Product,
         Package
