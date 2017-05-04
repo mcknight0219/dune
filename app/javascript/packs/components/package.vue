@@ -41,8 +41,9 @@
                         <tr v-for="p in packages">
                             <td><a href="">{{ p.serial }}</a></td>
                             <td>{{ new Date(p.created_at).toISOString().slice(0, 10) }}</td>
-                            <td>
-                               <a href="">已收到</a>
+                            <td class="is-icon">
+                               <a href="" class="is-shipped"><i class="fa fa-circle" aria-hidden="true"></i></a>
+                               <a href=""><i class="fa fa-bell-o" aria-hidden="true"></i></a>
                             </td>
                         </tr>
                     </tbody>
@@ -53,6 +54,20 @@
     </div>
     </div>
 </template>
+
+<style lang="scss">
+    .is-pending {
+        color: yellow
+    }
+
+    .is-received {
+        color: beige
+    }
+
+    .is-shipped {
+        color:aquamarine
+    }
+</style>
 
 <script>
 import Flatpickr from 'flatpickr'
