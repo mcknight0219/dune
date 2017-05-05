@@ -4,7 +4,7 @@
             <strong>寄件管理</strong>
         </div>
     
-        <div class="tile is-parent">
+        <div class="tile is-parent is-4">
             <article class="tile is-child box">
                 <p class="field has-addons">
                     <span class="select">
@@ -22,7 +22,7 @@
             <article class="tile is-child box">
                 <nav class="level">
                     <div class="level-left">
-                        <h4 class="title">邮寄列表</h4>
+                        <strong>邮寄列表</strong>
                     </div>
                     <div class="level-right">
                         <input type="text" class="input" placeholder="订单号码，名字等" v-model="q">
