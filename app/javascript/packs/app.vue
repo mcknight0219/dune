@@ -98,6 +98,7 @@ $fullhd: 1384px !default;
   width: 180px;
   min-width: 45px;
   max-height: 100vh;
+  z-index: 1;
   height: calc(100% - 50px);
   background: #fff;
   box-shadow: 0 2px 3px hsla(0, 0%, 7%, .1), 0 0 0 1px hsla(0, 0%, 7%, .1);
