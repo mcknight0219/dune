@@ -124,7 +124,11 @@ export default {
             flatPickr: null,
             option: {},
 
-            packageSelected: {},
+            packageSelected: {
+                address: {},
+                package_items: {},
+                profile: {}
+            },
             packageModal: false,
             statusModal: false
         }

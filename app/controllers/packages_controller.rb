@@ -117,7 +117,7 @@ class PackagesController < ApplicationController
 
   def decorate_package(package)
     package.as_json(:excpet => ['is_shipped', 'is_received', 'is_cancelled'])
-        .merge({status: package.status, address: package.address.as_json(:except => ["created_at", "updated_at"]).merge({:id_front => package.address.id_front.url, :id_back => package.address.id_back.url}), package_items: package.package_items.as_json(:except => ["created_at", "updated_at", "package_id"])})
+        .merge({profile: current_user.profile, status: package.status, address: package.address.as_json(:except => ["created_at", "updated_at"]).merge({:id_front => package.address.id_front.url, :id_back => package.address.id_back.url}), package_items: package.package_items.as_json(:except => ["created_at", "updated_at", "package_id"])})
   end
 
 end
