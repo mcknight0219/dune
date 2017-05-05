@@ -8,11 +8,11 @@
             <article class="tile is-child box">
                 <p class="field has-addons">
                     <span class="select">
-                        <select v-model="downloadType">
-                            <option value="normal">普货</option>
-                            <option value="luxury">轻奢</option>
-                        </select>
-                    </span>
+                            <select v-model="downloadType">
+                                <option value="normal">普货</option>
+                                <option value="luxury">轻奢</option>
+                            </select>
+                        </span>
                     <input v-model="dateVal" class="input" type="text" ref="pickrEl">
                     <a class="button" @click="download" v-bind:disabled="dateVal === null"><span class="icon"><i class="fa fa-download" aria-hidden="true"></i></span></a>
                 </p>
@@ -29,52 +29,64 @@
                     </div>
                 </nav>
                 <div class="table-responsive">
-                <table class="table is-bordered is-striped is-narrow">
-                    <thead>
-                        <tr>
-                            <th>订单号 <i class="fa" v-bind:class="{ 'fa-sort-asc': sortID === 'asc', 'fa-sort-desc': sortID === 'desc' }" style="vertical-align: middle" v-on:click="toggleSortID"></i></th>
-                            <th>时间 <i class="fa" v-bind:class="{ 'fa-sort-asc': sortTime === 'asc', 'fa-sort-desc': sortTime === 'desc' }" style="vertical-align: middle" v-on:click="toggleSortTime"></i></th>
-                            <th>操作</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="p in packages">
-                            <td><a href="">{{ p.serial }}</a></td>
-                            <td>{{ new Date(p.created_at).toISOString().slice(0, 10) }}</td>
-                            <td class="is-icon">
-                               <a href="" class="is-shipped"><i class="fa fa-circle" aria-hidden="true"></i></a>
-                               <a href=""><i class="fa fa-bell-o" aria-hidden="true"></i></a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                    <table class="table is-bordered is-striped is-narrow">
+                        <thead>
+                            <tr>
+                                <th>订单号 <i class="fa" v-bind:class="{ 'fa-sort-asc': sortID === 'asc', 'fa-sort-desc': sortID === 'desc' }" style="vertical-align: middle" v-on:click="toggleSortID"></i></th>
+                                <th>时间 <i class="fa" v-bind:class="{ 'fa-sort-asc': sortTime === 'asc', 'fa-sort-desc': sortTime === 'desc' }" style="vertical-align: middle" v-on:click="toggleSortTime"></i></th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="p in packages">
+                                <td><a class="button is-link" @click="openPackageModal(p)">{{ p.serial }}</a></td>
+                                <td>{{ new Date(p.created_at).toISOString().slice(0, 10) }}</td>
+                                <td class="is-icon is-small">
+                                    <a class="is-shipped" @click="openStatusModal(p)"><i class="fa fa-circle" aria-hidden="true"></i></a>
+                                    <a href=""><i class="fa fa-bell-o" aria-hidden="true"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </article>
         </div>
-    </div>
+        <PackageModalComponent :title="packageSelected.serial" :package="packageSelected" :visible="packageModal" @close="closeModal"></PackageModalComponent>
+        <StatusModalComponent title="状态" :package="packageSelected" :visible="statusModal" @close="closeModal"></StatusModalComponent>
     </div>
 </template>
 
 <style lang="scss">
-    .is-pending {
-        color: yellow
-    }
+.is-pending {
+    color: yellow
+}
 
-    .is-received {
-        color: beige
-    }
+.is-received {
+    color: beige
+}
 
-    .is-shipped {
-        color:aquamarine
-    }
+.is-shipped {
+    color: aquamarine
+}
 </style>
 
 <script>
+import Vue from 'vue'
 import Flatpickr from 'flatpickr'
+import PackageModal from './modals/PackageModal'
+import StatusModal from './modals/StatusModal'
 import Api from '../api'
+
+const PackageModalComponent = Vue.extend(PackageModal)
+const StatusModalComponent = Vue.extend(StatusModal)
 
 export default {
     name: 'Package',
+
+    components: {
+        PackageModalComponent,
+        StatusModalComponent
+    },
 
     computed: {
         packages() {
@@ -110,7 +122,11 @@ export default {
             downloadType: 'normal',
             dateVal: null,
             flatPickr: null,
-            option: {}
+            option: {},
+
+            packageSelected: {},
+            packageModal: false,
+            statusModal: false
         }
     },
 
@@ -139,6 +155,21 @@ export default {
     },
 
     methods: {
+        closeModal () {
+            this.packageModal = false
+            this.statusModal = false
+        },
+
+        openPackageModal (p) {
+            this.packageSelected = p
+            this.packageModal = true
+        },
+
+        openStatusModal (p) {
+            this.packageSelected = p
+            this.statusModal = true
+        },
+
         download() {
             Api.download(this.dateVal, this.downloadType)
         },
@@ -171,11 +202,11 @@ export default {
             return p.address.id_back
         },
 
-        hasId (addr) {
+        hasId(addr) {
             return addr.id_number !== null && addr.id_number.length > 0 && addr.id_front.indexOf("missing") > 0 && addr.id_back.indexOf("missing") > 0
         },
 
-        idPhotoUploadUrl (p) {
+        idPhotoUploadUrl(p) {
             return '/photos/' + p.id
         },
 

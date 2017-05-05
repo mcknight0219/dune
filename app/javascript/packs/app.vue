@@ -77,7 +77,7 @@ $fullhd: 1384px !default;
 .app-navbar {
   position: fixed;
   min-width: 100%;
-  z-index: 1024;
+  z-index: 1;
   box-shadow: 0 2px 3px hsla(0, 0%, 7%, .1), 0 0 0 1px hsla(0, 0%, 7%, .1);
 }
 
@@ -99,7 +99,6 @@ $fullhd: 1384px !default;
   min-width: 45px;
   max-height: 100vh;
   height: calc(100% - 50px);
-  z-index: 1023;
   background: #fff;
   box-shadow: 0 2px 3px hsla(0, 0%, 7%, .1), 0 0 0 1px hsla(0, 0%, 7%, .1);
   overflow-y: auto;
