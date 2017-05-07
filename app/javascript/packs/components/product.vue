@@ -1,9 +1,5 @@
 <template>
-    <div>
-        <div class="panel-title">
-            <strong>商品管理</strong>
-        </div>
-    
+    <div>    
         <div class="tile is-ancestor">
             <div class="tile is-parent  is-4">
                 <article class="tile is-child box">

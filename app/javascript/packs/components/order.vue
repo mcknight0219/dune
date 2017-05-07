@@ -1,6 +1,5 @@
 <template>
     <div>
-        <div class="panel-title"><strong>Orders</strong></div>
         <div class="tile is-parent">
             <article class="tile is-child box">
                 <h4 class="title">订单列表</h4>

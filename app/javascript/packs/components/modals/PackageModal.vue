@@ -1,5 +1,5 @@
 <template>
-    <card-modal :visible="visible" @close="close" :title="title" transition="zoom">
+    <card-modal :visible="visible" @ok="close" @cancel="close" @close="close" :title="title">
         <div>
             <nav class="level">
                 <div class="level-left">
@@ -11,7 +11,7 @@
                 </div>
                 <div class="level-right">
                     <div class="level-item">
-                        <span class="tag is-dark">普货</span>
+                        <span class="tag is-dark">{{ package.serial.substring(0, 2) === "AC" ? "普货" :"轻奢" }}</span>
                     </div>
                 </div>
             </nav>
@@ -43,7 +43,7 @@
                         </div>
                         <div class="level-right">
                             <div class="level-item">
-                                <span class="tag is-danger">无身份证信息</span>
+                                <span class="tag is-danger" v-if="!hasIdInfo(package.address)">无身份证信息</span>
                             </div>
                         </div>
                     </nav>
@@ -52,7 +52,7 @@
                             <div class="media">
                                 <div class="media-left">
                                     <figure class="image is-48x48">
-                                        <img v-bind:src="package.address.id_front" alt="Image">
+                                        <img v-bind:src="mediaSrc(package.address.id_front)" alt="Image">
                                     </figure>
                                 </div>
                                 <div class="media-content">
@@ -75,7 +75,7 @@
                                 <div>{{ package.address.address_line1 }}</div>
                                 <div>{{ package.address.city }} {{ package.address.state }}</div>
                                 <br>
-                                <small>寄件人电话 {{ package.profile.mobile}}</small>
+                                <small>寄件人 {{ package.profile.name}}(<strong>{{ package.profile.mobile}}</strong>)</small>
                             </div>
                         </div>
                     </div>
@@ -92,8 +92,14 @@ export default {
     },
 
     props: {
-        package: Object,
-        visible: Boolean,
+        package: {
+            type: Object,
+            default: () => ({ serial: "" })
+        },
+        visible: {
+            type: Boolean,
+            default: false
+        },
         title: String
     },
 
@@ -106,6 +112,17 @@ export default {
     methods: {
         close() {
             this.$emit('close')
+        },
+
+        hasIdInfo(addr) {
+            return addr.id_number !== undefined && addr.id_number !== null && addr.id_number.length > 0 && addr.id_front.indexOf("missing") < 0 && addr.id_back.indexOf("missing") < 0
+        },
+
+        mediaSrc (src) {
+            if (src.indexOf("missing") > 0) {
+                return "http://bulma.io/images/placeholders/96x96.png"
+            }
+            return src
         }
     }
 }

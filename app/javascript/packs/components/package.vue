@@ -1,20 +1,25 @@
 <template>
     <div>
-        <div class="panel-title">
-            <strong>寄件管理</strong>
-        </div>
-    
         <div class="tile is-parent is-4">
             <article class="tile is-child box">
+                <nav class="level">
+                    <div class="level-left">
+                        <strong>报关单下载</strong>
+                    </div>
+                </nav>
                 <p class="field has-addons">
                     <span class="select">
-                            <select v-model="downloadType">
-                                <option value="normal">普货</option>
-                                <option value="luxury">轻奢</option>
-                            </select>
-                        </span>
+                        <select v-model="downloadType">
+                            <option value="normal">普货</option>
+                            <option value="luxury">轻奢</option>
+                        </select>
+                    </span>
                     <input v-model="dateVal" class="input" type="text" ref="pickrEl">
-                    <a class="button" @click="download" v-bind:disabled="dateVal === null"><span class="icon"><i class="fa fa-download" aria-hidden="true"></i></span></a>
+                    <a class="button" @click="download" v-bind:disabled="dateVal === null">
+                        <span class="icon">
+                            <i class="fa fa-download" aria-hidden="true"></i>
+                        </span>
+                    </a>
                 </p>
             </article>
         </div>
@@ -32,18 +37,28 @@
                     <table class="table is-bordered is-striped is-narrow">
                         <thead>
                             <tr>
-                                <th>订单号 <i class="fa" v-bind:class="{ 'fa-sort-asc': sortID === 'asc', 'fa-sort-desc': sortID === 'desc' }" style="vertical-align: middle" v-on:click="toggleSortID"></i></th>
-                                <th>时间 <i class="fa" v-bind:class="{ 'fa-sort-asc': sortTime === 'asc', 'fa-sort-desc': sortTime === 'desc' }" style="vertical-align: middle" v-on:click="toggleSortTime"></i></th>
+                                <th>订单号
+                                    <i class="fa" v-bind:class="{ 'fa-sort-asc': sortID === 'asc', 'fa-sort-desc': sortID === 'desc' }" style="vertical-align: middle" v-on:click="toggleSortID"></i>
+                                </th>
+                                <th>时间
+                                    <i class="fa" v-bind:class="{ 'fa-sort-asc': sortTime === 'asc', 'fa-sort-desc': sortTime === 'desc' }" style="vertical-align: middle" v-on:click="toggleSortTime"></i>
+                                </th>
                                 <th>操作</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="p in packages">
-                                <td><a class="button is-link" @click="openPackageModal(p)">{{ p.serial }}</a></td>
+                                <td>
+                                    <a class="button is-link" @click="openPackageModal(p)">{{ p.serial }}</a>
+                                </td>
                                 <td>{{ new Date(p.created_at).toISOString().slice(0, 10) }}</td>
                                 <td class="is-icon is-small">
-                                    <a class="is-shipped" @click="openStatusModal(p)"><i class="fa fa-circle" aria-hidden="true"></i></a>
-                                    <a href=""><i class="fa fa-bell-o" aria-hidden="true"></i></a>
+                                    <a v-bind:class="statusClass(p.status)" @click="openStatusModal(p)">
+                                        <i class="fa fa-circle" aria-hidden="true"></i>
+                                    </a>
+                                    <a v-if="!hasIdInfo(p.address)" @click="openUploadModal(p)">
+                                        <i class="fa fa-bell-o" aria-hidden="true"></i>
+                                    </a>
                                 </td>
                             </tr>
                         </tbody>
@@ -51,41 +66,46 @@
                 </div>
             </article>
         </div>
+        
+        <UploadModalComponent :visible="uploadModal" @close="closeModal" :package="packageSelected"></UploadModalComponent>
         <PackageModalComponent :title="packageSelected.serial" :package="packageSelected" :visible="packageModal" @close="closeModal"></PackageModalComponent>
-        <StatusModalComponent title="状态" :package="packageSelected" :visible="statusModal" @close="closeModal"></StatusModalComponent>
+        <StatusModalComponent @ok="changeStatus" title="改变状态" :package="packageSelected" :visible="statusModal" @close="closeModal"></StatusModalComponent>
     </div>
 </template>
 
 <style lang="scss">
 .is-pending {
-    color: yellow
+    color: crimson;
 }
 
 .is-received {
-    color: beige
+    color: cadetblue;
 }
 
 .is-shipped {
-    color: aquamarine
+    color: aquamarine;
 }
 </style>
 
 <script>
 import Vue from 'vue'
+import Api from '../api'
 import Flatpickr from 'flatpickr'
+import UploadModal from './modals/UploadModal'
 import PackageModal from './modals/PackageModal'
 import StatusModal from './modals/StatusModal'
-import Api from '../api'
 
+const UploadModalComponent  = Vue.extend(UploadModal)
 const PackageModalComponent = Vue.extend(PackageModal)
-const StatusModalComponent = Vue.extend(StatusModal)
+const StatusModalComponent  = Vue.extend(StatusModal)
 
 export default {
     name: 'Package',
 
     components: {
         PackageModalComponent,
-        StatusModalComponent
+        StatusModalComponent,
+        UploadModalComponent
     },
 
     computed: {
@@ -127,10 +147,13 @@ export default {
             packageSelected: {
                 address: {},
                 package_items: {},
-                profile: {}
+                profile: {},
+                status: null,
+                serial: ""
             },
             packageModal: false,
-            statusModal: false
+            statusModal: false,
+            uploadModal: false
         }
     },
 
@@ -159,9 +182,25 @@ export default {
     },
 
     methods: {
-        closeModal () {
-            this.packageModal = false
+        statusClass(status) {
+            return "is-" + status
+        },
+
+        changeStatus(status) {
             this.statusModal = false
+            this.packageSelected.status = status
+            this.$store.dispatch('updatePackage', this.packageSelected)
+        },
+
+        closeModal() {
+            this.packageModal = false
+            this.statusModal  = false
+            this.uploadModal  = false
+        },
+
+        openUploadModal (p) {
+            this.packageSelected = p
+            this.uploadModal = true
         },
 
         openPackageModal (p) {
@@ -206,16 +245,12 @@ export default {
             return p.address.id_back
         },
 
-        hasId(addr) {
-            return addr.id_number !== null && addr.id_number.length > 0 && addr.id_front.indexOf("missing") > 0 && addr.id_back.indexOf("missing") > 0
+        hasIdInfo(addr) {
+            return addr.id_number !== null && addr.id_number.length > 0 && addr.id_front.indexOf("missing") < 0 && addr.id_back.indexOf("missing") < 0
         },
 
         idPhotoUploadUrl(p) {
             return '/photos/' + p.id
-        },
-
-        updateStatus(p) {
-            this.$store.dispatch('updatePackage', p)
         },
 
         search(qs) {
@@ -258,9 +293,17 @@ export default {
 }
 </script>
 
-<style lang="css">
-.field__width--40 {
-    width: 40%;
+<style lang="scss">
+.is-pending {
+    color: crimson;
+}
+
+.is-received {
+    color: cadetblue;
+}
+
+.is-shipped {
+    color: aquamarine;
 }
 </style>
 
