@@ -3,10 +3,19 @@
         <div class="box">
             <article class="media">
                 <div class="media-content">
-                    <input class="input" type="url" v-model="uploadLocation" disabled=true>   
-                    <p>
-                    请将此地址告知用户，以便用户可以随时上传他的身份证信息
-                    </p>
+                    <div class="field has-addons">
+                        <p class="control is-expanded">
+                            <input id="url" class="input" type="url" v-model="uploadLocation" readonly=true>   
+                        </p>
+                        <p class="control">
+                            <a data-clipboard-target="#url" class="button is-icon"><i class="fa fa-clipboard" aria-hidden="true"></i></a>
+                        </p>
+                    </div>
+                    <div v-if="successful" class="notification is-primary">
+                        地址已拷贝到您的剪贴板
+                    </div>
+
+                    <p>请将此地址告知用户，以便用户可以随时上传他的身份证信息</p>
                 </div>
             </article>
         </div>
@@ -15,10 +24,11 @@
 
 <script>
 import {Modal} from 'vue-bulma-modal'
+import Clipboard from 'clipboard'
 
 export default {
     components: {
-        Modal
+        Modal,
     },
 
     computed: {
@@ -26,6 +36,13 @@ export default {
             const href = window.location.href
             const root = href.substring(0, href.indexOf(window.location.pathname))
             return root + "/photos/" + this.package.id
+        }
+    },
+
+    data () {
+        return {
+            clipboard: null,
+            successful: false
         }
     },
 
@@ -44,6 +61,13 @@ export default {
         close () {
             this.$emit('close')
         }
+    },
+
+    created () {
+        this.clipboard = new Clipboard('.button.is-icon')
+        this.clipboard.on('success', () => {
+            this.successful = true
+        })
     }
 }
 </script>  
