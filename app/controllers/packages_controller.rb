@@ -10,10 +10,9 @@ class PackagesController < ApplicationController
       }
       format.csv {
         args = {}
-        args[:luxury] = params[:luxury] if params[:luxury]
+        args[:luxury] = params[:luxury] == 'true' if params[:luxury]
         args[:start_date] = Date.parse(params[:start_date]) if params[:start_date]
         args[:end_date] = Date.parse(params[:end_date]) if params[:end_date]
-        
         send_data Package.to_csv(filter: args), filename: ".csv"
       }
     end
@@ -117,7 +116,7 @@ class PackagesController < ApplicationController
 
   def decorate_package(package)
     package.as_json(:excpet => ['is_shipped', 'is_received', 'is_cancelled'])
-        .merge({profile: current_user.profile, status: package.status, address: package.address.as_json(:except => ["created_at", "updated_at"]).merge({:id_front => package.address.id_front.url, :id_back => package.address.id_back.url}), package_items: package.package_items.as_json(:except => ["created_at", "updated_at", "package_id"])})
+        .merge({profile: package.user.profile, status: package.status, address: package.address.as_json(:except => ["created_at", "updated_at"]).merge({:id_front => package.address.id_front.url, :id_back => package.address.id_back.url}), package_items: package.package_items.as_json(:except => ["created_at", "updated_at", "package_id"])})
   end
 
 end

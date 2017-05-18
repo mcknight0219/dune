@@ -24,7 +24,7 @@ class ProfilesController < ApplicationController
       if session[:return]
         url = session[:return]
         session.delete :return
-        redirect_to session[:return] and return
+        redirect_to url and return
       else
         flash[:notice] = '新建成功'
         redirect_to profile_path(p.id)

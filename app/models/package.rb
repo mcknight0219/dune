@@ -71,8 +71,8 @@ class Package < ApplicationRecord
   end
 
   def self.to_csv(filter: {})
-    start_date = filter.fetch(:start_date, Date.new(2000, 1, 1))
-    end_date = filter.fetch(:end_date, Date.today + 1)
+    start_date = filter.fetch(:start_date, Date.new(2000, 1, 1)).beginning_of_day
+    end_date = filter.fetch(:end_date, Date.today + 1).end_of_day
     if start_date == end_date 
       start_date = end_date.yesterday
     end

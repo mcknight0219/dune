@@ -14,7 +14,7 @@
                             <option value="luxury">轻奢</option>
                         </select>
                     </span>
-                    <input v-model="dateVal" class="input" type="text" ref="pickrEl">
+                    <input v-model="dateVal" class="input" type="text" ref="pickrEl" placeholder="选择日期">
                     <a class="button" @click="download" v-bind:disabled="dateVal === null">
                         <span class="icon">
                             <i class="fa fa-download" aria-hidden="true"></i>

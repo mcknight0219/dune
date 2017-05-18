@@ -21,7 +21,7 @@ export default {
         [start, end] = parseRange(dates)
         let url = '/packages.csv?start_date=' + start.toISOString().slice(0, 10) + "&end_date=" + end.toISOString().slice(0, 10)
         if (type === 'luxury') {
-            url = url + '?luxury'
+            url = url + '&luxury=true'
         }
 
         return fetch(url, {
@@ -33,6 +33,7 @@ export default {
         }).then(response => response.blob())
         .then((blob) => {
             var a = window.document.createElement("a")
+         
             a.href = URL.createObjectURL(blob, {type: "text/plain"})
             let filename = ""
             if (type === "luxury") {
