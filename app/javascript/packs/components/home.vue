@@ -59,6 +59,7 @@
 <script>
 
 import Chartist from './chartist'
+import * as moment from 'moment'
 
 export default {
     components: {
@@ -67,13 +68,6 @@ export default {
 
     data() {
         return {
-            series: [
-                [12, 9, 7, 8, 5, 1, 3]
-            ],
-            labels: {
-                week: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                year: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-            },
             linesOptions: {
                 fullWidth: true,
                 chartPadding: {
@@ -97,9 +91,27 @@ export default {
 
     computed: {
         linesData() {
+            let labels = [] // label
+            let series = [] // data
+            if (this.range === 'week') {
+                labels = [...Array(7).keys()].map((n) => {
+                    moment().subtract(n, 'days').format("MMM Do")
+                })
+                series = [12, 9, 7, 8, 5, 1, 3]
+            } else if (this.range === 'month') {
+                labels = [...Array(30).keys()].map((n) => {
+                    moment().substract(n, 'days').format("DD")
+                })
+
+            } else if (this.range === 'year') {
+                labels = [...Array(12).keys()].map((n) => {
+                    moment().substract(n, 'months').format("MMM")
+                })
+            }
+
             return {
-                labels: this.labels.week,
-                series: this.series
+                labels,
+                series
             }
         },
 
