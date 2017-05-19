@@ -18,8 +18,8 @@ export default {
      download: function(dates, type) {
         var start, end
        
-        [start, end] = parseRange(dates)
-        let url = '/packages.csv?start_date=' + start.toISOString().slice(0, 10) + "&end_date=" + end.toISOString().slice(0, 10)
+        [start, end] = parseRange(dates).map ((d) => d.toISOString().slice(0, 10))
+        let url = '/packages.csv?start_date=' + start + "&end_date=" + end
         if (type === 'luxury') {
             url = url + '&luxury=true'
         }

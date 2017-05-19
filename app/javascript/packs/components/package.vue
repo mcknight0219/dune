@@ -145,7 +145,7 @@ export default {
             option: {},
 
             packageSelected: {
-                address: {},
+                address: {id_front: ''},
                 package_items: {},
                 profile: {},
                 status: null,
@@ -267,10 +267,6 @@ export default {
             return results
         }
 
-    },
-
-    created() {
-        this.$store.dispatch('getAllPackages')
     },
 
     mounted() {

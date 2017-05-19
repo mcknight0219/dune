@@ -52,7 +52,7 @@
         <% @packages.each do |p| %>
           <tr>
             <td><%= p.serial %></td>
-            <td><%= p.created_at.localtime.strftime '%Y-%m-%d %H:%M:%S' %></td>
+            <td><%= p.created_at.localtime.strftime '%Y-%m-%d' %></td>
             <td>
               <span style="font-weight: 500"><%= p.address.name %></span>
               <span><%= "#{p.address.address_line1} #{p.address.city} #{p.address.state}"%></span>
@@ -63,7 +63,11 @@
               <% elsif p.status == 'received' %>
                 已收到
               <% else %>
-                查询
+                <% if p.serial.start_with? 'SU' %>
+                  <%= link_to '查询', "http://www.sureton.com/index.php/Index/exp_track", :target => "_blank"%>
+                <% else %>
+                  <%= link_to '查询', "http://www.cctexpress.com/select/?num=#{p.serial}", :target => "_blank"%>
+                <% end %>
               <% end %>
             </td>
           </tr>

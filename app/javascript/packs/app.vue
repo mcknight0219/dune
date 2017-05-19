@@ -16,7 +16,7 @@
                         </a>
                     </div>
                     <div class="nav-right is-flex">
-                        <a href="/" style="margin-top:15px; margin-right:25px;"><span class="icon"><i class="fa fa-home"></i></span>回到主页</a>
+                        <a href="/" style="margin-top:15px; margin-right:25px;"><span class="icon"><i class="fa fa-home"></i></span></a>
                     </div>
                 </nav>
             </div>
