@@ -20,6 +20,13 @@ export default {
         state.productCategories.push(category)
     },
 
+    DEL_PRODUCT_CATEGORY: (state, id) => {
+        const record = state.productCategories.find(pc => pc.id === id)
+        if (record) {
+            state.productCategories.splice(state.productCategories.indexOf(record), 1)
+        }
+    },
+
     ADD_NEW_PRODUCT: (state, {product}) => {
         state.products.push(product)
     },

@@ -87,12 +87,16 @@ export default {
     },
 
     addProductCategory: function(data) {
-        if (data.parentId === -1)
+        if (data.parentId === -1) 
             data.parent_id = null
         else
             data.parent_id = data.parentId
 
         return csrf_fetch('POST', '/product_categories', JSON.stringify({product_category: data}))
+    },
+
+    deleteProductCategory: function(id) {
+        return csrf_fetch('DELETE', '/product_categories/' + id)
     },
 
     addItemCategory: function(data) {

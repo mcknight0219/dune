@@ -25,7 +25,6 @@
                                     <a v-on:click="deleteProduct(p)">
                                         <i class="fa fa-trash"></i>
                                     </a>
-                                    
                                 </td>
                             </tr>
                         </tbody>
@@ -73,9 +72,10 @@
                                 <td>{{ pc.name }}</td>
                                 <td>{{ pc.parent_id }}</td>
                                 <td class="is-icon">
-                                    <a @click="">
+                                    <a @click="deleteProductCategory(pc.id)">
                                         <i class="fa fa-trash"></i>
                                     </a>
+                                    <p v-if="deleteFailed(pc.id)" class="help is-danger">无法删除，正在使用</p>
                                 </td>
                             </tr>
                         </tbody>
@@ -321,6 +321,19 @@ export default {
             this.newProductCategory.parentId = null
         },
 
+        deleteProductCategory(id) {
+            if (this.productCategories.filter(pc => pc.parent_id === id).length > 0) {
+                this.failedDeletedCategories.push(id)
+                return
+            }
+
+            this.$store.dispatch('deleteProductCategory', id)
+        },
+
+        deleteFailed(id) {
+            return this.failedDeletedCategories.indexOf(id) >= 0
+        },
+
         deleteProduct(product) {
             this.$store.dispatch('deleteProduct', { product: product })
         },
@@ -364,6 +377,7 @@ export default {
                 name: '',
                 parentId: -1
             },
+            failedDeletedCategories: [],
             // number of images uploaded so far
             count: 0,
             uploads: {},

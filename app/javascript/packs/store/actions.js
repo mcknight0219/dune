@@ -51,6 +51,18 @@ export default {
             })
     },
 
+    deleteProductCategory: ({commit}, id) => {
+        Api.deleteProductCategory(id)
+            .then((response) => {
+                return response.json()
+            })
+            .then(({ success }) => {
+                if (success) {
+                    commit('DEL_PRODUCT_CATEGORY', id)
+                }
+            })
+    },
+
     getAllPackages: ({commit}) => {
         Api.getPackages()
             .then(response => response.json())
