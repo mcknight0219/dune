@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170428151441) do
+ActiveRecord::Schema.define(version: 20170605203325) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,12 +61,13 @@ ActiveRecord::Schema.define(version: 20170428151441) do
 
   create_table "orders", force: :cascade do |t|
     t.integer  "items"
-    t.boolean  "refunded",   default: false
-    t.boolean  "shipped",    default: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.boolean  "refunded",        default: false
+    t.boolean  "shipped",         default: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.integer  "user_id"
     t.integer  "address_id"
+    t.string   "tracking_number"
     t.index ["address_id"], name: "index_orders_on_address_id", using: :btree
     t.index ["user_id"], name: "index_orders_on_user_id", using: :btree
   end

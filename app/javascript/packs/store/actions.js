@@ -105,11 +105,20 @@ export default {
             })
     },
 
-    shipOrder: ({commit}, {id}) => {
-        Api.shipOrder(id)
+    shipOrder: ({commit}, {id, trackingNumber}) => {
+        Api.shipOrder({id, trackingNumber})
             .then(jsonResponse)
-            .then(() => {
-                commit('MARK_ORDER_SHIPPED', {id})
+            .then(({success}) => {
+                if (success) {
+                    commit('SHIP_ORDER', {id, trackingNumber})
+                    commit('MARK_SHIP_ORDER_STATUS', 'success')
+                } else {
+                    commit('MARK_SHIP_ORDER_STATUS', 'failure')
+                }
             })
+    },
+
+    resetShipOrderStatus: ({commit}) => {
+        commit('MARK_SHIP_ORDER_STATUS', 'normal')
     }
 }

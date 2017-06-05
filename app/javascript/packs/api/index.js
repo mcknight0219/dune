@@ -127,8 +127,8 @@ export default {
         return csrf_fetch('GET', '/orders')
     },
 
-    shipOrder(id) {
-        return csrf_fetch('PUT', '/orders/' + id)
+    shipOrder({id, trackingNumber}) {
+        return csrf_fetch('PUT', '/orders/' + id, JSON.stringify({tracking_number: trackingNumber}))
     },
 
     // Totally removes product from cart

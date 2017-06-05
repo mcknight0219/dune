@@ -201,6 +201,10 @@ $fullhd: 1384px !default;
     }
   }
 
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .1s
+    }
+
 </style>
 
 <script>

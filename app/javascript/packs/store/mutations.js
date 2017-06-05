@@ -53,9 +53,14 @@ export default {
         state.orders =  orders
     },
 
-    MARK_ORDER_SHIPPED: (state, {id}) => {
+    SHIP_ORDER: (state, {id, trackingNumber}) => {
         const order = state.orders.find(o => o.id == id)
         order.is_shipped = true
+        order.tracking_number = trackingNumber
+    },
+
+    MARK_SHIP_ORDER_STATUS: (state, status) => {
+        state.shipOrderStatus = status
     },
     
     RECEIVE_ADDRESSES: (state, {addresses}) => {
