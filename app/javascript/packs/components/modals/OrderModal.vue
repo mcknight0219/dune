@@ -14,17 +14,23 @@
                     <thead>
                         <tr>
                             <th>产品ID</th>
+                            <th>名称</th>
                             <th>价格</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="oi in order.items">
                             <td>{{ oi.id }}</td>
+                            <td>{{ oi.name + "(" + oi.brand + ")"}}</td>
                             <td>${{ oi.price }}</td>
                         </tr>
                         <tr>
-                            <td>总价</td>
-                            <td>${{order.total_price}}</td>
+                            <th colspan="2">邮费</th>
+                            <td>${{ order.shipping_price}}</td>    
+                        </tr>
+                        <tr>
+                            <th colspan="2">总价</th>
+                            <td>${{order.total_price / 100 }}</td>
                         </tr>
                     </tbody>
     
@@ -114,6 +120,7 @@ export default {
             if (src.indexOf("missing") > 0) {
                 return "http://bulma.io/images/placeholders/96x96.png"
             }
+            return src
         }
     }
 }

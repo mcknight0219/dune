@@ -28,6 +28,7 @@
                                     <i class="fa fa-check-square-o" aria-hidden="true"></i>
                                 </a>
                                 <a class="is-icon"><i class="fa fa-trash"></i></a>
+                                <a v-if="!hasIdInfo(o.address)" @click="openUploadModal(o)"><i class="fa fa-bell-o"></i></a>
                             </td>
                         </tr>
                     </tbody>
@@ -35,6 +36,7 @@
                 </div>
             </article>
         </div>
+        <UploadModalComponent :visible="showUploadModal" @close="closeModal" :orderOrPackage="selectedOrder"></UploadModalComponent>
         <OrderModalComponent :visible="showOrderModal" :order="selectedOrder" @close="closeModal"></OrderModalComponent>
         <TrackingModalComponent :visible="showTrackingModal" :order="selectedOrder" @close="closeModal"></TrackingModalComponent>
     </div>
@@ -44,14 +46,17 @@
 import Vue from 'vue'
 import OrderModal from './modals/OrderModal'
 import TrackingModal from './modals/TrackingModal'
+import UploadModal from './modals/UploadModal'
 
 const OrderModalComponent = Vue.extend(OrderModal)
 const TrackingModalComponent = Vue.extend(TrackingModal)
+const UploadModalComponent = Vue.extend(UploadModal)
 
 export default {
     components: {
         OrderModalComponent,
-        TrackingModalComponent
+        TrackingModalComponent,
+        UploadModalComponent
     },
 
     computed: {
@@ -65,6 +70,7 @@ export default {
             trackingNumbers: {},
             showTrackingModal: false,
             showOrderModal: false,
+            showUploadModal: false,
             selectedOrder: {}
         }
     },
@@ -96,9 +102,23 @@ export default {
             this.showOrderModal = true
         },
 
+        openUploadModal(o) {
+            this.selectedOrder = o
+            this.showUploadModal = true
+        },
+
         closeModal() {
             this.showTrackingModal = false
             this.showOrderModal = false
+            this.showUploadModal = false
+        },
+
+        hasIdInfo(addr) {
+            return addr.id_number !== null && addr.id_number.length > 0 && addr.id_front.indexOf('missing') < 0 && addr.id_back.indexOf('missing') < 0
+        },
+
+        idPhotoUploadUrl(o) {
+            return '/photos/order/' + o.id
         }
     },
 

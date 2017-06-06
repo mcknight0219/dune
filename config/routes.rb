@@ -17,8 +17,8 @@ Rails.application.routes.draw do
   post 'packages/new', :to => 'packages#choose_type'
   resources :packages
 
-  get 'photos/:id', :to => 'photos#show'
-  post 'photos/:id', :to => 'photos#create'
+  get  'photos/:context/:id', :to => 'photos#show'
+  post 'photos/:context/:id', :to => 'photos#create'
 
   get 'myorder', to: 'myorder#index'
   # 购物车

@@ -248,7 +248,7 @@ import ProductModal from './modals/ProductModal'
 const ProductModalComponent = Vue.extend(ProductModal)
 
 export default {
-    name: 'Product',
+    name: 'ManageProduct',
 
     components: {
         ProductModalComponent

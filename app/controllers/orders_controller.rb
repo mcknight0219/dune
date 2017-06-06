@@ -26,6 +26,7 @@ class OrdersController < ApplicationController
           user: o.user.email,
           address: o.address.as_json(:except => ["created_at", "updated_at"]).merge({:id_front => o.address.id_front.url, :id_back => o.address.id_back.url}),
           total_price: PriceCalculator.new(o).total_price,
+          shipping_price: PriceCalculator.new(o).shipping_price,
           items: summarize_order_details(o),
           created_at: o.created_at,
           tracking_number: o.tracking_number

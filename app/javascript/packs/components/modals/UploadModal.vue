@@ -35,7 +35,8 @@ export default {
         uploadLocation () {
             const href = window.location.href
             const root = href.substring(0, href.indexOf(window.location.pathname))
-            return root + "/photos/" + this.package.id
+            const ctx = this.isPackage(this.orderOrPackage) ? 'package' : 'order'
+            return root + "/photos/" + ctx + '/' + this.orderOrPackage.id
         }
     },
 
@@ -47,7 +48,7 @@ export default {
     },
 
     props: {
-        package: {
+        orderOrPackage: {
             type: Object,
             required: true
         },
@@ -60,6 +61,10 @@ export default {
     methods: {
         close () {
             this.$emit('close')
+        },
+
+        isPackage(x) {
+            return x.serial !== undefined
         }
     },
 

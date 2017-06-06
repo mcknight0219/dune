@@ -67,7 +67,7 @@
             </article>
         </div>
         
-        <UploadModalComponent :visible="uploadModal" @close="closeModal" :package="packageSelected"></UploadModalComponent>
+        <UploadModalComponent :visible="uploadModal" @close="closeModal" :orderOrPackage="packageSelected"></UploadModalComponent>
         <PackageModalComponent :title="packageSelected.serial" :package="packageSelected" :visible="packageModal" @close="closeModal"></PackageModalComponent>
         <StatusModalComponent @ok="changeStatus" title="改变状态" :package="packageSelected" :visible="statusModal" @close="closeModal"></StatusModalComponent>
     </div>
@@ -247,10 +247,6 @@ export default {
 
         hasIdInfo(addr) {
             return addr.id_number !== null && addr.id_number.length > 0 && addr.id_front.indexOf("missing") < 0 && addr.id_back.indexOf("missing") < 0
-        },
-
-        idPhotoUploadUrl(p) {
-            return '/photos/' + p.id
         },
 
         search(qs) {
