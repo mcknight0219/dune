@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170605203325) do
+ActiveRecord::Schema.define(version: 20170810204728) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,8 +115,6 @@ ActiveRecord::Schema.define(version: 20170605203325) do
     t.boolean  "active"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
-    t.string   "cover"
-    t.string   "grids"
     t.string   "image1_file_name"
     t.string   "image1_content_type"
     t.integer  "image1_file_size"
@@ -166,6 +164,21 @@ ActiveRecord::Schema.define(version: 20170605203325) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_profiles_on_user_id", using: :btree
+  end
+
+  create_table "uploads", force: :cascade do |t|
+    t.string   "package"
+    t.string   "id_number"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.string   "id_front_file_name"
+    t.string   "id_front_content_type"
+    t.integer  "id_front_file_size"
+    t.datetime "id_front_updated_at"
+    t.string   "id_back_file_name"
+    t.string   "id_back_content_type"
+    t.integer  "id_back_file_size"
+    t.datetime "id_back_updated_at"
   end
 
   create_table "users", force: :cascade do |t|

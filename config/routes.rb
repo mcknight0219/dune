@@ -19,6 +19,9 @@ Rails.application.routes.draw do
 
   get  'photos/:context/:id', :to => 'photos#show'
   post 'photos/:context/:id', :to => 'photos#create'
+  get  'upload/new', :to => 'upload#new'
+  post 'upload', :to => 'upload#create'
+  get  'uploads', :to => 'upload#index'
 
   get 'myorder', to: 'myorder#index'
   get 'manage_addresses', to: 'manage_addresses#index'

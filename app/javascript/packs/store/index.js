@@ -17,7 +17,8 @@ export default new Vuex.Store({
         updatingPackage: null,
         products: [],
         productCategories: [],
-        shipOrderStatus: 'normal'
+        shipOrderStatus: 'normal',
+        uploads: []
     },
     
     mutations,

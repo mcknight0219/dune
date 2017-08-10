@@ -8,6 +8,10 @@ export default {
         state.isMobile = isMobile
     },
 
+    RECEIVE_UPLOADS: (state, { uploads }) => {
+        state.uploads = uploads
+    },
+
     RECEIVE_PRODUCTS: (state, { products }) => {
         state.products = products
     },

@@ -66,6 +66,10 @@ export default {
         return csrf_fetch('GET', '/addresses')
     },
 
+    getUploads: function () {
+        return csrf_fetch('GET', '/uploads')
+    },
+
     deleteAddress: function (id) {
         return csrf_fetch('DELETE', '/addresses/' + id)
     },

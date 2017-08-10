@@ -21,6 +21,14 @@ export default {
             })
     },
 
+    getAllUploads: ({commit}) => {
+        Api.getUploads()
+          .then(jsonResponse)
+          .then((uploads) => {
+              commit('RECEIVE_UPLOADS', {uploads})
+          })
+    },
+
     getAllProducts: ({commit}) => {
         Api.getProducts()
             .then((response) => {

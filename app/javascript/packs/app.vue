@@ -50,6 +50,11 @@
                         <span class="icon is-small"><i class="fa fa-desktop" aria-hidden="true"></i></span> 商品
                     </router-link>
                 </li>
+                <li>
+                    <router-link to="upload" active-class="is-active">
+                        <span class="icon is-small"><i class="fa fa-picture-o"></i></span> 上传照片
+                    </router-link>
+                </li>
             </ul>
         </aside>
         <section class="app-main">
@@ -212,6 +217,7 @@ import Home from './components/home'
 import Order from './components/order'
 import ManageProduct from './components/ManageProduct'
 import Package from './components/package'
+import Upload from './components/upload'
 import store from './store'
 
 export default {
@@ -221,7 +227,8 @@ export default {
         Home,
         Order,
         ManageProduct,
-        Package
+        Package,
+        Upload
     },
 
     computed: {
