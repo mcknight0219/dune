@@ -64,7 +64,7 @@
                 已收到
               <% else %>
                 <% if p.serial.start_with? 'SU' %>
-                  <%= link_to '查询', "http://www.sureton.com/index.php/Index/exp_track", :target => "_blank"%>
+                  <%= link_to '查询', "http://www.sureton.com/index.php", :target => "_blank"%>
                 <% else %>
                   <%= link_to '查询', "http://www.cctexpress.com/select/?num=#{p.serial}", :target => "_blank"%>
                 <% end %>

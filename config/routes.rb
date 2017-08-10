@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   post 'photos/:id', :to => 'photos#create'
 
   get 'myorder', to: 'myorder#index'
+  get 'manage_addresses', to: 'manage_addresses#index'
   # 购物车
   resource :cart
   post 'cart/item', to: 'carts#add_to_cart'

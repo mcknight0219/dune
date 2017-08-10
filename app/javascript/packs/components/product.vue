@@ -60,7 +60,6 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>名称</th>
                                 <th>父类别</th>
                                 <th></th>
@@ -68,7 +67,6 @@
                         </thead>
                         <tbody>
                             <tr v-for="pc in productCategories">
-                                <td>{{ pc.id }}</td>
                                 <td>{{ pc.name }}</td>
                                 <td>{{ pc.parent_id }}</td>
                                 <td class="is-icon">
@@ -158,7 +156,7 @@
                         <div class="field-body">
                             <div class="field">
                                 <div class="control">
-                                    <input type="file" @change="handleUpload"> {{ 9 - count}}</input>
+                                    <input class="input" type="file" @change="handleUpload"> {{ 9 - count}}</input>
                                 </div>
                             </div>
                         </div>
@@ -170,47 +168,47 @@
                                 <div class="control">
                                     <div class="columns is-multiline">
                                         <div class="column">
-                                            <figure class="image is-128x128" style="border: 1px dotted #DDD">
+                                            <figure class="image is-square" style="border: 1px dotted #DDD">
                                                 <img v-bind:src="src1 || placeholder">
                                             </figure>
                                         </div>
                                         <div class="column" v-if="src2 !== null">
-                                            <figure class="image is-128x128">
+                                            <figure class="image is-64x64">
                                                 <img v-bind:src="src2">
                                             </figure>
                                         </div>
                                         <div class="column" v-if="src3 !== null">
-                                            <figure class="image is-128x128">
+                                            <figure class="image is-64x64">
                                                 <img v-bind:src="src3">
                                             </figure>
                                         </div>
                                         <div class="column" v-if="src4 !== null">
-                                            <figure class="image is-128x128">
+                                            <figure class="image is-64x64">
                                                 <img v-bind:src="src4">
                                             </figure>
                                         </div>
                                         <div class="column" v-if="src5 !== null">
-                                            <figure class="image is-128x128">
+                                            <figure class="image is-64x64">
                                                 <img v-bind:src="src5">
                                             </figure>
                                         </div>
                                         <div class="column" v-if="src6 !== null">
-                                            <figure class="image is-128x128">
+                                            <figure class="image is-64x64">
                                                 <img v-bind:src="src6">
                                             </figure>
                                         </div>
                                         <div class="column" v-if="src7 !== null">
-                                            <figure class="image is-128x128">
+                                            <figure class="image is-64x64">
                                                 <img v-bind:src="src7">
                                             </figure>
                                         </div>
                                         <div class="column" v-if="src8 !== null">
-                                            <figure class="image is-128x128">
+                                            <figure class="image is-64x64">
                                                 <img v-bind:src="src8">
                                             </figure>
                                         </div>
                                         <div class="column" v-if="src9 !== null">
-                                            <figure class="image is-128x128">
+                                            <figure class="image is-64x64">
                                                 <img v-bind:src="src9">
                                             </figure>
                                         </div>

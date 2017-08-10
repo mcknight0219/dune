@@ -46,6 +46,20 @@
               <%=	f.label :mobile, '电话号码' %>
               <%=	f.phone_field :mobile %>
             </div>
+             <div class="block">
+              <%= f.label :id_number, '身份证号 *' %>
+              <%= f.text_field :id_number %>
+            </div>
+            <div class="block">
+              <div class="one_half first">
+                <%= f.label :id_front, '身份证正面 *' %>
+                <%= f.file_field :id_front %>
+              </div>
+              <div class="one_half">
+                <%= f.label :id_front, '身份证背面 *' %>
+                <%= f.file_field :id_back %>
+              </div>
+            </div>
             <div class="block">
               <%= f.submit '保存', :class => "btn mgt-small"%>
             </div>

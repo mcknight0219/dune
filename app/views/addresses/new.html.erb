@@ -41,16 +41,16 @@
             </div>
             <div class="block">
               <%= f.label :id_number, '身份证号 *' %>
-              <%= f.text_field :id_number %>
+              <%= f.text_field :id_number, :required => true %>
             </div>
             <div class="block">
               <div class="one_half first">
                 <%= f.label :id_front, '身份证正面 *' %>
-                <%= f.file_field :id_front %>
+                <%= f.file_field :id_front, :required => true %>
               </div>
               <div class="one_half">
                 <%= f.label :id_front, '身份证背面 *' %>
-                <%= f.file_field :id_back %>
+                <%= f.file_field :id_back, :required => true %>
               </div>
             </div>
 
