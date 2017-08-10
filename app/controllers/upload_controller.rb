@@ -19,7 +19,7 @@ class UploadController < ApplicationController
     else
       flash[:error] = up.errors
     end
-    redirect_to '/upload'
+    redirect_to '/upload/new'
   end
 
   def upload_params
