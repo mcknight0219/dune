@@ -122,6 +122,7 @@ export default {
     
      created() {
         this.$store.dispatch('getAllPackages')
+        this.$store.dispatch('getAllOrders')
     },
 }
 

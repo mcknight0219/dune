@@ -36,6 +36,7 @@ class CartsController < ApplicationController
       session[:order_id] = order.id
       redirect_to payments_path
     rescue Exceptions::CartError
+      order.destroy
       flash[:error] = "无法创建订单。请稍后重试"
       render action: :show
     end

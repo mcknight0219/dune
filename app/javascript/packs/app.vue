@@ -46,7 +46,7 @@
                     </router-link>
                 </li>
                 <li>
-                    <router-link to="product" active-class="is-active">
+                    <router-link to="manage-product" active-class="is-active">
                         <span class="icon is-small"><i class="fa fa-desktop" aria-hidden="true"></i></span> 商品
                     </router-link>
                 </li>
@@ -201,12 +201,16 @@ $fullhd: 1384px !default;
     }
   }
 
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .1s
+    }
+
 </style>
 
 <script>
 import Home from './components/home'
 import Order from './components/order'
-import Product from './components/product'
+import ManageProduct from './components/ManageProduct'
 import Package from './components/package'
 import store from './store'
 
@@ -216,7 +220,7 @@ export default {
     components: {
         Home,
         Order,
-        Product,
+        ManageProduct,
         Package
     },
 

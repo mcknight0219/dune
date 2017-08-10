@@ -1,9 +1,11 @@
 class OrdersController < ApplicationController
   load_and_authorize_resource
 
+  # Update only changes tracking number
   def update
-    Order.find(params['id']).update!(:shipped => true)
-    render :json => {success: true}
+    o = Order.find(params['id'])
+    o.update(:tracking_number => params['tracking_number'])
+    render :json => {success: o.errors.empty?}
   end
 
   def show
@@ -22,9 +24,12 @@ class OrdersController < ApplicationController
           is_shipped: o.shipped,
           is_refunded: o.refunded,
           user: o.user.email,
-          address: o.address,
+          address: o.address.as_json(:except => ["created_at", "updated_at"]).merge({:id_front => o.address.id_front.url, :id_back => o.address.id_back.url}),
           total_price: PriceCalculator.new(o).total_price,
-          items: summarize_order_details(o)
+          shipping_price: PriceCalculator.new(o).shipping_price,
+          items: summarize_order_details(o),
+          created_at: o.created_at,
+          tracking_number: o.tracking_number
       }
     end
   end
