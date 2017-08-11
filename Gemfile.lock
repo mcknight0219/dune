@@ -96,6 +96,9 @@ GEM
     capistrano3-puma (1.2.1)
       capistrano (~> 3.0)
       puma (>= 2.6)
+    china_city (0.0.4)
+      jquery-rails
+      rails (>= 3.1.0)
     chronic (0.10.2)
     climate_control (0.1.0)
     cocaine (0.5.8)
@@ -314,6 +317,7 @@ DEPENDENCIES
   capistrano-rails
   capistrano-rbenv
   capistrano3-puma
+  china_city
   coffee-rails (~> 4.2)
   devise
   dropbox_api
@@ -347,4 +351,4 @@ DEPENDENCIES
   will_paginate (~> 3.1.0)
 
 BUNDLED WITH
-   1.14.5
+   1.14.6

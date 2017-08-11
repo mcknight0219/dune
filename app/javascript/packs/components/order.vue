@@ -71,7 +71,7 @@ export default {
             showTrackingModal: false,
             showOrderModal: false,
             showUploadModal: false,
-            selectedOrder: {}
+            selectedOrder: { address: {}}
         }
     },
 

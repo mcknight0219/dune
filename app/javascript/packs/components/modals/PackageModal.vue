@@ -74,7 +74,7 @@
     
                     <div class="content">
                         <div>{{ package.address.address_line1 }}</div>
-                        <div>{{ package.address.city }} {{ package.address.state }}</div>
+                        <div>{{ package.address.city }} {{ package.address.state }} {{ package.address.district }}</div>
                         <br>
                         <small>寄件人 {{ package.profile.name}}(
                             <strong>{{ package.profile.mobile}}</strong>)</small>

@@ -265,6 +265,10 @@ export default {
 
     },
 
+    created () {
+      this.$store.dispatch('getAllPackages')
+    },
+
     mounted() {
         const el = this.$refs.pickrEl
         this.options = {
@@ -281,7 +285,6 @@ export default {
             this.flatPickr = null
         }
     }
-
 }
 </script>
 

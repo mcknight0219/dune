@@ -69,6 +69,8 @@ gem 'whenever', :require => false
 # 附件管理
 gem "paperclip", git: "git://github.com/thoughtbot/paperclip.git"
 
+gem 'china_city'
+
 source 'http://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.3.3'
 end

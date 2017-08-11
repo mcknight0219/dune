@@ -54,7 +54,13 @@ class AddressesController < ApplicationController
   end
 
   def create
-    new_address = current_user.addresses.create address_params
+    hv = address_params.to_hash
+    hv.each do |k, v|
+      if ['district', 'city', 'state'].include? k
+        hv[k] = ChinaCity.get(v)
+      end
+    end
+    new_address = current_user.addresses.create hv
     if new_address.persisted?
       redirection = session[:return]
       if redirection
@@ -70,7 +76,13 @@ class AddressesController < ApplicationController
   end
 
   def update
-    updated = Address.find(params[:id]).update address_params
+    hv = address_params.to_hash
+    hv.each do |k, v|
+      if ['district', 'city', 'state'].include? k
+        hv[k] = ChinaCity.get(v)
+      end
+    end
+    updated = Address.find(params[:id]).update hv
     if updated
       redirection = session[:return]
       if redirection
@@ -86,6 +98,6 @@ class AddressesController < ApplicationController
   end
 
   def address_params
-    params.require(:address).permit(:name, :country, :state, :city, :post_code, :address_line1, :address_line2, :mobile, :phone, :id_number, :id_front, :id_back)
+    params.require(:address).permit(:name, :district, :state, :city, :post_code, :address_line1, :address_line2, :mobile, :phone, :id_number, :id_front, :id_back)
   end
 end

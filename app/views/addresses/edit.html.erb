@@ -16,18 +16,24 @@
               <%= f.label :name, '收件人' %>
               <%= f.text_field :name %>
             </div>
-            <div class="block">
-              <div class='one_third first'>
-                <%=	f.label :country, '国家' %>
-                <%= f.text_field :country %>
-              </div>
-              <div class='one_third'>
-                <%=	f.label :state, '省份' %>
-                <%= f.text_field :state %>
-              </div>
-              <div class="one_third">
-                <%=	f.label :city, '城市' %>
-                <%=	f.text_field :city %>
+            <div class='block'>
+              <div class="city-group">
+                <div class="one_third first">
+                  <%=	f.label :state, '省份' %>
+                  <%= f.select :state, ['--省份--', options_for_select(ChinaCity.list)], {:include_blank => false } , { :class => 'city-select' } %>
+                </div>
+                <div class="one_third">
+                  <%=	f.label :city, '城市' %>
+                  <%= f.select :city, [], {:include_blank => false}, { :class => 'city-select' } do %>
+                    <option>--城市--</option>
+                  <% end %>
+                </div>
+                <div class="one_third">
+                  <%=	f.label :district, '地区' %>
+                  <%= f.select :district, [], {:include_blank => false}, { :class => 'city-select' } do %>
+                    <option>--地区--</option>
+                  <% end %>
+                </div>
               </div>
             </div>
 

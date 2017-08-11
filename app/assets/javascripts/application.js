@@ -12,6 +12,7 @@
 //
 //= require clipboard.min
 //= require jquery
+//= require china_city/jquery.china_city
 //= require tether
 //= require bootstrap
 //= require jquery_ujs

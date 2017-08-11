@@ -98,7 +98,9 @@ export default {
     props: {
         order: {
             type: Object,
-            default: () => ({ addr: {} })
+            default: function () {
+              return { address: {} }
+            }
         },
         visible: {
             type: Boolean,
@@ -113,11 +115,11 @@ export default {
         },
 
         hasIdInfo(addr) {
-            return addr.id_number !== undefined && addr.id_number !== null && addr.id_number.length > 0 && addr.id_front.indexOf("missing") < 0 && addr.id_back.indexOf("missing") < 0
+            return addr !== undefined && addr.id_number !== undefined && addr.id_number !== null && addr.id_number.length > 0 && addr.id_front.indexOf("missing") < 0 && addr.id_back.indexOf("missing") < 0
         },
 
         mediaSrc(src) {
-            if (src.indexOf("missing") > 0) {
+            if (src && src.indexOf("missing") > 0) {
                 return "http://bulma.io/images/placeholders/96x96.png"
             }
             return src
