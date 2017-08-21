@@ -2,7 +2,10 @@ class Product < ApplicationRecord
   has_many :order_items
   belongs_to :product_category
 
-  validates_presence_of :price, :name, :product_category_id
+  validates_presence_of  :name, :product_category_id
+  (1..6).each do |n|
+    validates_presence_of "price#{n}".to_sym
+  end
   before_save :default_values
 
   scope :active, -> { where(active: true) }

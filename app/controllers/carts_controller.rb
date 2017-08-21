@@ -44,7 +44,7 @@ class CartsController < ApplicationController
 
   def add_to_cart
     cart = get_cart
-    cart.update({:id => params[:product].to_i, :quantity => 1})
+    cart.update({:id => params[:product].to_i, :quantity => params[:quantity].to_i})
     session[:cart] = cart.items
     redirect_to :action => :show
   end
@@ -69,8 +69,7 @@ class CartsController < ApplicationController
     session[:order_id] = order.id
     @order = order
     @summary = order.summary
-    @shipping_cost = PriceCalculator.new(@order).shipping_price
-    @total_price = PriceCalculator.new(@order).total_price
+    @total_price = 0
   end
 
   private

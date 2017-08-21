@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="tile is-ancestor">
-            <div class="tile is-parent is-4">
+            <div class="tile is-parent is-6">
                 <article class="tile is-child box">
                     <nav class="level">
                         <div class="level-left">
@@ -18,8 +18,8 @@
                         </thead>
                         <tbody>
                             <tr v-for="p in products">
-                                <td>
-                                    <a @click="openModal(p)" class="button is-link">{{ p.name }}</a>
+                                <td style="max-width: 10em; overflow: auto;">
+                                    <a @click="openModal(p)" class="button is-link" >{{ p.name }}</a>
                                 <td>{{ p.active ? "在售" : "下架"}}</td>
                                 <td class="is-icon">
                                     <a v-on:click="deleteProduct(p)">
@@ -31,56 +31,8 @@
                     </table>
                 </article>
             </div>
-            <div class="tile is-parent is-4">
-                <article class="tile is-child box">
-                    <nav class="level">
-                        <div class="level-left">
-                            <strong>商品类别管理</strong>
-                        </div>
-                    </nav>
-                    <div class="field has-addons has-addons-right">
-                        <p class="control">
-                            <span class="select">
-                                <select v-model="newProductCategory.parentId">
-                                    <option v-for="option in options" v-bind:value="option.id">
-                                        {{ option.name }}
-                                    </option>
-    
-                                </select>
-                            </span>
-                        </p>
-                        <p class="control">
-                            <input type="text" placeholder="类别名称" class="input" v-model="newProductCategory.name">
-                        </p>
-                        <p class="control">
-                            <a class="button is-primary" @click="addProductCategory">添加</a>
-                        </p>
-    
-                    </div>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>名称</th>
-                                <th>父类别</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="pc in productCategories">
-                                <td>{{ pc.name }}</td>
-                                <td>{{ pc.parent_id }}</td>
-                                <td class="is-icon">
-                                    <a @click="deleteProductCategory(pc.id)">
-                                        <i class="fa fa-trash"></i>
-                                    </a>
-                                    <p v-if="deleteFailed(pc.id)" class="help is-danger">无法删除，正在使用</p>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </article>
-            </div>
-            <div class="tile is-parent is-4">
+           
+            <div class="tile is-parent is-vertical">
                 <article class="tile is-child box">
                     <nav class="level">
                         <div class="level-left">
@@ -103,24 +55,6 @@
                                     <input class="input" type="text" placeholder="品牌" v-model="newProduct.brand">
                                 </p>
                             </div>
-                        </div>
-                    </div>
-    
-                    <div class="field is-horizontal">
-                        <div class="field-label is-normal">
-                            <label class="label">参数</label>
-                        </div>
-                        <div class="field-body">
-                            <div class="field is-grouped">
-                                <p class="control is-expanded">
-                                    <input class="input" type="number" placeholder="价格" v-model="newProduct.price">
-                                </p>
-                            </div>
-                            <div class="field">
-                                <p class="control is-expanded">
-                                    <input class="input" type="number" placeholder="邮费（每件）" v-model="newProduct.shipping_price">
-                                </p>
-                            </div>
                             <div class="field is-narrow">
                                 <p class="control is-expanded">
                                     <div class="select is-fullwidth">
@@ -135,6 +69,53 @@
                         </div>
                     </div>
     
+                    <div class="field is-horizontal">
+                      <div class="field-label is-normal"><label class="label">价格(包含运费)</label></div>
+                      <div class="field-body">
+                        <div class="field has-addons">
+                          <p class="control">
+                              <span class="select">
+                                  <select v-model="quantityToAdd">
+                                      <option v-for="n in 6">
+                                          {{ n }}
+                                      </option>
+                                  </select>
+                              </span>
+                          </p>
+                          <p class="control">
+                              <input type="number" placeholder="e.g. 123.45" class="input" v-model="priceToAdd" min="0">
+                          </p>
+                          <p class="control">
+                              <a class="button is-primary" @click="addNewPrice" v-bind:disabled="priceToAdd == null">添加</a>
+                          </p>
+                        </div>
+                      </div>
+                    </div>  
+
+                    <div class="field is-horizontal" v-if="!isAddedPriceEmpty">
+                      <div class="field-label is-normal"></div>
+                      <div class="field-body">
+                        <table class="table is-striped">
+                          <thead>
+                            <th>数量</th>
+                            <th>总价</th>
+                            <th></th>
+                          </thead>
+                          <tbody>
+                            <tr v-for="i in Object.keys(newProduct.price)">
+                              <td>{{ i }}</td>
+                              <td>${{ newProduct.price[i] }}</td>
+                              <td class="is-icon is-small">
+                                <a @click="removePriceForQuantity(i)">
+                                  <i class="fa fa-minus-circle" aria-hidden="true"></i>
+                                </a>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
                     <div class="field is-horizontal">
                         <div class="field-label is-normal">
                             <label for="" class="label">产品描述</label>
@@ -233,6 +214,54 @@
                     </div>
     
                 </article>
+
+                <article class="tile is-child box">
+                    <nav class="level">
+                        <div class="level-left">
+                            <strong>商品类别管理</strong>
+                        </div>
+                    </nav>
+                    <div class="field has-addons has-addons-right">
+                        <p class="control">
+                            <span class="select">
+                                <select v-model="newProductCategory.parentId">
+                                    <option v-for="option in options" v-bind:value="option.id">
+                                        {{ option.name }}
+                                    </option>
+    
+                                </select>
+                            </span>
+                        </p>
+                        <p class="control">
+                            <input type="text" placeholder="类别名称" class="input" v-model="newProductCategory.name">
+                        </p>
+                        <p class="control">
+                            <a class="button is-primary" @click="addProductCategory">添加</a>
+                        </p>
+    
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>名称</th>
+                                <th>父类别</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="pc in productCategories">
+                                <td>{{ pc.name }}</td>
+                                <td>{{ pc.parent_id }}</td>
+                                <td class="is-icon">
+                                    <a @click="deleteProductCategory(pc.id)">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                    <p v-if="deleteFailed(pc.id)" class="help is-danger">无法删除，正在使用</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </article>
             </div>
         </div>
         <ProductModalComponent :visible="showModal" @close="closeModal" :product="productInModal"></ProductModalComponent>
@@ -257,6 +286,15 @@ export default {
             return this.$store.getters.allProducts
         },
 
+        isAddedPriceEmpty() {
+          for (let i = '1'; i <= '6'; i++) {
+            if (this.newProduct.price.hasOwnProperty(i)) {
+              return false
+            }
+          }
+          return true
+        },
+
         productCategories() {
             return this.$store.getters.allProductCategories
         },
@@ -274,28 +312,39 @@ export default {
         },
 
         submitable() {
-
             var submitable = true
             Object.getOwnPropertyNames(this.newProduct).forEach((p) => {
-                if (this.newProduct[p].length === 0) {
+                if (p !== '__ob__' && (!this.newProduct[p] || this.newProduct[p].length === 0)) {
                     submitable = false
                 }
             })
+
+            for (let i = '1'; i <= '6'; ++i) {
+              if (!this.newProduct.price.hasOwnProperty(i)) {
+                submitable = false
+                break
+              }
+            }
             return submitable && this.count >= 1
         }
     },
 
     methods: {
-        packProduct(product) {
+        normalizeProduct(product) {
             if (product['category']) {
                 product['category'] = product['category'].toLowerCase()
             }
             const form = new FormData()
+            let prices = product.price
+            delete product.price
             Object.getOwnPropertyNames(product).forEach(function (k) {
                 form.append(k, product[k])
             })
-            // attach images
+            for (let i = '1'; i <= '6'; ++i) {
+              form.append('price' + i, prices[i])
+            }
 
+            // attach images
             Object.getOwnPropertyNames(this.uploads).forEach((k) => {
                 form.append(k, this.uploads[k])
             })
@@ -303,11 +352,37 @@ export default {
             return form
         },
 
+        addNewPrice() {
+          if (!this.priceToAdd || !this.quantityToAdd || this.quantityToAdd > 6) {
+            return
+          }
+          Vue.set(this.newProduct.price, this.quantityToAdd + '', this.priceToAdd)
+          if (this.quantityToAdd < 6) {
+            this.quantityToAdd++
+          } else {
+            this.quantityToAdd = 1
+          }
+          this.priceToAdd = null
+        },
+
+        removePriceForQuantity(n) {
+          Vue.delete(this.newProduct.price, n)
+        },
+
         addProduct() {
-            this.$store.dispatch('addNewProduct', { product: this.packProduct(this.newProduct) })
+            this.$store.dispatch('addNewProduct', { product: this.normalizeProduct(this.newProduct) })
+            // reset form
             this.uploads = {}
             this.count = 0
-            this.newProduct = {}
+            this.newProduct = {
+                name: '',
+                brand: '',
+                price: {},
+                detail: '',
+                product_category_id: ''
+            }
+            this.quantityToAdd = 1
+            this.priceToAdd = null
             for (var i = 1; i <= 9; i++) {
                 this["src" + i] = null
             }
@@ -363,11 +438,12 @@ export default {
         return {
             showModal: false,
             productInModal: {},
+            quantityToAdd: 1,
+            priceToAdd: null,
             newProduct: {
                 name: '',
                 brand: '',
-                price: '',
-                shipping_price: '',
+                price: {},
                 detail: '',
                 product_category_id: ''
             },
@@ -379,7 +455,7 @@ export default {
             // number of images uploaded so far
             count: 0,
             uploads: {},
-            placeholder: "http://bulma.io/images/placeholders/128x128.png",
+            placeholder: "http://bulma.io/images/placeholders/64x64.png",
             src1: null,
             src2: null,
             src3: null,

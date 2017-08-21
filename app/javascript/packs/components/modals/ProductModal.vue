@@ -23,10 +23,7 @@
                             <p class="subtitle is-6">
                                 <span>{{ product.brand }}</span>
                                 <br/>
-                                <span class="icon is-small"><i class="fa fa-usd" aria-hidden="true"></i></span>
-                                {{ product.price }}加币
-                                <span class="icon is-small"><i class="fa fa-truck" aria-hidden="true"></i></span>
-                                {{ product.shipping_price }}加币
+                                {{ makePriceLabel(product) }}
                             </p>
                         </div>
                     </div>
@@ -64,6 +61,18 @@ export default {
     methods: {
         close() {
             this.$emit('close')
+        },
+
+        makePriceLabel(prices) {
+          let label = ''
+          if (!prices) 
+            return label
+          for (let i = '1'; i <= '6'; ++i) {
+            if (prices['price'+i] > 0) {
+              label = label + '$' + prices['price'+i] + ' (' + i + ') '
+            }
+          }
+          return label
         },
 
         getProductCategoryName(id) {

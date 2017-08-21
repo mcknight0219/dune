@@ -21,8 +21,10 @@ class Order < ApplicationRecord
     self.order_items.each_with_object({}) do |item, hsh|
       if hsh.has_key?(item.product.name)
         hsh[item.product.name][:quantity] += 1
+        quantity = hsh[item.product.name][:quantity]
+        hsh[item.product.name][:price] = item.product["price#{quantity}"]
       else
-        hsh[item.product.name] = {quantity: 1, price: item.product.price}
+        hsh[item.product.name] = {quantity: 1, price: item.product.price1}
       end
     end
   end

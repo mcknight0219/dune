@@ -51,14 +51,14 @@
                     <div class="two_third">
                       <ul style="list-style: none; padding-left:0;">
                         <li style="font-weight: 400;font-size:17px;"><%= item[:product]['name'] %></li>
-                        <li style="padding-top: 10px;"><span style="padding-right:8px;">单价:</span><%= item[:product]['price']%>加元</li>
+                        <li style="padding-top: 10px;" ><span style="padding-right:8px;">价格(包括邮费):</span><span id="price-tag" data=<%= (1..6).map {|i| item[:product]["price#{i}"]}.select {|p| p > 0}.join(';') %>><%= item[:product]["price#{item[:quantity]}"]%></span> 加元</li>
                       </ul>
                     </div>
                   </td>
                   <td>
                     <div>
                       <%= form_tag cart_path, method: :put do %>
-                          <%= number_field_tag(:quantity, item[:quantity], :style => 'display: inline-block;padding-right: 7px;width: 80px;') %>
+                          <%= number_field_tag(:quantity, item[:quantity], :max => 6, :min => 1, :style => 'display: inline-block;padding-right: 7px;width: 80px;') %>
                           <%= hidden_field_tag :id, item[:product]['id'] %>
                           <%= submit_tag '更新购物车', :style => 'border:none;display:inline;background-color:transparent;color:#2BB656;cursor:pointer' %>
                           <%= link_to '删除', cart_path(id: item[:product]['id'], return: Base64.encode64(cart_path)), method: :delete %>

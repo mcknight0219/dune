@@ -34,8 +34,8 @@
               </figure>
               <div style="text-align: center;">
                 <p style="font-weight:500; font-size:18px;margin-top:10px;text-overflow: ellipsis; height: 48px;overflow:hidden;"><%= link_to product.name, product_path(product.id) %></p>
-                <div style="color:gray; margin-top:6px;">Costco, Canada</div>
-                <div style="font-weight: 400"><%= "$#{product.price} 加元" %></div>
+                <div style="color:gray; margin-top:6px;"><%= product.brand %></div>
+                <div style="font-weight: 400"><%= "$#{product.price1} 加元" %></div>
               </div>
             </div>
         <% end %>

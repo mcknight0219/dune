@@ -70,6 +70,8 @@ gem 'whenever', :require => false
 gem "paperclip", git: "git://github.com/thoughtbot/paperclip.git"
 
 gem 'china_city'
+gem 'http'
+gem 'nokogiri'
 
 source 'http://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.3.3'

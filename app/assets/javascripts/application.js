@@ -89,3 +89,14 @@ $('.thumbnail-strip figure').click(function () {
     $(this).addClass("selected")
     $('.large-view figure img').attr('src', $(this).children('img').attr('src'))
 })
+
+$('#quantity-select').change(function () {
+    $('#price').html($(this).val() + " 加元")
+    $('#quantity').val($(this).find(':selected').text())
+})
+
+$('#quantity').change(function () {
+    let arr = $('#price-tag').attr('data').split(';')
+    let i = parseInt($(this).val()) - 1
+    $('#price-tag').html(arr[i])
+})
