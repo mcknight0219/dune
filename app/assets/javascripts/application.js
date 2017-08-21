@@ -96,7 +96,7 @@ $('#quantity-select').change(function () {
 })
 
 $('#quantity').change(function () {
-    let arr = $('#price-tag').attr('data').split(';')
-    let i = parseInt($(this).val()) - 1
+    var arr = $('#price-tag').attr('data').split(';')
+    var i = parseInt($(this).val()) - 1
     $('#price-tag').html(arr[i])
 })
