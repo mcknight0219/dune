@@ -89,5 +89,12 @@ export default {
             record.is_shipped = pac.is_shipped
             record.is_received = pac.is_received
         }
+    },
+
+    UPDATE_INVENTORY: (state, { id, stock }) => {
+        const p = state.products.find(p => p.inventory.id === id)
+        if (p) {
+            p.inventory.stock = stock
+        }
     }
 }

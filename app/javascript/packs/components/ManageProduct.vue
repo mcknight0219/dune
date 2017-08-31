@@ -13,6 +13,7 @@
                             <tr>
                                 <th>商品</th>
                                 <th>状态</th>
+                                <th>库存</th>
                                 <th>操作</th>
                             </tr>
                         </thead>
@@ -21,6 +22,26 @@
                                 <td style="max-width: 10em; overflow: auto;">
                                     <a @click="openModal(p)" class="button is-link" >{{ p.name }}</a>
                                 <td>{{ p.active ? "在售" : "下架"}}</td>
+                                <td class="is-icon">
+                                    <span v-if="inEditingInventory">
+                                        <div class="field has-addons">
+                                            <p class="control">
+                                                <input class="input" type="number" v-bind:placeholder="p.inventory.stock" v-model="newInventory">
+                                            </p>
+                                            <p class="control">
+                                                <a class="button is-static" v-on:click="endEditInventory">
+                                                    保存
+                                                </a>
+                                            </p>
+                                        </div>
+                                    </span>
+                                    <span v-else>
+                                        {{ p.inventory.stock }}
+                                        <a v-on:click="beginEditInventory(p.inventory)">
+                                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                                        </a>
+                                    </span>
+                                </td>
                                 <td class="is-icon">
                                     <a v-on:click="deleteProduct(p)">
                                         <i class="fa fa-trash"></i>
@@ -55,7 +76,7 @@
                                     <input class="input" type="text" placeholder="品牌" v-model="newProduct.brand">
                                 </p>
                             </div>
-                            <div class="field is-narrow">
+                            <div class="field">
                                 <p class="control is-expanded">
                                     <div class="select is-fullwidth">
                                         <select v-model="newProduct.product_category_id">
@@ -66,6 +87,22 @@
                                     </div>
                                 </p>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal"></div>        
+                        <div class="field-body">
+                            <div class="field is-grouped">
+                                <p class="control is-expanded">
+                                    <input type="text" class="input" placeholder="规格" v-model="newProduct.specification">
+                                </p>
+                            </div>
+                            <div class="field">
+                                <p class="control is-expanded">
+                                    <input type="number" class="input" placeholder="库存" v-model="newProduct.inventory">
+                                </p>
+                            </div> 
                         </div>
                     </div>
     
@@ -148,7 +185,7 @@
                             <div class="field">
                                 <div class="control">
                                     <div class="columns is-multiline">
-                                        <div class="column">
+                                        <div class="column is-one-quarter">
                                             <figure class="image is-square" style="border: 1px dotted #DDD">
                                                 <img v-bind:src="src1 || placeholder">
                                             </figure>
@@ -379,7 +416,9 @@ export default {
                 brand: '',
                 price: {},
                 detail: '',
-                product_category_id: ''
+                product_category_id: '',
+                specification: '',
+                inventory: 0
             }
             this.quantityToAdd = 1
             this.priceToAdd = null
@@ -431,6 +470,19 @@ export default {
 
         closeModal() {
             this.showModal = false
+        },
+
+        beginEditInventory(inventory) {
+            this.currentInventoryId = inventory.id
+            this.inEditingInventory = true
+        },
+
+        endEditInventory() {
+            if (this.newInventory !== null && this.newInventory !== 0) {
+                this.$store.dispatch('updateInventory', { id: this.currentInventoryId, stock: this.newInventory })
+            }
+            this.currentInventoryId = null
+            this.inEditingInventory = false
         }
     },
 
@@ -445,12 +497,17 @@ export default {
                 brand: '',
                 price: {},
                 detail: '',
-                product_category_id: ''
+                product_category_id: '',
+                specification: '',
+                inventory: 0
             },
             newProductCategory: {
                 name: '',
                 parentId: -1
             },
+            inEditingInventory: false,
+            newInventory: null,
+            currentInventoryId: null,
             failedDeletedCategories: [],
             // number of images uploaded so far
             count: 0,

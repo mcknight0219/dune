@@ -33,7 +33,7 @@ class Cart
     end
     # retrieve information for each product
     counts.map do |id, n|
-      { :quantity => n, :product => Product.find(id).as_json }
+      { :quantity => n, :product => Product.find(id).as_json(include: { inventory: { only: [:stock] } }) }
     end
   end
 

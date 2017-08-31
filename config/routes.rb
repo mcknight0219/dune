@@ -1,21 +1,22 @@
 Rails.application.routes.draw do
   root to: 'home#index'
   get 'home/index'
-  get 'rates', :to => 'rate#index'
+  # get 'rates', :to => 'rate#index'
   post 'report', :to => 'report#create'
 
   resources :orders
   resources :addresses
   resources :products
   resources :product_categories
+  resources :inventories
 
-  get 'packages/confirm', :to  => 'packages#confirm'
-  post 'packages/add', :to => 'packages#add_package_item'
-  post 'packages/remove', :to => 'packages#remove_package_item'
-  get 'packages/address', :to => 'packages#choose_address'
-  get 'packages/item', :to => 'packages#item'
-  post 'packages/new', :to => 'packages#choose_type'
-  resources :packages
+#   get 'packages/confirm', :to  => 'packages#confirm'
+#   post 'packages/add', :to => 'packages#add_package_item'
+#   post 'packages/remove', :to => 'packages#remove_package_item'
+#   get 'packages/address', :to => 'packages#choose_address'
+#   get 'packages/item', :to => 'packages#item'
+#   post 'packages/new', :to => 'packages#choose_type'
+#   resources :packages
 
   get  'photos/:context/:id', :to => 'photos#show'
   post 'photos/:context/:id', :to => 'photos#create'

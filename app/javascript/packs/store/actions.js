@@ -128,5 +128,25 @@ export default {
 
     resetShipOrderStatus: ({commit}) => {
         commit('MARK_SHIP_ORDER_STATUS', 'normal')
+    },
+
+    updateInventory: ({commit}, {id, stock}) => {
+        Api.updateInventory({id, stock})
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.json()
+                }
+                var error = new Error(response.statusText)
+                error.response = response
+                throw error
+            })
+            .then(({stock}) => {
+                if (stock !== null) {
+                    commit('UPDATE_INVENTORY', {id, stock})
+                }
+            })
+            .catch((error) => {
+
+            })
     }
 }

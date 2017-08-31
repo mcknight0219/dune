@@ -119,6 +119,10 @@ export default {
         })
     },
 
+    updateInventory: function({id, stock}) {
+        return csrf_fetch('PUT', '/inventories/' + id, JSON.stringify({ adjustment: stock}))
+    },
+
     deleteProduct: function (id) {
         return csrf_fetch('DELETE', '/products/' + id)
     },

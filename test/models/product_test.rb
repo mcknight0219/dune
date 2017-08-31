@@ -2,16 +2,14 @@ require 'test_helper'
 
 class ProductTest < ActiveSupport::TestCase
   setup do
-    @off_shelf = products(:offshelf)
   end
 
   test 'active products' do
-    assert_equal(3, Product.active.count)
-    assert_not(@off_shelf.active)
+    assert_equal(1, Product.active.count)
   end
 
   test 'categorized scope' do
-    assert_equal(3, Product.categorized(product_categories(:other).id).count)
+    assert_equal(1, Product.categorized(product_categories(:health).id).count)
   end
 
 end

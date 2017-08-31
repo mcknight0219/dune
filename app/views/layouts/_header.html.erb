@@ -14,9 +14,6 @@
         <li class="<%= if set_active_class(products_path) then
                          "active"
                        end %>"><%= link_to '商店', products_path %></li>
-        <li class="<%= if set_active_class(rates_path) then
-                         "active"
-                       end %>"><%= link_to '邮寄费率', rates_path %></li>
         <li class="<%= if set_active_class(upload_path) then
                           "active"
                        end %>"><%= link_to '上传照片', '/upload/new' %></li>

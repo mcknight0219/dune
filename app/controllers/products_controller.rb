@@ -2,10 +2,17 @@
 class ProductsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
 
+  DEFAULT_STOCK = 20
   # 显示所有商品
   def index
     respond_to do |format|
-      format.json { render :json => { products: Product.all } }
+      format.json { 
+        render :json => { 
+          products: Product.all.as_json(
+            include: { inventory: { only: [:stock, :id] } }
+          )
+        } 
+      }
       format.html {
         @categories = ProductCategory.top_levels
         @currentCategoryId = params[:category_id]
@@ -28,13 +35,21 @@ class ProductsController < ApplicationController
   def show
     @product = Product.find(params[:id])
     respond_to do |format|
-      format.json { render :json => { product: @product }}
+      format.json { 
+        render :json => { 
+          product: @product.as_json(
+            include: { inventory: { only: [:stock, :id] } }
+          )
+        }
+      }
       format.html
     end
   end
   
   def create
     p = Product.create product_params
+    params[:inventory] ||= ProductsController::DEFAULT_STOCK
+    p.create_inventory(stock: params[:inventory])
     render :json => {product: p.as_json}
   end
 
@@ -54,6 +69,6 @@ class ProductsController < ApplicationController
 
   private
   def product_params
-    params.permit([:name, :weight, :brand, :dimension, :detail, :product_category_id] + (1..9).map { |n| "image#{n}".to_sym } + (1..6).map { |n| "price#{n}".to_sym} )
+    params.permit([:name, :weight, :brand, :specification, :detail, :product_category_id] + (1..9).map { |n| "image#{n}".to_sym } + (1..6).map { |n| "price#{n}".to_sym} )
   end
 end

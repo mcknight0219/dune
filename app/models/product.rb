@@ -1,6 +1,7 @@
 class Product < ApplicationRecord
   has_many :order_items
   belongs_to :product_category
+  has_one :inventory
 
   validates_presence_of  :name, :product_category_id
   (1..6).each do |n|

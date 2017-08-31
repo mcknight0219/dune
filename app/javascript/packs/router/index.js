@@ -13,8 +13,7 @@ const routes = [
     { path: '/home',  name: 'home',  component: Home },
     { path: '/order', name: 'order', component: Order },
     { path: '/manage-product', name: 'manage-product', component: ManageProduct },
-    { path: '/upload', name: 'upload', component: Upload },
-    { path: '/package', name: 'package', component: Package }
+    { path: '/upload', name: 'upload', component: Upload }
 ]
 
 export default new VueRouter({routes})

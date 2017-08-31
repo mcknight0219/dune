@@ -34,13 +34,6 @@
                     </router-link>
                 </li>
                 <li>
-                    <router-link to="package" active-class="is-active">
-                        <span class="icon is-small">
-                            <i class="fa fa-truck" aria-hidden="true"></i>
-                          </span> 邮寄
-                    </router-link>
-                </li>
-                <li>
                     <router-link to="order" active-class="is-active">
                         <span class="icon is-small"><i class="fa fa-shopping-bag" aria-hidden="true"></i></span> 订单
                     </router-link>

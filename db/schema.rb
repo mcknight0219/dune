@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170821000740) do
+ActiveRecord::Schema.define(version: 20170830230121) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,15 @@ ActiveRecord::Schema.define(version: 20170821000740) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_contacts_on_email", using: :btree
+  end
+
+  create_table "inventories", force: :cascade do |t|
+    t.integer  "stock",                      null: false
+    t.boolean  "offshelf",   default: false, null: false
+    t.integer  "product_id"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.index ["product_id"], name: "index_inventories_on_product_id", using: :btree
   end
 
   create_table "order_items", force: :cascade do |t|
@@ -110,7 +119,7 @@ ActiveRecord::Schema.define(version: 20170821000740) do
   create_table "products", force: :cascade do |t|
     t.string   "name"
     t.float    "weight"
-    t.string   "dimension"
+    t.string   "specification"
     t.string   "detail"
     t.boolean  "active"
     t.datetime "created_at",          null: false
@@ -205,6 +214,7 @@ ActiveRecord::Schema.define(version: 20170821000740) do
   end
 
   add_foreign_key "addresses", "users"
+  add_foreign_key "inventories", "products"
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "products"
   add_foreign_key "orders", "addresses"

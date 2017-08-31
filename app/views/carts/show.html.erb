@@ -58,7 +58,8 @@
                   <td>
                     <div>
                       <%= form_tag cart_path, method: :put do %>
-                          <%= number_field_tag(:quantity, item[:quantity], :max => 6, :min => 1, :style => 'display: inline-block;padding-right: 7px;width: 80px;') %>
+                          <% byebug %>
+                          <%= number_field_tag(:quantity, item[:quantity], :max => item[:product]['inventory']['stock'] <= 6 ? item[:product]['inventory']['stock'] : 6 , :min => 1, :style => 'display: inline-block;padding-right: 7px;width: 80px;') %>
                           <%= hidden_field_tag :id, item[:product]['id'] %>
                           <%= submit_tag '更新购物车', :style => 'border:none;display:inline;background-color:transparent;color:#2BB656;cursor:pointer' %>
                           <%= link_to '删除', cart_path(id: item[:product]['id'], return: Base64.encode64(cart_path)), method: :delete %>
