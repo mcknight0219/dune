@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :orders
   has_many :addresses
   has_many :packages
+  has_many :wishes
 
   has_one :profile
 

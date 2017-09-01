@@ -7,5 +7,6 @@ export default {
     allUploads: state => state.uploads,
     updatingPackage: state => state.updatingPackage,
     shipOrderStatus: state => state.shipOrderStatus,
+    wishes: state => state.wishes,
     sidebar: state => state.sidebar
 }

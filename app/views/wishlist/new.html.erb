@@ -1,0 +1,25 @@
+<div class="wrapper row3" style="flex: 1;">
+  <main class="hoc container clear btmpad-none">
+    <div class="content single-col">
+        <div class="form">
+            <h4 class="title-divider"><span>您希望我们提供哪些新产品:<span></h4>
+            <%= form_for @wish, url: { action: 'create', controller: 'wishlist'} do |f| %>
+                <% if flash[:notice] %>
+                    <div class="alert alert-success"><%= flash[:notice] %></div>
+                <% end %>
+                <% if flash[:error] %>
+                    <div class="alert alert-danger"><%= flash[:error] %></div>
+                <% end %>
+
+                <div class="block clear">
+                    <%= f.text_field :data, required: true, placeholder: '任何产品的信息：品牌，名称，或者网址' %>
+                </div>
+                <div>
+                    <%= f.submit "提交", :class => 'btn' %>
+                </div>
+            <% end %>
+        </div>
+    </div>
+    <div class="clear"></div>
+  </main>
+</div>

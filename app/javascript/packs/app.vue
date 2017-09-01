@@ -48,6 +48,12 @@
                         <span class="icon is-small"><i class="fa fa-picture-o"></i></span> 上传照片
                     </router-link>
                 </li>
+                <li>
+                    <router-link to="wish" active-class="is-active">
+                        <span class="icon is-small"><i class="fa fa-heart"></i></span> 心愿列表
+                    </router-link>
+                </li>
+
             </ul>
         </aside>
         <section class="app-main">
@@ -209,8 +215,8 @@ $fullhd: 1384px !default;
 import Home from './components/home'
 import Order from './components/order'
 import ManageProduct from './components/ManageProduct'
-import Package from './components/package'
 import Upload from './components/upload'
+import Wish from './components/wish'
 import store from './store'
 
 export default {
@@ -220,8 +226,8 @@ export default {
         Home,
         Order,
         ManageProduct,
-        Package,
-        Upload
+        Upload,
+        Wish
     },
 
     computed: {

@@ -18,7 +18,8 @@ export default new Vuex.Store({
         products: [],
         productCategories: [],
         shipOrderStatus: 'normal',
-        uploads: []
+        uploads: [],
+        wishes: []
     },
     
     mutations,

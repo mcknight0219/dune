@@ -14,6 +14,9 @@
         <li class="<%= if set_active_class(products_path) then
                          "active"
                        end %>"><%= link_to '商店', products_path %></li>
+        <li class="<%= if set_active_class('/wish_list/new') then
+                         "active"
+                       end %>"><%= link_to '心愿单', '/wish_list/new' %></li>
         <li class="<%= if set_active_class(upload_path) then
                           "active"
                        end %>"><%= link_to '上传照片', '/upload/new' %></li>

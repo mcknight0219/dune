@@ -96,5 +96,9 @@ export default {
         if (p) {
             p.inventory.stock = stock
         }
+    },
+
+    GET_WISHLIST: (state, wishes)=> {
+        state.wishes = wishes
     }
 }

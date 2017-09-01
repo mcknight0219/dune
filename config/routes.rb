@@ -4,6 +4,10 @@ Rails.application.routes.draw do
   # get 'rates', :to => 'rate#index'
   post 'report', :to => 'report#create'
 
+  get 'wish_list', :to => 'wishlist#index'
+  get 'wish_list/new', :to => 'wishlist#new'
+  post 'wish_list', :to => 'wishlist#create'
+
   resources :orders
   resources :addresses
   resources :products

@@ -4,9 +4,14 @@ class ContactController < ApplicationController
   end
 
   def create
-    Contact.create contact_params
-    flash[:notice] = '您的信息我们已经收到 ！'
-    redirect_to contact_path
+    @contact = Contact.create contact_params
+    if @contact.persisted?
+        flash[:notice] = '您的信息我们已经收到 ！'
+        redirect_to contact_path
+    else
+        flash.now[:error] = '无法提交，请稍后重试'
+        render :index
+    end
   end
 
   private

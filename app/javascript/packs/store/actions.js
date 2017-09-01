@@ -148,5 +148,21 @@ export default {
             .catch((error) => {
 
             })
+    },
+
+    getWishlist: ({commit}) => {
+        Api.getWishlist()
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.json()
+                }
+                var e = new Error(response.statusText)
+                e.response = response
+                throw e
+            })
+            .then(({wishes}) => {
+                commit('GET_WISHLIST', wishes)
+            })
+            .catch((e) => {})
     }
 }

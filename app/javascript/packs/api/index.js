@@ -154,5 +154,9 @@ export default {
 
     getCart: function() {
       return csrf_fetch('GET', '/cart')
+    },
+
+    getWishlist: function() {
+        return csrf_fetch('GET', '/wish_list')
     }
 }
