@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Order from '../components/order'
 import ManageProduct from '../components/ManageProduct'
-import Upload from '../components/upload'
+import Carousel from '../components/carousel'
 import Wish from '../components/wish'
 import Home from '../components/home'
 
@@ -13,7 +13,7 @@ const routes = [
     { path: '/home',  name: 'home',  component: Home },
     { path: '/order', name: 'order', component: Order },
     { path: '/manage-product', name: 'manage-product', component: ManageProduct },
-    { path: '/upload', name: 'upload', component: Upload },
+    { path: '/carousel', name: 'carousel', component: Carousel },
     { path: '/wish', name: 'wish', component: Wish }
 ]
 

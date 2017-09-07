@@ -4,7 +4,7 @@
       <article class="tile is-child box">
         <nav class="level">
           <div class="level-left"><strong>上传照片</strong></div>
-          <div class="level-right"><input type="text" class="input" placeholder="包裹单号"></div>
+          <div class="level-right"></div>
         </nav>
         <div class="table-responsive">
           <table class="table is-bordered is-striped is-narrow">

@@ -44,8 +44,8 @@
                     </router-link>
                 </li>
                 <li>
-                    <router-link to="upload" active-class="is-active">
-                        <span class="icon is-small"><i class="fa fa-picture-o"></i></span> 上传照片
+                    <router-link to="carousel" active-class="is-active">
+                        <span class="icon is-small"><i class="fa fa-picture-o"></i></span> 上传主页照片
                     </router-link>
                 </li>
                 <li>
@@ -215,7 +215,7 @@ $fullhd: 1384px !default;
 import Home from './components/home'
 import Order from './components/order'
 import ManageProduct from './components/ManageProduct'
-import Upload from './components/upload'
+import Carousel from './components/carousel'
 import Wish from './components/wish'
 import store from './store'
 
@@ -226,7 +226,7 @@ export default {
         Home,
         Order,
         ManageProduct,
-        Upload,
+        Carousel,
         Wish
     },
 

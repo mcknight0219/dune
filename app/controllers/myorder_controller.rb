@@ -5,7 +5,6 @@ class MyorderController < ApplicationController
 
   def index
     @orders = current_user.orders.paginate(:page => params[:page], :per_page => 8)
-    @packages = current_user.packages.paginate(:page => params[:page], :per_page => 8)
   end
 
   def item_lines(order)

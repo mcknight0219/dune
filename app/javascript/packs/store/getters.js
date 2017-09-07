@@ -5,6 +5,7 @@ export default {
     allAddresses: state => state.addresses,
     allPackages: state => state.packages,
     allUploads: state => state.uploads,
+    allCarousels: state => state.carousels,
     updatingPackage: state => state.updatingPackage,
     shipOrderStatus: state => state.shipOrderStatus,
     wishes: state => state.wishes,

@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
 
   def only_admin
     unless current_user.admin?
-      render json: {:success => false}, status: :forbidden
+      render json: {}, status: :forbidden
     end
   end
 

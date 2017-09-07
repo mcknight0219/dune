@@ -19,7 +19,8 @@ export default new Vuex.Store({
         productCategories: [],
         shipOrderStatus: 'normal',
         uploads: [],
-        wishes: []
+        wishes: [],
+        carousels: []
     },
     
     mutations,

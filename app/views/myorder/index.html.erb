@@ -38,45 +38,6 @@
   </main>
 
   <main class="hoc container clear">
-    <h2 class="title-divider"><span>我的寄件</span></h2>
-    <table>
-      <thead>
-      <tr>
-        <th>寄件单号</th>
-        <th>提交时间</th>
-        <th>地址</th>
-        <th>状态</th>
-      </tr>
-      </thead>
-      <tbody>
-        <% @packages.each do |p| %>
-          <tr>
-            <td><%= p.serial %></td>
-            <td><%= p.created_at.localtime.strftime '%Y-%m-%d' %></td>
-            <td>
-              <span style="font-weight: 500"><%= p.address.name %></span>
-              <span><%= "#{p.address.address_line1} #{p.address.city} #{p.address.state}"%></span>
-            </td>
-            <td>
-              <% if p.status == 'pending' %>
-                等待寄送
-              <% elsif p.status == 'received' %>
-                已收到
-              <% else %>
-                <% if p.serial.start_with? 'SU' %>
-                  <%= link_to '查询', "http://www.sureton.com/index.php", :target => "_blank"%>
-                <% else %>
-                  <%= link_to '查询', "http://www.cctexpress.com/select/?num=#{p.serial}", :target => "_blank"%>
-                <% end %>
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-    <%= will_paginate @packages, :page_links => false %>
-  </main>
-  <main class="hoc container clear">
     <h2 class="title-divider"><span>我的余额</span></h2>
     <p>此功能还未开通</p>
   </main>

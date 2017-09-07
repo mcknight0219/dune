@@ -11,12 +11,14 @@
 // about supported directives.
 //
 //= require clipboard.min
-//= require jquery
+//= require jquery3
+//= require popper
 //= require china_city/jquery.china_city
 //= require tether
-//= require bootstrap
+//= require bootstrap-sprockets
 //= require jquery_ujs
 //= require turbolinks
+//= require slick.min
 
 jQuery("#backtotop").click(function () {
     jQuery("body,html").animate({
@@ -99,4 +101,27 @@ $('#quantity').change(function () {
     var arr = $('#price-tag').attr('data').split(';')
     var i = parseInt($(this).val()) - 1
     $('#price-tag').html(arr[i])
+})
+
+$('.slider').slick({
+    lazyLoad: 'ondemand',
+    autoplay: true,
+    infinite: true,
+    centerMode: true,
+    centerPadding: '60px',
+    slidesToShow: 3,
+    index: 2,
+    dots: true,
+    responsive: [
+        {
+            breakpoint: 768,
+            settings: {
+                arrows: false,
+                centerMode: true,
+                centerPadding: '40px',
+                slidesToShow: 1    
+            }
+        }
+       
+    ]
 })

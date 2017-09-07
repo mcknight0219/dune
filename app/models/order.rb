@@ -3,6 +3,10 @@ class Order < ApplicationRecord
   belongs_to :address
   has_many :order_items, :dependent => :destroy
 
+  state_machine :state, :initial => :cart do
+  
+  end
+
   class << self
     def cancel(order_id)
       Order.find(order_id).destroy

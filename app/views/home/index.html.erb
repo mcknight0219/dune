@@ -38,6 +38,20 @@
     </main>
   </div>
 
+  <% unless @carousels.empty? || @carousels.count < 3 %>
+    <div class="wrapper row3">
+        <section class="hoc container clear">
+            <section class="lazy slider">
+            <% @carousels.each do |url| %>
+                <div>
+                    <img data-lazy=<%= url %>>
+                </div>
+            <% end %> 
+            </section>
+        </section>
+    </div>
+  <% end %>
+
   <div class="wrapper bgded overlay coloured">
     <section class="hoc container clear">
       <div class="sectiontitle center">
@@ -47,7 +61,7 @@
       <ul class="nospace group infoboxes">
         <li class="one_third first">
           <article class="infobox"><i class="fa fa-codepen"></i>
-            <p><a href="#">购物邮寄一站通</a></p>
+            <p>购物邮寄一站通</p>
             <h6>大量折扣产品库存，一键邮寄中国</h6>
             <footer>
               <%= link_to '开始选购', products_path, class: 'btn' %>

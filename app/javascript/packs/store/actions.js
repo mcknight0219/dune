@@ -164,5 +164,46 @@ export default {
                 commit('GET_WISHLIST', wishes)
             })
             .catch((e) => {})
+    },
+
+    getCarousels: ({commit}) => {
+        Api.getCarousels()
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.json()
+                }
+                var e = new Error(Response.statusText)
+                e.response = response
+                throw e
+            })
+            .then(({carousels}) => {
+                commit('GET_CAROUSELS', carousels)
+            })
+            .catch((e) => {})
+    },
+
+    addCarousel: ({commit}, carousel) => {
+        Api.newCarousel(carousel)
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.json()
+                }
+                var e = new Error(Response.statusText)
+                e.response = response
+                throw e
+            })
+            .then(({carousel}) => {
+                commit('NEW_CAROUSEL', carousel)
+            })
+            .catch((e) => {})
+    },
+
+    removeCarousel: ({commit}, id) => {
+        Api.removeCarousel(id)
+            .then(jsonResponse)
+            .then(({success}) => {
+                if (success)
+                    commit('REMOVE_CAROUSEL', id)
+            })
     }
 }

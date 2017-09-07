@@ -158,5 +158,25 @@ export default {
 
     getWishlist: function() {
         return csrf_fetch('GET', '/wish_list')
+    },
+
+    getCarousels: function() {
+        return csrf_fetch('GET', '/carousels')
+    },
+
+    newCarousel: function (form) {
+        return fetch('/carousels', {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRF-Token': csrfToken()
+            },
+            credentials: 'same-origin',
+            body: form
+        })
+    },
+    
+    removeCarousel: function (id) {
+        return csrf_fetch('DELETE', '/carousels/' + id)
     }
 }

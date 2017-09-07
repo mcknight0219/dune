@@ -10,13 +10,13 @@ gem 'pg'
 gem 'puma', '~> 3.0'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
+gem 'popper_js' 
 gem 'bootstrap', '~> 4.0.0.alpha6'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
 gem "dynamic_form"
-
 gem "will_paginate", "~> 3.1.0"
 
 gem "font-awesome-rails"
@@ -43,6 +43,8 @@ group :development do
   gem 'capistrano-rbenv', group: :development
   gem 'capistrano-npm'
 end
+
+gem 'state_machine'
 
 # 检测是否移动设备
 gem 'browser'

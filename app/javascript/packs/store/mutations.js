@@ -100,5 +100,20 @@ export default {
 
     GET_WISHLIST: (state, wishes)=> {
         state.wishes = wishes
+    },
+
+    GET_CAROUSELS: (state, carousels) => {
+        state.carousels = carousels
+    },
+
+    NEW_CAROUSEL: (state, carousel) => {
+        state.carousels.push(carousel)
+    },
+
+    REMOVE_CAROUSEL: (state, id) => {
+        const c = state.carousels.find(p => p.id === id)
+        if (c) {
+            state.carousels.splice(state.carousels.indexOf(c), 1)
+        }
     }
 }
